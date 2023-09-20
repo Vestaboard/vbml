@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["esnext"],
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "declaration": true
+  },
+  "include": ["src"]
+}
