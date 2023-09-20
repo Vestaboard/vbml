@@ -1,4 +1,4 @@
-name: Publish Package to npmjs
+name: Build and Publish
 on:
   push:
     branches: [main]
@@ -8,13 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
       - name: Install Dependencies
         run: yarn install
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Run Tests
         run: yarn test
       - name: Build
