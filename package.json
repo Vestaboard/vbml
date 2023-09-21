@@ -1,9 +1,8 @@
 {
   "name": "@vestaboard/vbml",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The Vestaboard markup language",
   "main": "lib/index.js",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "jest"

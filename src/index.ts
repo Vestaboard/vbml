@@ -21,3 +21,5 @@ export const vbml = {
     return layoutComponents(emptyBoard, components);
   },
 };
+
+export * from "./types";
