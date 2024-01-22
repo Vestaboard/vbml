@@ -23,15 +23,19 @@ export const horizontalAlign = curry(
             );
         });
       case Justify.justified:
+        const rows = codes.map((row) => removeExtraSpace(row).row);
         const longestRow =
-          codes.reduce((prev, current) => {
+          rows.reduce((prev, current) => {
             return current.length > prev ? current.length : prev;
           }, 0) - 1;
-        const paddingLeft = Math.floor((width - longestRow) / 2);
-        return codes.map((row) => {
+        const paddingRight = +Math.floor((width - longestRow) / 2);
+        const paddingLeft = width - (longestRow + (paddingRight + 1));
+        const padding = paddingRight > paddingLeft ? paddingLeft : paddingRight;
+
+        return rows.map((row) => {
           return Array(width)
             .fill(CharacterCode.Blank)
-            .map((_, index) => row[index - paddingLeft] || CharacterCode.Blank);
+            .map((_, index) => row[index - padding] || CharacterCode.Blank);
         });
       default:
         return codes.map((row) => {

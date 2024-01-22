@@ -22,6 +22,11 @@ export const getLinesFromWords = curry((width: number, words: string[]) => {
       if (curr.startsWith("{") && curr.endsWith("}")) {
         // new line case for colors
         if (1 + lineLength > width) {
+          // If a blank space is forced at the beginning of a line, it is ignored.
+          if (curr === "{0}") {
+            return acc;
+          }
+
           const newLine = {
             line: curr,
             length: 1,
@@ -52,9 +57,10 @@ export const getLinesFromWords = curry((width: number, words: string[]) => {
       };
       return [...acc, newLine];
     },
-    // keep track of length seperate from string since colors count as 1 bit
+    // keep track of length separate from string since colors count as 1 bit
     [{ line: "", length: 0 }]
   );
+
   const firstLineEmpty = !lines[0].line;
   // remove 1st line we added for reduces default case
   return firstLineEmpty
