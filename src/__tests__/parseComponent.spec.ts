@@ -149,8 +149,85 @@ describe("Parse Component", () => {
 
   it("Should horizontally align justified", () => {
     const input: IVBMLComponent = {
-      template: "the quick brown fox jumped over the lazy dog",
+      template: "Testing Testing 123",
       style: {
+        align: Align.center,
+        justify: Justify.justified,
+      },
+    };
+
+    const result = parseComponent(6, 22)(input);
+
+    expect(result).toEqual([
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [
+        0, 20, 5, 19, 20, 9, 14, 7, 0, 20, 5, 19, 20, 9, 14, 7, 0, 27, 28, 29,
+        0, 0,
+      ],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+  });
+
+  it("Should horizontally align justified when the full line is covered", () => {
+    const input: IVBMLComponent = {
+      template: "Testing Testing 123456",
+      style: {
+        align: Align.center,
+        justify: Justify.justified,
+      },
+    };
+
+    const result = parseComponent(6, 22)(input);
+
+    expect(result).toEqual([
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [
+        20, 5, 19, 20, 9, 14, 7, 0, 20, 5, 19, 20, 9, 14, 7, 0, 27, 28, 29, 30,
+        31, 32,
+      ],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+  });
+
+  it("Should horizontally align justified when we flow to the next line", () => {
+    const input: IVBMLComponent = {
+      template: "Testing Testing 123456789",
+      style: {
+        align: Align.center,
+        justify: Justify.justified,
+      },
+    };
+
+    const result = parseComponent(6, 22)(input);
+
+    expect(result).toEqual([
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [
+        0, 0, 0, 20, 5, 19, 20, 9, 14, 7, 0, 20, 5, 19, 20, 9, 14, 7, 0, 0, 0,
+        0,
+      ],
+      [
+        0, 0, 0, 27, 28, 29, 30, 31, 32, 33, 34, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0,
+      ],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+  });
+
+  it("Should horizontally align justified a long complex message", () => {
+    const input: IVBMLComponent = {
+      template:
+        "Pack my box with five dozen liquor jugs. The quick brown fox jumps over the lazy dog. How vexingly quick daft zebras jump!",
+      style: {
+        align: Align.center,
         justify: Justify.justified,
       },
     };
@@ -159,17 +236,29 @@ describe("Parse Component", () => {
 
     expect(result).toEqual([
       [
-        0, 20, 8, 5, 0, 17, 21, 9, 3, 11, 0, 2, 18, 15, 23, 14, 0, 6, 15, 24, 0,
+        16, 1, 3, 11, 0, 13, 25, 0, 2, 15, 24, 0, 23, 9, 20, 8, 0, 6, 9, 22, 5,
         0,
       ],
       [
-        0, 10, 21, 13, 16, 5, 4, 0, 15, 22, 5, 18, 0, 20, 8, 5, 0, 12, 1, 26,
-        25, 0,
+        4, 15, 26, 5, 14, 0, 12, 9, 17, 21, 15, 18, 0, 10, 21, 7, 19, 56, 0, 20,
+        8, 5,
       ],
-      [0, 4, 15, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [
+        17, 21, 9, 3, 11, 0, 2, 18, 15, 23, 14, 0, 6, 15, 24, 0, 10, 21, 13, 16,
+        19, 0,
+      ],
+      [
+        15, 22, 5, 18, 0, 20, 8, 5, 0, 12, 1, 26, 25, 0, 4, 15, 7, 56, 0, 8, 15,
+        23,
+      ],
+      [
+        22, 5, 24, 9, 14, 7, 12, 25, 0, 17, 21, 9, 3, 11, 0, 4, 1, 6, 20, 0, 0,
+        0,
+      ],
+      [
+        26, 5, 2, 18, 1, 19, 0, 10, 21, 13, 16, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0,
+      ],
     ]);
   });
 
@@ -275,7 +364,7 @@ describe("Parse Component", () => {
 
   it("Should allow newlines before spaces", () => {
     const input: IVBMLComponent = {
-      template: "{1}\n{0}{1}",
+      template: "{1}\n{70}{1}",
       style: {
         justify: Justify.center,
       },
@@ -285,7 +374,7 @@ describe("Parse Component", () => {
 
     expect(result).toEqual([
       [1, 0],
-      [0, 1],
+      [70, 1],
     ]);
   });
 
