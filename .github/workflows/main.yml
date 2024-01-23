@@ -29,6 +29,6 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Publish to GitHub Packages
-        run: rm ./.npmrc; mv ./.npmrc-github ./.nmprc npm publish
+        run: rm ./.npmrc; mv ./.npmrc-github ./.nmprc; npm publish
         env:
           NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
