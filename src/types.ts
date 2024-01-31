@@ -9,6 +9,7 @@ export enum Align {
   center = "center",
   top = "top",
   bottom = "bottom",
+  justified = "justified",
 }
 
 interface IComponentStyle {

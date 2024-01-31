@@ -1,4 +1,4 @@
-import { vbml } from "..";
+import { Align, vbml } from "..";
 
 describe("VBML", () => {
   it("Should parse a single component on a board", () => {
@@ -109,5 +109,47 @@ describe("VBML", () => {
       [1, 2, 3, 4],
       [5, 6, 0, 0],
     ]);
+  });
+
+  it("Should justify the content vertically", () => {
+    const result = vbml.parse({
+      style: {
+        height: 5,
+        width: 1,
+      },
+      components: [
+        {
+          template: "abcd",
+          style: {
+            height: 5,
+            width: 1,
+            align: Align.justified,
+          },
+        },
+      ],
+    });
+
+    expect(result).toEqual([[0], [1], [2], [3], [4]]);
+  });
+
+  it("Should justify the content vertically with three characters and rows", () => {
+    const result = vbml.parse({
+      style: {
+        height: 5,
+        width: 1,
+      },
+      components: [
+        {
+          template: "abc",
+          style: {
+            height: 5,
+            width: 1,
+            align: Align.justified,
+          },
+        },
+      ],
+    });
+
+    expect(result).toEqual([[0], [1], [2], [3], [0]]);
   });
 });
