@@ -3,6 +3,8 @@ import { createEmptyBoard } from "./createEmptyBoard";
 import { layoutComponents } from "./layoutComponents";
 import { parseComponent } from "./parseComponent";
 import { IVBML } from "./types";
+import { characterCodesToString } from "./characterCodesToString";
+import { characterCodesToAscii } from "./characterCodesToAscii";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -20,6 +22,8 @@ export const vbml = {
 
     return layoutComponents(emptyBoard, components);
   },
+  characterCodesToString,
+  characterCodesToAscii,
 };
 
 export * from "./types";
