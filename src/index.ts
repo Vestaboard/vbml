@@ -5,6 +5,7 @@ import { parseComponent } from "./parseComponent";
 import { IVBML } from "./types";
 import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
+import { copyCharacterCodes } from "./copyCharacterCodes";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -24,6 +25,7 @@ export const vbml = {
   },
   characterCodesToString,
   characterCodesToAscii,
+  copyCharacterCodes,
 };
 
 export * from "./types";

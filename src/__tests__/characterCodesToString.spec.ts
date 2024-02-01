@@ -40,15 +40,15 @@ describe("Convert array of array of characters to a string", () => {
   it("Should handle line breaks", () => {
     const result = characterCodesToString(
       [
-        [1, 1, 0, 0, 0],
-        [2, 2, 0, 0, 0],
+        [1, 2, 0, 0, 0],
+        [3, 4, 0, 0, 0],
       ],
       {
         allowLineBreaks: true,
       }
     );
 
-    expect(result).toEqual("AA\nBB");
+    expect(result).toEqual("AB\nCD");
   });
 
   it("Should assume there is no line break if the first word can fit on the previous line", () => {
