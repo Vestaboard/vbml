@@ -36,4 +36,32 @@ describe("Convert array of array of characters to a string", () => {
 
     expect(result).toEqual("HANDLE BREAKS GRACEFULLY");
   });
+
+  it("Should handle line breaks", () => {
+    const result = characterCodesToString(
+      [
+        [1, 1, 0, 0, 0],
+        [2, 2, 0, 0, 0],
+      ],
+      {
+        allowLineBreaks: true,
+      }
+    );
+
+    expect(result).toEqual("AA\nBB");
+  });
+
+  it("Should assume there is no line break if the first word can fit on the previous line", () => {
+    const result = characterCodesToString(
+      [
+        [1, 0],
+        [2, 0],
+      ],
+      {
+        allowLineBreaks: true,
+      }
+    );
+
+    expect(result).toEqual("A B");
+  });
 });

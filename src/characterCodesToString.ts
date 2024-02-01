@@ -73,16 +73,130 @@ const characterCodesMap: {
   "69": "",
   "70": "",
   "71": " ",
+  "100": "\n", // line break
 };
 
-export const characterCodesToString = (characters: number[][]) => {
-  const mergedRows = characters.reduce((acc: number[], row: number[]) => {
-    return [...acc, 0, ...row];
-  }, []);
+// These characters are considered empty and if there are enough of them in a row, we can consider it a line break
+const breakableCharacters = Object.keys(characterCodesMap).filter(
+  (key) => characterCodesMap[key] === "" || characterCodesMap[key] === " "
+);
 
-  return mergedRows
-    .map((code: number) => characterCodesMap[`${code}`] || "")
-    .join("")
-    .trim()
-    .replace(/\s+/g, " ");
+interface ICharacterCodesToStringOptions {
+  allowLineBreaks?: boolean;
+}
+
+const countEmptyCharactersBeforeFirstWord = (row: number[]) => {
+  return row.reduce(
+    (prev, current) => {
+      if (!breakableCharacters.includes(`${current}`) || !prev.counting) {
+        return {
+          ...prev,
+          counting: false,
+        };
+      }
+
+      return {
+        ...prev,
+        count: prev.count + 1,
+      };
+    },
+    {
+      count: 0,
+      counting: true,
+    }
+  ).count;
+};
+
+const countFirstWordLength = (row: number[]) => {
+  return row.reduce(
+    (prev, current) => {
+      if (!prev.counting) {
+        return prev;
+      }
+
+      const isCharacter = !breakableCharacters.includes(`${current}`);
+
+      if (isCharacter && !prev.startedCounting) {
+        return {
+          ...prev,
+          count: prev.count + 1,
+          startedCounting: true,
+        };
+      }
+
+      if (!isCharacter && !prev.startedCounting) {
+        return prev;
+      }
+
+      if (!isCharacter && prev.startedCounting) {
+        return {
+          ...prev,
+          counting: false,
+        };
+      }
+
+      return {
+        ...prev,
+        count: prev.count + 1,
+      };
+    },
+    {
+      count: 0,
+      counting: true,
+      startedCounting: false,
+    }
+  ).count;
+};
+
+export const characterCodesToString = (
+  characters: number[][],
+  options?: ICharacterCodesToStringOptions
+) => {
+  const mergedRows = characters.reduce(
+    (acc: number[], row: number[], index: number) => {
+      const unbrokenAccumulator = [...acc, 0, ...row];
+      if (options?.allowLineBreaks) {
+        const previousLine = characters[index - 1] || null;
+
+        if (!previousLine) {
+          return unbrokenAccumulator;
+        }
+
+        const prefixBreakableCharacters =
+          countEmptyCharactersBeforeFirstWord(previousLine);
+
+        const postfixBreakableCharacters = countEmptyCharactersBeforeFirstWord(
+          previousLine.reverse()
+        );
+
+        const firstWordLength = countFirstWordLength(row);
+
+        const previousBreakableCharacters =
+          prefixBreakableCharacters + postfixBreakableCharacters;
+
+        return [
+          ...acc,
+          previousBreakableCharacters > firstWordLength ? 100 : 0,
+          ...row,
+        ];
+      }
+
+      return unbrokenAccumulator;
+    },
+    []
+  );
+
+  return (
+    mergedRows
+      .map((code: number) => characterCodesMap[`${code}`] || "")
+      .join("")
+      // Remove trailing whitespace
+      .trim()
+      // Remove duplicate whitespace
+      .split(" ")
+      .filter((string) => string != "")
+      .join(" ")
+      // Remove whitespace before line breaks
+      .replace(/ \n/g, "\n")
+  );
 };
