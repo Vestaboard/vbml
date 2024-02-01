@@ -38,3 +38,7 @@ export interface IVBML {
   style?: IVBMLStyle;
   components: IVBMLComponent[];
 }
+
+export interface ICharacterCodesToStringOptions {
+  allowLineBreaks?: boolean;
+}

@@ -1,3 +1,5 @@
+import { ICharacterCodesToStringOptions } from "./types";
+
 const characterCodesMap: {
   [key: string]: string;
 } = {
@@ -80,10 +82,6 @@ const characterCodesMap: {
 const breakableCharacters = Object.keys(characterCodesMap).filter(
   (key) => characterCodesMap[key] === "" || characterCodesMap[key] === " "
 );
-
-interface ICharacterCodesToStringOptions {
-  allowLineBreaks?: boolean;
-}
 
 const countEmptyCharactersBeforeFirstWord = (row: number[]) => {
   return row.reduce(
