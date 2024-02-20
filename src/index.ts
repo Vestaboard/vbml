@@ -1,7 +1,7 @@
 import "./characterCodes";
 import { createEmptyBoard } from "./createEmptyBoard";
 import { layoutComponents } from "./layoutComponents";
-import { parseComponent } from "./parseComponent";
+import { parseAbsoluteComponent, parseComponent } from "./parseComponent";
 import { IVBML } from "./types";
 import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
@@ -17,11 +17,15 @@ export const vbml = {
     const width = input?.style?.width || BOARD_COLUMNS;
     const emptyBoard = createEmptyBoard(height, width);
 
-    const components = input.components.map(
-      parseComponent(height, width, input.props)
-    );
+    const components = input.components
+      .filter((component) => !component.style?.absolutePosition)
+      .map(parseComponent(height, width, input.props));
 
-    return layoutComponents(emptyBoard, components);
+    const absoluteComponents = input.components
+      .filter((component) => !!component.style?.absolutePosition)
+      .map(parseAbsoluteComponent(height, width, input.props));
+
+    return layoutComponents(emptyBoard, components, absoluteComponents);
   },
   characterCodesToString,
   characterCodesToAscii,

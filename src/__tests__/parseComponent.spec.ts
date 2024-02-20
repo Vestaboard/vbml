@@ -1,4 +1,4 @@
-import { parseComponent } from "../parseComponent";
+import { parseAbsoluteComponent, parseComponent } from "../parseComponent";
 import { Align, IVBMLComponent, Justify } from "../types";
 
 describe("Parse Component", () => {
@@ -427,6 +427,43 @@ describe("Parse Component", () => {
 
     const result = parseComponent(2, 2)(input);
 
+    expect(result).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+  });
+  it("Should parse absolute component", () => {
+    const input: IVBMLComponent = {
+      template: "Hello World!",
+      style: {
+        absolutePosition: {
+          x: 4,
+          y: 2,
+        },
+        width: 6,
+        height: 2,
+      },
+    };
+
+    const result = parseAbsoluteComponent(3, 12)(input);
+    expect(result).toEqual({
+      characters: [
+        [8, 5, 12, 12, 15, 0],
+        [23, 15, 18, 12, 4, 37],
+      ],
+      x: 4,
+      y: 2,
+    });
+  });
+
+  it("Should parse a raw component", () => {
+    const input: IVBMLComponent = {
+      rawCharacters: [
+        [1, 2],
+        [3, 4],
+      ],
+    };
+    const result = parseComponent(3, 12)(input);
     expect(result).toEqual([
       [1, 2],
       [3, 4],

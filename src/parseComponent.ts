@@ -12,6 +12,8 @@ import map from "lodash/fp/map";
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
   (component: IVBMLComponent) => {
+    if ("rawCharacters" in component) return component.rawCharacters;
+
     const width = component?.style?.width || defaultWidth;
     const height = component?.style?.height || defaultHeight;
     const emptyComponent = createEmptyBoard(height, width);
@@ -24,5 +26,19 @@ export const parseComponent =
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
       renderComponent(emptyComponent)
-    )(component.template) as number[][];
+    )("template" in component ? component.template : "") as number[][];
+  };
+
+export const parseAbsoluteComponent =
+  (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
+  (component: IVBMLComponent) => {
+    return {
+      characters: parseComponent(
+        defaultHeight,
+        defaultWidth,
+        props
+      )(component) as number[][],
+      x: component.style?.absolutePosition?.x || 0,
+      y: component.style?.absolutePosition?.y || 0,
+    };
   };
