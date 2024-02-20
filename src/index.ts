@@ -18,12 +18,12 @@ export const vbml = {
     const emptyBoard = createEmptyBoard(height, width);
 
     const components = input.components
-      .filter((component) => component.style?.position !== Position.absolute)
+      .filter((component) => !component.style?.absolutePosition)
       .map(parseComponent(height, width, input.props));
 
-    const absoluteComponents = input.components.filter(
-      (component) => component.style?.position === Position.absolute
-    ).map(parseAbsoluteComponent(height, width, input.props));
+    const absoluteComponents = input.components
+      .filter((component) => !!component.style?.absolutePosition)
+      .map(parseAbsoluteComponent(height, width, input.props));
 
     return layoutComponents(emptyBoard, components, absoluteComponents);
   },

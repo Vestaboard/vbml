@@ -38,7 +38,7 @@ export const parseAbsoluteComponent =
         defaultWidth,
         props
       )(component) as number[][],
-      x: component.style?.x || 0,
-      y: component.style?.y || 0,
+      x: component.style?.absolutePosition?.x || 0,
+      y: component.style?.absolutePosition?.y || 0,
     };
   };

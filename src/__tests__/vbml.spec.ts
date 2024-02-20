@@ -177,8 +177,10 @@ describe("VBML", () => {
             align: Align.top,
             justify: Justify.left,
             position: Position.absolute,
-            x: 3,
-            y: 0,
+            absolutePosition: {
+              x: 3,
+              y: 0,
+            },
           },
         },
       ],
@@ -212,14 +214,151 @@ describe("VBML", () => {
             align: Align.top,
             justify: Justify.left,
             position: Position.absolute,
-            x: 0,
-            y: 0,
+            absolutePosition: {
+              x: 0,
+              y: 0,
+            },
           },
         },
       ],
     });
     expect(result[0]).toEqual([
       4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
+  });
+
+  it("Should layout absolute components over relative components", () => {
+    const result = vbml.parse({
+      style: {
+        height: 6,
+        width: 22,
+      },
+      components: [
+        {
+          template: "abc",
+          style: {
+            height: 6,
+            width: 22,
+            align: Align.top,
+            justify: Justify.left,
+          },
+        },
+        {
+          template: "def",
+          style: {
+            height: 1,
+            width: 3,
+            align: Align.top,
+            justify: Justify.left,
+            position: Position.absolute,
+            absolutePosition: {
+              x: 0,
+              y: 0,
+            },
+          },
+        },
+      ],
+    });
+    expect(result[0]).toEqual([
+      4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
+  });
+
+  it("Should layout raw components", () => {
+    const result = vbml.parse({
+      style: {
+        height: 6,
+        width: 22,
+      },
+      components: [
+        {
+          rawCharacters: [[1, 2, 3]],
+        },
+      ],
+    });
+    expect(result[0]).toEqual([
+      1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
+  });
+
+  it("Should layout absolute components with raw components for a mountain background clock", () => {
+    const result = vbml.parse({
+      props: {
+        time: "12:00 PM",
+      },
+      style: {
+        height: 6,
+        width: 22,
+      },
+      components: [
+        {
+          rawCharacters: [
+            [
+              68, 68, 68, 68, 68, 69, 69, 68, 68, 68, 68, 68, 68, 68, 68, 68,
+              68, 68, 68, 68, 68, 68,
+            ],
+            [
+              68, 68, 68, 68, 69, 69, 69, 69, 68, 68, 68, 68, 68, 68, 68, 68,
+              65, 65, 65, 65, 68, 68,
+            ],
+            [
+              63, 63, 63, 69, 66, 69, 66, 69, 69, 63, 63, 63, 63, 63, 63, 65,
+              65, 65, 65, 65, 65, 63,
+            ],
+            [
+              63, 63, 66, 66, 66, 69, 66, 66, 66, 66, 63, 63, 63, 63, 63, 65,
+              65, 65, 65, 65, 65, 63,
+            ],
+            [
+              64, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 64, 64, 64, 64, 64,
+              65, 65, 65, 65, 64, 64,
+            ],
+            [
+              66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 64, 64, 64, 64,
+              64, 64, 64, 64, 64, 64,
+            ],
+          ],
+        },
+        {
+          template: "{{time}}",
+          style: {
+            height: 1,
+            width: 8,
+            absolutePosition: {
+              x: 11,
+              y: 3,
+            },
+          },
+        },
+      ],
+    });
+    // visual representation of the result
+    // https://web.vestaboard.com/board/cda490a3-aaa5-4f2d-9018-a41cd365328a/compose/duplicate/[[68,68,68,68,68,69,69,68,68,68,68,68,68,68,68,68,68,68,68,68,68,68],[68,68,68,68,69,69,69,69,68,68,68,68,68,68,68,68,65,65,65,65,68,68],[63,63,63,69,66,69,66,69,69,63,63,63,63,63,63,65,65,65,65,65,65,63],[63,63,66,66,66,69,66,66,66,66,63,27,28,50,36,36,0,16,13,65,65,63],[64,66,66,66,66,66,66,66,66,66,66,64,64,64,64,64,65,65,65,65,64,64],[66,66,66,66,66,66,66,66,66,66,66,66,64,64,64,64,64,64,64,64,64,64]]
+    expect(result).toEqual([
+      [
+        68, 68, 68, 68, 68, 69, 69, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68,
+        68, 68, 68, 68,
+      ],
+      [
+        68, 68, 68, 68, 69, 69, 69, 69, 68, 68, 68, 68, 68, 68, 68, 68, 65, 65,
+        65, 65, 68, 68,
+      ],
+      [
+        63, 63, 63, 69, 66, 69, 66, 69, 69, 63, 63, 63, 63, 63, 63, 65, 65, 65,
+        65, 65, 65, 63,
+      ],
+      [
+        63, 63, 66, 66, 66, 69, 66, 66, 66, 66, 63, 27, 28, 50, 36, 36, 0, 16,
+        13, 65, 65, 63,
+      ],
+      [
+        64, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 64, 64, 64, 64, 64, 65, 65,
+        65, 65, 64, 64,
+      ],
+      [
+        66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 64, 64, 64, 64, 64, 64,
+        64, 64, 64, 64,
+      ],
     ]);
   });
 });

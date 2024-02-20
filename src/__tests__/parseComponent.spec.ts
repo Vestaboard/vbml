@@ -437,8 +437,10 @@ describe("Parse Component", () => {
       template: "Hello World!",
       style: {
         position: Position.absolute,
-        x: 4,
-        y: 2,
+        absolutePosition: {
+          x: 4,
+          y: 2,
+        },
         width: 6,
         height: 2,
       },

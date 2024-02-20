@@ -18,14 +18,18 @@ export enum Position {
   absolute = "absolute",
 }
 
+
+
 interface IComponentStyle {
   justify?: Justify;
   align?: Align;
   height?: number;
   width?: number;
   position?: Position;
-  x?: number;
-  y?: number;
+  absolutePosition?: {
+    x: number;
+    y: number;
+  }
 }
 
 interface IVBMLStyle {
