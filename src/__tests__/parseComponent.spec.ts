@@ -1,5 +1,5 @@
 import { parseAbsoluteComponent, parseComponent } from "../parseComponent";
-import { Align, IVBMLComponent, Justify, Position } from "../types";
+import { Align, IVBMLComponent, Justify } from "../types";
 
 describe("Parse Component", () => {
   it("Should format a message with plain text", () => {
@@ -436,7 +436,6 @@ describe("Parse Component", () => {
     const input: IVBMLComponent = {
       template: "Hello World!",
       style: {
-        position: Position.absolute,
         absolutePosition: {
           x: 4,
           y: 2,

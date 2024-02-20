@@ -1,4 +1,4 @@
-import { Align, Justify, Position, vbml } from "..";
+import { Align, Justify, vbml } from "..";
 
 describe("VBML", () => {
   it("Should parse a single component on a board", () => {
@@ -176,7 +176,6 @@ describe("VBML", () => {
             width: 3,
             align: Align.top,
             justify: Justify.left,
-            position: Position.absolute,
             absolutePosition: {
               x: 3,
               y: 0,
@@ -213,7 +212,6 @@ describe("VBML", () => {
             width: 3,
             align: Align.top,
             justify: Justify.left,
-            position: Position.absolute,
             absolutePosition: {
               x: 0,
               y: 0,
@@ -250,7 +248,6 @@ describe("VBML", () => {
             width: 3,
             align: Align.top,
             justify: Justify.left,
-            position: Position.absolute,
             absolutePosition: {
               x: 0,
               y: 0,

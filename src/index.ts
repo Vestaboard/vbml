@@ -2,7 +2,7 @@ import "./characterCodes";
 import { createEmptyBoard } from "./createEmptyBoard";
 import { layoutComponents } from "./layoutComponents";
 import { parseAbsoluteComponent, parseComponent } from "./parseComponent";
-import { IVBML, Position } from "./types";
+import { IVBML } from "./types";
 import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
 import { copyCharacterCodes } from "./copyCharacterCodes";

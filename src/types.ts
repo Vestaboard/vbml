@@ -13,23 +13,15 @@ export enum Align {
   absolute = "absolute",
 }
 
-export enum Position {
-  relative = "relative",
-  absolute = "absolute",
-}
-
-
-
 interface IComponentStyle {
   justify?: Justify;
   align?: Align;
   height?: number;
   width?: number;
-  position?: Position;
   absolutePosition?: {
     x: number;
     y: number;
-  }
+  };
 }
 
 interface IVBMLStyle {
