@@ -12,11 +12,19 @@ export enum Align {
   justified = "justified",
 }
 
+export enum Position {
+  relative = "relative",
+  absolute = "absolute",
+}
+
 interface IComponentStyle {
   justify?: Justify;
   align?: Align;
   height?: number;
   width?: number;
+  position?: Position
+  x?: number;
+  y?: number;
 }
 
 interface IVBMLStyle {

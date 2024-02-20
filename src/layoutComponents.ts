@@ -1,6 +1,7 @@
 export const layoutComponents = (
   board: number[][],
-  components: number[][][]
+  components: number[][][],
+  absoluteComponents: { characters: number[][]; x: number; y: number }[]
 ) => {
   let position = {
     top: 0,
@@ -28,6 +29,22 @@ export const layoutComponents = (
       height: component.length,
     };
   });
+
+  absoluteComponents &&
+    absoluteComponents.forEach((component) => {
+      component.characters.forEach((row, rowIndex) => {
+        row.forEach((bit, bitIndex) => {
+          // make sure we are in bounds, truncate the rest for now
+          if (component.y + rowIndex >= board.length) {
+            return;
+          }
+          if (component.x + bitIndex >= board[0].length) {
+            return;
+          }
+          board[rowIndex + component.y][bitIndex + component.x] = bit;
+        });
+      });
+    });
 
   return board;
 };

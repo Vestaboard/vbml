@@ -26,3 +26,17 @@ export const parseComponent =
       renderComponent(emptyComponent)
     )(component.template) as number[][];
   };
+
+export const parseAbsoluteComponent =
+  (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
+  (component: IVBMLComponent) => {
+    return {
+      characters: parseComponent(
+        defaultHeight,
+        defaultWidth,
+        props
+      )(component) as number[][],
+      x: component.style?.x || 0,
+      y: component.style?.y || 0,
+    };
+  };

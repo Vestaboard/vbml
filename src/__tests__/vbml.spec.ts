@@ -1,4 +1,4 @@
-import { Align, vbml } from "..";
+import { Align, Justify, Position, vbml } from "..";
 
 describe("VBML", () => {
   it("Should parse a single component on a board", () => {
@@ -151,5 +151,40 @@ describe("VBML", () => {
     });
 
     expect(result).toEqual([[0], [1], [2], [3], [0]]);
+  });
+
+  it("Should layout absolute components over relative components", () => {
+    const result = vbml.parse({
+      style: {
+        height: 22,
+        width: 6,
+      },
+      components: [
+        {
+          template: "abc",
+          style: {
+            height: 6,
+            width: 22,
+            align: Align.top,
+            justify: Justify.left,
+          },
+        },
+        {
+          template: "def",
+          style: {
+            height: 1,
+            width: 3,
+            align: Align.top,
+            justify: Justify.left,
+            position: Position.absolute,
+            x: 3,
+            y: 0,
+          },
+        },
+      ],
+    });
+    expect(result[0]).toEqual([
+      1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ]);
   });
 });
