@@ -10,6 +10,7 @@ export enum Align {
   top = "top",
   bottom = "bottom",
   justified = "justified",
+  absolute = "absolute",
 }
 
 export enum Position {
@@ -22,7 +23,7 @@ interface IComponentStyle {
   align?: Align;
   height?: number;
   width?: number;
-  position?: Position
+  position?: Position;
   x?: number;
   y?: number;
 }
@@ -36,10 +37,17 @@ export interface VBMLProps {
   [key: string]: any;
 }
 
-export interface IVBMLComponent {
+export interface IVBMLRawComponent {
+  style?: IComponentStyle;
+  rawCharacters?: number[][];
+}
+
+export interface IVBMLTemplateComponent {
   template: string;
   style?: IComponentStyle;
 }
+
+export type IVBMLComponent = IVBMLRawComponent | IVBMLTemplateComponent;
 
 export interface IVBML {
   props?: VBMLProps;
