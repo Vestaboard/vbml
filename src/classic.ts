@@ -986,112 +986,134 @@ enum VestaboardCharacter {
     Black
 }
 
-interface IValueObject<T> {
-    value: T;
-    get(): T;
-}
+//     override fun format(request: FormatRequest): FormatResponse {
+//         val lines = request.text.split("\n")
+//             .map { REGEX.findAll(it) }
+//             .map {
+//                 it
+//                     .map {
+//                         when {
+//                             (it.value.startsWith("{") && it.value.endsWith("}")) ->
+//                                 it
+//                                     .groupValues
+//                                     .get(1)
+//                                     .toInt()
+//                                     .let { VestaboardCharacterCode(it) }.asVestaboardCharacter()
+//                             else -> it
+//                                 .value
+//                                 .first()
+//                                 .asVestaboardCharacter()
+//                         }
+//                     }
+//                     .toList()
+//             }
+//             .toList()
+//             .map {
+//                 WrappedLine(
+//                     it.let {
+//                         val words = mutableListOf<WrappedWord>()
+//                         val word = mutableListOf<VestaboardCharacter>()
+//                         for (i in 0..(it.size - 1)) {
+//                             val char = it.get(i)
+//                             if (char == VestaboardCharacter.Blank) {
+//                                 words.add(WrappedWord(word.toList()))
+//                                 word.clear()
+//                             } else {
+//                                 word.add(it.get(i))
+//                             }
+//                         }
 
-class VestaboardCharacterSet implements IValueObject<string> {
-    constructor(public value: string) {}
-    get() {
-        return this.value;
-    }
-}
+//                         words.add(WrappedWord(word.toList()))
+//                         words
+//                     }
+//                 )
+//             }
 
-class VestaboardCharacterCode implements IValueObject<number> {
-    constructor(public value: number) {}
-    get() {
-        return this.value;
-    }
-}
+//         val contentAreaWidth = request.cols - request.extraHPadding
 
-const DEFAULT_CHARACTER_SET = new VestaboardCharacterSet("Flagship");
+//         fun makeLines(c: List<WrappedWord>): List<WrappedLine> {
+//             val words =
+//                 c.map { it.characters.chunked(contentAreaWidth) }.flatten().map { WrappedWord(it) }
 
-function getEmptyLayout(rows: number, columns: number) {
-    return Array(rows).fill(null).map(() => Array(columns).fill(VestaboardCharacter.Blank.asCharacterCode().get()));
-}
+//             if (words.requiredCharacters() <= contentAreaWidth) return listOf(WrappedLine(words))
 
-class Layout {
-    constructor(public characterSet: VestaboardCharacterSet = DEFAULT_CHARACTER_SET, public characters: number[][]) {}
-}
+//             for (index in 0..words.size) {
+//                 val sublist = words.subList(0, index)
 
-function asListOfListOfVestaboardCharacter(characters: number[][]) {
-    return characters.map(row => row.map(code => new VestaboardCharacterCode(code).asVestaboardCharacter()));
-}
+//                 if (sublist.requiredCharacters() > contentAreaWidth) {
+//                     return listOf(
+//                         WrappedLine(
+//                             words.subList(
+//                                 0,
+//                                 index - 1
+//                             )
+//                         )
+//                     ) + makeLines(words.subList(index - 1, words.size))
+//                 }
+//             }
 
-function intersperse<T>(list: T[], value: T) {
-    return list.flatMap(item => [item, value]).slice(0, -1);
-}
+//             return listOf()
+//         }
 
-function max(list: number[]) {
-    return list.sort((a, b) => a - b).pop() || null;
-}
+//         val wrapping = lines.map { makeLines(it.words) }.flatten()
 
-// rewrite the countCharacters function in typescript
-function countCharacters(text: string, columns?: number): number {
-    const columnLength = columns ?? 22;
-    let linePosition = 0;
-    let lineIndex = -1;
-    const lines = text.replace("{", "").replace("}", "").split("\n");
-    return lines.reduce((prev, line) => {
-        lineIndex++;
-        const words = line.split(" ");
-        let prevLinePosition = 0 + linePosition;
-        linePosition = 0;
-        const newLineAdjustment = lineIndex > 0 ? columnLength - prevLinePosition : 0;
-        return (
-            prev +
-            newLineAdjustment +
-            words.reduce((prevWords, word) => {
-                const space = linePosition > 0 ? 1 : 0;
-                prevLinePosition = 0 + linePosition;
-                const wordLength = word.length;
-                if (wordLength > columnLength) {
-                    const wordChunks = word.match(new RegExp(`.{1,${columnLength}}`, "g"));
-                    linePosition += wordChunks[0].length + space;
-                    return (
-                        prevWords +
-                        wordChunks.reduce((prevChunks, chunk) => {
-                            const wordChunkSpace = linePosition > 0 ? 1 : 0;
-                            const wordChuckPrevLinePosition = 0 + linePosition;
-                            linePosition += chunk.length + wordChunkSpace;
-                            if (linePosition > columnLength) {
-                                linePosition = chunk.length;
-                                return (
-                                    prevChunks +
-                                    (columnLength - wordChuckPrevLinePosition) +
-                                    chunk.length
-                                );
-                            } else {
-                                return prevChunks + chunk.length + wordChunkSpace;
-                            }
-                        }, 0)
-                    );
-                } else {
-                    linePosition += wordLength + space;
-                    if (linePosition > columnLength) {
-                        linePosition = wordLength;
-                        return (
-                            prevWords +
-                            (columnLength - prevLinePosition) +
-                            wordLength
-                        );
-                    } else {
-                        return prevWords + wordLength + space;
-                    }
-                }
-            }, 0)
-        );
-    }, 0);
-}
+//         val chars = getEmptyLayout(request.rows, request.cols)
 
-function format(text: string): string {
+//         val formatted = wrapping.map {
+//             WrappedLine(it.words.intersperse(WrappedWord(listOf(VestaboardCharacter.Blank))))
+//         }
+
+//         val numContentRows = formatted.size
+
+//         when (numContentRows) {
+//             0, 1, 2 -> {}
+//             3 -> {
+//                 if (request.extraHPadding == 0) {
+//                     return format(request.copy(extraHPadding = request.extraHPadding + 4))
+//                 }
+//             }
+//         }
+
+//         val maxNumContentColumns =
+//             formatted.map { it.words.map { it.characters.size }.sum() }.max() ?: 0
+
+//         val hPad = listOf((request.cols - maxNumContentColumns) / 2, 0).max() ?: 0
+//         val vPad = listOf((request.rows - numContentRows) / 2, 0).max() ?: 0
+
+//         val emptyRow =
+//             MutableList(request.cols) { VestaboardCharacter.Blank }.toList()
+//                 .map { WrappedWord(listOf(it)) }
+//         val emptyRowPaddings = MutableList(vPad) { WrappedLine(emptyRow) }.toList()
+//         val hPaddings =
+//             MutableList(hPad) { WrappedWord(listOf(VestaboardCharacter.Blank)) }.toList()
+
+//         val padded = emptyRowPaddings + formatted.map {
+//             WrappedLine(hPaddings + it.words + hPaddings)
+//         } + emptyRowPaddings
+
+//         padded.take(request.rows).forEachIndexed { row, line ->
+//             line.words.map { it.characters }.flatten().take(request.cols)
+//                 .forEachIndexed { column, character ->
+//                     chars[row][column] = character.asCharacterCode().get()
+//                 }
+//         }
+
+//         val layout = Layout(characters = chars.map { row -> row.toList() }.toList())
+//         val totalCharsAvailable = request.rows * request.cols
+//         val usedChars = countCharacters(request.text, request.cols)
+
+//         return FormatSuccessResponse(layout, totalCharsAvailable, usedChars)
+//     }
+// }
+
+
+export function classic(text: string): string {
     const lines = text.split("\n");
     const formattedLines = lines.map((line) => {
         const words = line.split(" ");
         const formattedWords = words.map((word) => {
             if (word.length > 22) {
-                const chunks = word.match(/.{1,22}/g);
+                const chunks = word.match(/.{0,71}/g);
                 return chunks.join(" ");
             } else {
                 return word;
