@@ -102,6 +102,32 @@ const VestaboardCharactersCodeMap = {
   X: VestaboardCharacter.X,
   Y: VestaboardCharacter.Y,
   Z: VestaboardCharacter.Z,
+  a: VestaboardCharacter.A,
+  b: VestaboardCharacter.B,
+  c: VestaboardCharacter.C,
+  d: VestaboardCharacter.D,
+  e: VestaboardCharacter.E,
+  f: VestaboardCharacter.F,
+  g: VestaboardCharacter.G,
+  h: VestaboardCharacter.H,
+  i: VestaboardCharacter.I,
+  j: VestaboardCharacter.J,
+  k: VestaboardCharacter.K,
+  l: VestaboardCharacter.L,
+  m: VestaboardCharacter.M,
+  n: VestaboardCharacter.N,
+  o: VestaboardCharacter.O,
+  p: VestaboardCharacter.P,
+  q: VestaboardCharacter.Q,
+  r: VestaboardCharacter.R,
+  s: VestaboardCharacter.S,
+  t: VestaboardCharacter.T,
+  u: VestaboardCharacter.U,
+  v: VestaboardCharacter.V,
+  w: VestaboardCharacter.W,
+  x: VestaboardCharacter.X,
+  y: VestaboardCharacter.Y,
+  z: VestaboardCharacter.Z,
   "1": VestaboardCharacter.One,
   "2": VestaboardCharacter.Two,
   "3": VestaboardCharacter.Three,
@@ -216,19 +242,17 @@ const VestaboardCharactersCodeMap = {
 export function classic(
   text: string,
   extraHPadding = 0,
-  recursions = 0
 ): Array<Array<number>> {
   const rowCount = 6;
   const columnCount = 22;
   const lines = text.split("\n");
-  const wordCharCodeRegex = /[a-zA-Z]+|{.\d}+|\d+|\s+/g;
+  const wordCharCodeRegex = /[a-zA-Z]+|\{.\d\}+|\d+|\s+|[^\w\s]/g;
 
   const chunkedLines = lines.map((line) => {
     const words = line.match(wordCharCodeRegex);
     return words;
   });
 
-  console.log(chunkedLines, "::chunkedLines");
   const vestaboardCharsLines = chunkedLines
     .map((line) => {
       return line.flatMap((word) => {
@@ -236,12 +260,11 @@ export function classic(
           return VestaboardCharactersCodeMap[word];
         }
         return word.split("").flatMap((char) => {
-          return VestaboardCharactersCodeMap[char.toUpperCase()];
+          return VestaboardCharactersCodeMap[char];
         });
       });
     })
     .map((chars) => {
-      //   console.log(chars, "::char");
       let words = [];
       let word = [];
       for (let i = 0; i < chars.length; i++) {
@@ -253,11 +276,10 @@ export function classic(
         }
       }
       words.push(word);
-
       return words;
     });
-  console.log(vestaboardCharsLines, "::vestaboardCharsLines");
   const contentAreaWidth = columnCount - extraHPadding;
+  console.log(vestaboardCharsLines, "::vestaboardCharsLines")
   function makeLines(wrappedWord) {
     const words = wrappedWord.flatMap((word) =>
       word.reduce((acc, char, i) => {
@@ -285,6 +307,8 @@ export function classic(
         sublist.reduce((sum, word) => sum + word.length, 0) + words.length - 1 >
         contentAreaWidth
       ) {
+        // split big word
+
         return [
           words.slice(0, index - 1),
           ...makeLines(words.slice(index - 1)),
@@ -295,28 +319,26 @@ export function classic(
   }
 
   const wrapping = vestaboardCharsLines.flatMap((line) => makeLines(line));
-  console.log(wrapping, recursions, "::wrapping");
-
+  console.log(wrapping, "::wrapping");
   const formatted = wrapping.map((line) => {
-    // line.words.flatMap((word) => [word, [0]]).slice(0, -1)
     return line.flatMap((word) => [word, [0]]).slice(0, -1);
   });
   const numContentRows = formatted.length;
-  if (numContentRows === 3 && extraHPadding === 0) {
-    // redo all the work, add padding
-    return classic(text, extraHPadding + 4, recursions + 1);
-  }
-
+  // not sure why this recursion would be here
+  //   if (numContentRows === 3 && extraHPadding === 0) {
+  //     // redo all the work, add padding
+  //     return classic(text, extraHPadding + 4, recursions + 1);
+  //   }
   const maxNumContentColumns = Math.max(
     ...formatted.map((line) => line.reduce((sum, word) => sum + word.length, 0))
   );
 
   const hPad = Math.max(
-    Math.floor((columnCount - maxNumContentColumns) / 2),
+    Math.floor((columnCount - (maxNumContentColumns + 1)) / 2),
     0
   );
+  console.log(hPad, "::hPad")
   const vPad = Math.max(Math.floor((rowCount - numContentRows) / 2), 0);
-
   const emptyRow = new Array(columnCount).fill(0);
   const emptyRowPaddings = new Array(vPad).fill(0).map(() => emptyRow);
   const hPaddings = new Array(hPad).fill([0]);
@@ -327,20 +349,25 @@ export function classic(
     ...emptyRowPaddings,
   ];
 
-  let emptyBoard = [emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow];
+  const emptyBoard = [
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+  ];
 
-  padded.slice(0, rowCount).forEach((line, rowIndex) => {
-    line
+  const codes = padded.slice(0, rowCount).map((line, rowIndex) => {
+    return line
       .flatMap((word) => word)
       .slice(0, columnCount)
-      .forEach((character, columnIndex) => {
-        // console.log(character, rowIndex, columnIndex, "::character");
-        emptyBoard[rowIndex][columnIndex] = character;
-      });
+      .map((charCode) => charCode);
   });
 
-  //   console.log(emptyBoard, "::finalBoard");
+  const finalBoard = emptyBoard.map((line, rowIndex) => {
+    return line.map((_, columnIndex) => codes?.[rowIndex]?.[columnIndex] || 0);
+  });
 
-  //   console.log(lineCount)
-  return emptyBoard;
+  return finalBoard;
 }
