@@ -213,7 +213,11 @@ const VestaboardCharactersCodeMap = {
 };
 
 // KMM format
-export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
+export function classic(
+  text: string,
+  extraHPadding = 0,
+  recursions = 0
+): Array<Array<number>> {
   const rowCount = 6;
   const columnCount = 22;
   const lines = text.split("\n");
@@ -223,6 +227,7 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     const words = line.match(wordCharCodeRegex);
     return words;
   });
+
   console.log(chunkedLines, "::chunkedLines");
   const vestaboardCharsLines = chunkedLines
     .map((line) => {
@@ -247,12 +252,11 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
           word.push(chars[i]);
         }
       }
-      if (words.length === 0) {
-        words.push(word);
-      }
+      words.push(word);
+
       return words;
     });
-
+  console.log(vestaboardCharsLines, "::vestaboardCharsLines");
   const contentAreaWidth = columnCount - extraHPadding;
   function makeLines(wrappedWord) {
     const words = wrappedWord.flatMap((word) =>
@@ -291,16 +295,16 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   }
 
   const wrapping = vestaboardCharsLines.flatMap((line) => makeLines(line));
+  console.log(wrapping, recursions, "::wrapping");
 
   const formatted = wrapping.map((line) => {
     // line.words.flatMap((word) => [word, [0]]).slice(0, -1)
-    console.log(line, ":::line");
     return line.flatMap((word) => [word, [0]]).slice(0, -1);
   });
   const numContentRows = formatted.length;
   if (numContentRows === 3 && extraHPadding === 0) {
     // redo all the work, add padding
-    return classic(text, extraHPadding + 4);
+    return classic(text, extraHPadding + 4, recursions + 1);
   }
 
   const maxNumContentColumns = Math.max(
@@ -314,9 +318,7 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   const vPad = Math.max(Math.floor((rowCount - numContentRows) / 2), 0);
 
   const emptyRow = new Array(columnCount).fill(0);
-  const emptyRowPaddings = new Array(vPad)
-    .fill(0)
-    .map(() => emptyRow);
+  const emptyRowPaddings = new Array(vPad).fill(0).map(() => emptyRow);
   const hPaddings = new Array(hPad).fill([0]);
 
   const padded = [
@@ -324,8 +326,6 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     ...formatted.map((line) => [...hPaddings, ...line, ...hPaddings]),
     ...emptyRowPaddings,
   ];
-
-  console.log(padded, "::padded");
 
   let emptyBoard = [emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow];
 
@@ -339,7 +339,7 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
       });
   });
 
-//   console.log(emptyBoard, "::finalBoard");
+  //   console.log(emptyBoard, "::finalBoard");
 
   //   console.log(lineCount)
   return emptyBoard;
