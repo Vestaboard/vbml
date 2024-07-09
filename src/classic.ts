@@ -138,6 +138,69 @@ const VestaboardCharactersCodeMap = {
   "?": VestaboardCharacter.QuestionMark,
   // " ": VestaboardCharacter.Missing6,
   "°": VestaboardCharacter.DegreeSign,
+  "{0}": VestaboardCharacter.Blank,
+  "{1}": VestaboardCharacter.A,
+  "{2}": VestaboardCharacter.B,
+  "{3}": VestaboardCharacter.C,
+  "{4}": VestaboardCharacter.D,
+  "{5}": VestaboardCharacter.E,
+  "{6}": VestaboardCharacter.F,
+  "{7}": VestaboardCharacter.G,
+  "{8}": VestaboardCharacter.H,
+  "{9}": VestaboardCharacter.I,
+  "{10}": VestaboardCharacter.J,
+  "{11}": VestaboardCharacter.K,
+  "{12}": VestaboardCharacter.L,
+  "{13}": VestaboardCharacter.M,
+  "{14}": VestaboardCharacter.N,
+  "{15}": VestaboardCharacter.O,
+  "{16}": VestaboardCharacter.P,
+  "{17}": VestaboardCharacter.Q,
+  "{18}": VestaboardCharacter.R,
+  "{19}": VestaboardCharacter.S,
+  "{20}": VestaboardCharacter.T,
+  "{21}": VestaboardCharacter.U,
+  "{22}": VestaboardCharacter.V,
+  "{23}": VestaboardCharacter.W,
+  "{24}": VestaboardCharacter.X,
+  "{25}": VestaboardCharacter.Y,
+  "{26}": VestaboardCharacter.Z,
+  "{27}": VestaboardCharacter.One,
+  "{28}": VestaboardCharacter.Two,
+  "{29}": VestaboardCharacter.Three,
+  "{30}": VestaboardCharacter.Four,
+  "{31}": VestaboardCharacter.Five,
+  "{32}": VestaboardCharacter.Six,
+  "{33}": VestaboardCharacter.Seven,
+  "{34}": VestaboardCharacter.Eight,
+  "{35}": VestaboardCharacter.Nine,
+  "{36}": VestaboardCharacter.Zero,
+  "{37}": VestaboardCharacter.ExclamationMark,
+  "{38}": VestaboardCharacter.AtSign,
+  "{39}": VestaboardCharacter.PoundSign,
+  "{40}": VestaboardCharacter.DollarSign,
+  "{41}": VestaboardCharacter.LeftParen,
+  "{42}": VestaboardCharacter.RightParen,
+  "{43}": VestaboardCharacter.Hyphen,
+  "{44}": VestaboardCharacter.Missing,
+  "{45}": VestaboardCharacter.Missing2,
+  "{46}": VestaboardCharacter.PlusSign,
+  "{47}": VestaboardCharacter.Ampersand,
+  "{48}": VestaboardCharacter.EqualsSign,
+  "{49}": VestaboardCharacter.Semicolon,
+  "{50}": VestaboardCharacter.Colon,
+  "{51}": VestaboardCharacter.Missing3,
+  "{52}": VestaboardCharacter.SingleQuote,
+  "{53}": VestaboardCharacter.DoubleQuote,
+  "{54}": VestaboardCharacter.PercentSign,
+  "{55}": VestaboardCharacter.Comma,
+  "{56}": VestaboardCharacter.Period,
+  "{57}": VestaboardCharacter.Missing4,
+  "{58}": VestaboardCharacter.Missing5,
+  "{59}": VestaboardCharacter.Slash,
+  "{60}": VestaboardCharacter.QuestionMark,
+  "{61}": VestaboardCharacter.Missing6,
+  "{62}": VestaboardCharacter.DegreeSign,
   "{63}": VestaboardCharacter.PoppyRed,
   "{64}": VestaboardCharacter.Orange,
   "{65}": VestaboardCharacter.Yellow,
@@ -150,7 +213,7 @@ const VestaboardCharactersCodeMap = {
 };
 
 // KMM format
-export function classic(text: string): string {
+export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   const rowCount = 6;
   const columnCount = 22;
   const lines = text.split("\n");
@@ -161,59 +224,123 @@ export function classic(text: string): string {
     return words;
   });
   console.log(chunkedLines, "::chunkedLines");
+  const vestaboardCharsLines = chunkedLines
+    .map((line) => {
+      return line.flatMap((word) => {
+        if (word.includes("{") && word.includes("}")) {
+          return VestaboardCharactersCodeMap[word];
+        }
+        return word.split("").flatMap((char) => {
+          return VestaboardCharactersCodeMap[char.toUpperCase()];
+        });
+      });
+    })
+    .map((chars) => {
+      //   console.log(chars, "::char");
+      let words = [];
+      let word = [];
+      for (let i = 0; i < chars.length; i++) {
+        if (chars[i] === 0) {
+          words.push(word);
+          word = [];
+        } else {
+          word.push(chars[i]);
+        }
+      }
+      if (words.length === 0) {
+        words.push(word);
+      }
+      return words;
+    });
 
-  // break up lines/words that are too long into more lines
-  const lineCount = chunkedLines.reduce(
-    (acc, line) => acc + Math.ceil(line.length / columnCount),
+  const contentAreaWidth = columnCount - extraHPadding;
+  function makeLines(wrappedWord) {
+    const words = wrappedWord.flatMap((word) =>
+      word.reduce((acc, char, i) => {
+        const index = Math.floor(i / contentAreaWidth);
+        if (!acc[index]) acc[index] = [];
+        acc[index].push(char);
+        return acc;
+      }, [])
+    );
+    if (
+      words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
+      contentAreaWidth
+    )
+      return [words];
+
+    if (
+      words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
+      contentAreaWidth
+    )
+      return [words];
+
+    for (let index = 0; index <= words.length; index++) {
+      const sublist = words.slice(0, index);
+      if (
+        sublist.reduce((sum, word) => sum + word.length, 0) + words.length - 1 >
+        contentAreaWidth
+      ) {
+        return [
+          words.slice(0, index - 1),
+          ...makeLines(words.slice(index - 1)),
+        ];
+      }
+    }
+    return [];
+  }
+
+  const wrapping = vestaboardCharsLines.flatMap((line) => makeLines(line));
+
+  const formatted = wrapping.map((line) => {
+    // line.words.flatMap((word) => [word, [0]]).slice(0, -1)
+    console.log(line, ":::line");
+    return line.flatMap((word) => [word, [0]]).slice(0, -1);
+  });
+  const numContentRows = formatted.length;
+  if (numContentRows === 3 && extraHPadding === 0) {
+    // redo all the work, add padding
+    return classic(text, extraHPadding + 4);
+  }
+
+  const maxNumContentColumns = Math.max(
+    ...formatted.map((line) => line.reduce((sum, word) => sum + word.length, 0))
+  );
+
+  const hPad = Math.max(
+    Math.floor((columnCount - maxNumContentColumns) / 2),
     0
   );
-  //   const countNestedLines = (line: Array<string>) => {
-  //     const lineLength = line.reduce((acc, word) => {
-  //       if ((word.includes("{") && word.includes("}")) || word === " ") {
-  //         return acc + 1;
-  //       }
-  //       return acc + word.length;
-  //     }, 0);
+  const vPad = Math.max(Math.floor((rowCount - numContentRows) / 2), 0);
 
-  //     return Math.ceil(lineLength / columnCount);
-  //   };
+  const emptyRow = new Array(columnCount).fill(0);
+  const emptyRowPaddings = new Array(vPad)
+    .fill(0)
+    .map(() => emptyRow);
+  const hPaddings = new Array(hPad).fill([0]);
 
-  const annotateWordLength = (line: Array<string>) => {
-    const annotatedWords = line.reduce((acc, word) => {
-      if ((word.includes("{") && word.includes("}")) || word === " ") {
-        return [word, 1];
-      }
-      return [word, word.length];
-    }, []);
-    const lineLength = annotatedWords.reduce((acc, word) => acc + word[1], 0);
-    return {
-      annotatedWords,
-      lineLength,
-      nestedLineCount: Math.ceil(lineLength / columnCount),
-    };
-  };
+  const padded = [
+    ...emptyRowPaddings,
+    ...formatted.map((line) => [...hPaddings, ...line, ...hPaddings]),
+    ...emptyRowPaddings,
+  ];
 
-  const formattedLines = chunkedLines.reduce((acc, line) => {
-    const { annotatedWords, nestedLineCount } = annotateWordLength(line);
-    console.log(nestedLineCount, "::nestedLineCount");
-    if (nestedLineCount > 1) {
-      const newLines = Array(nestedLineCount).fill([]);
-      let currentLineIndex = 0;
+  console.log(padded, "::padded");
 
-      return acc.concat(newLines);
-    }
-    return acc.concat(line);
-  }, []);
+  let emptyBoard = [emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow];
 
-  console.log(formattedLines, "::formattedLines");
+  padded.slice(0, rowCount).forEach((line, rowIndex) => {
+    line
+      .flatMap((word) => word)
+      .slice(0, columnCount)
+      .forEach((character, columnIndex) => {
+        // console.log(character, rowIndex, columnIndex, "::character");
+        emptyBoard[rowIndex][columnIndex] = character;
+      });
+  });
 
-  const blankBoard = Array(rowCount).fill(Array(columnCount).fill(" "));
-  //   const filledBoard = blankBoard.map((row, rowIndex) => {
-  //     return row.map((_, columnIndex) => {
-
-  //     });
-  //   })
+//   console.log(emptyBoard, "::finalBoard");
 
   //   console.log(lineCount)
-  return formattedLines.join("\n");
+  return emptyBoard;
 }
