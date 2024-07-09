@@ -1,3 +1,4 @@
+// legacy formatter we base the classic logic on
 package com.vestaboard.kmm
 
 data class FormatRequest(

@@ -324,7 +324,7 @@ export function classic(
     return line.flatMap((word) => [word, [0]]).slice(0, -1);
   });
   const numContentRows = formatted.length;
-  // not sure why this recursion would be here
+  // not sure why this recursion would be here, legacy formatter includes it
   //   if (numContentRows === 3 && extraHPadding === 0) {
   //     // redo all the work, add padding
   //     return classic(text, extraHPadding + 4, recursions + 1);
