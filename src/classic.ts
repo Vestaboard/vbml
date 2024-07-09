@@ -279,7 +279,6 @@ export function classic(
       return words;
     });
   const contentAreaWidth = columnCount - extraHPadding;
-  console.log(vestaboardCharsLines, "::vestaboardCharsLines")
   function makeLines(wrappedWord) {
     const words = wrappedWord.flatMap((word) =>
       word.reduce((acc, char, i) => {
@@ -319,7 +318,6 @@ export function classic(
   }
 
   const wrapping = vestaboardCharsLines.flatMap((line) => makeLines(line));
-  console.log(wrapping, "::wrapping");
   const formatted = wrapping.map((line) => {
     return line.flatMap((word) => [word, [0]]).slice(0, -1);
   });
@@ -337,7 +335,6 @@ export function classic(
     Math.floor((columnCount - (maxNumContentColumns + 1)) / 2),
     0
   );
-  console.log(hPad, "::hPad")
   const vPad = Math.max(Math.floor((rowCount - numContentRows) / 2), 0);
   const emptyRow = new Array(columnCount).fill(0);
   const emptyRowPaddings = new Array(vPad).fill(0).map(() => emptyRow);
