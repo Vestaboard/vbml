@@ -288,17 +288,32 @@ export function classic(
         return acc;
       }, [])
     );
-    if (
-      words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
-      contentAreaWidth
-    )
-      return [words];
+
+    console.log(words, ':::words')
 
     if (
       words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
       contentAreaWidth
     )
       return [words];
+
+              // TODO: split big word
+
+      // kotlin
+    //   for (index in 0..words.size) {
+    //     val sublist = words.subList(0, index)
+
+    //     if (sublist.requiredCharacters() > contentAreaWidth) {
+    //         return listOf(
+    //             WrappedLine(
+    //                 words.subList(
+    //                     0,
+    //                     index - 1
+    //                 )
+    //             )
+    //         ) + makeLines(words.subList(index - 1, words.size))
+    //     }
+    // }
 
     for (let index = 0; index <= words.length; index++) {
       const sublist = words.slice(0, index);
@@ -306,8 +321,7 @@ export function classic(
         sublist.reduce((sum, word) => sum + word.length, 0) + words.length - 1 >
         contentAreaWidth
       ) {
-        // split big word
-
+        console.log(index, words, ':::index')
         return [
           words.slice(0, index - 1),
           ...makeLines(words.slice(index - 1)),
