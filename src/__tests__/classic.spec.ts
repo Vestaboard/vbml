@@ -43,8 +43,6 @@ describe("Classic", () => {
   });
 
   it("Should convert string to classic board", () => {
-    // should be 3 lines
-    // 57 characters
     const string = "reallylongwordthatismorethantwentytwocharcters";
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -64,8 +62,6 @@ describe("Classic", () => {
   });
 
   it("Should convert string to classic board", () => {
-    // should be 3 lines
-    // 57 characters
     const string = "reallylongwordthatismorethan22charcters";
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -85,8 +81,6 @@ describe("Classic", () => {
   });
 
   it("Should convert string to classic board", () => {
-    // should be 3 lines
-    // 57 characters
     const string = `hello
     world`;
     const classicBoard = classic(string);
@@ -101,15 +95,11 @@ describe("Classic", () => {
   });
 
   it("Should convert string to classic board", () => {
-    // should be 3 lines
-    // 57 characters
     const string = `hello\n\nworld`;
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,8,5,12,12,15,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,23,15,18,12,4,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]);
   });
   it("Should convert string to classic board", () => {
-    // should be 3 lines
-    // 57 characters
     const string = ``;
     const classicBoard = classic(string);
     const emptyRow = new Array(22).fill(0);
@@ -121,6 +111,49 @@ describe("Classic", () => {
       emptyRow,
       emptyRow,
       emptyRow,
+    ]);
+  });
+
+  it("Should convert string to classic board", () => {
+    const string = `{1}`;
+    const classicBoard = classic(string);
+    expect(classicBoard).toEqual(   [
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 1, 0, 0, 0,
+        0, 0, 0,  0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ]
     ]);
   });
 });
