@@ -6,6 +6,7 @@ import { IVBML } from "./types";
 import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
 import { copyCharacterCodes } from "./copyCharacterCodes";
+import { classic } from "./classic";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -30,6 +31,7 @@ export const vbml = {
   characterCodesToString,
   characterCodesToAscii,
   copyCharacterCodes,
+  classic: (input: string)  => classic(input),
 };
 
 export * from "./types";
