@@ -469,4 +469,12 @@ describe("Parse Component", () => {
       [3, 4],
     ]);
   });
+
+  it("Should convert emoji characters to character codes", () => {
+    const input: IVBMLComponent = {
+      template: "🟥🟧🟨🟩🟦🟪⬜⬛",
+    };
+    const result = parseComponent(1, 8)(input);
+    expect(result).toEqual([[63, 64, 65, 66, 67, 68, 69, 70]]);
+  });
 });

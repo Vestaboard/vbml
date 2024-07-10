@@ -9,6 +9,8 @@ import { parseProps } from "./parseProps";
 import { splitWords } from "./splitWords";
 import pipe from "lodash/fp/pipe";
 import map from "lodash/fp/map";
+import { emojisToCharacterCodes } from "./emojisToCharacterCodes";
+
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
   (component: IVBMLComponent) => {
@@ -18,7 +20,10 @@ export const parseComponent =
     const height = component?.style?.height || defaultHeight;
     const emptyComponent = createEmptyBoard(height, width);
 
+    const template = "template" in component ? component.template : "";
+
     return pipe(
+      emojisToCharacterCodes,
       parseProps(props || {}),
       splitWords(width),
       getLinesFromWords(width),
@@ -26,7 +31,7 @@ export const parseComponent =
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
       renderComponent(emptyComponent)
-    )("template" in component ? component.template : "") as number[][];
+    )(template) as number[][];
   };
 
 export const parseAbsoluteComponent =
