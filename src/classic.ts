@@ -286,8 +286,6 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
       }, [])
     );
 
-    console.log(words, ":::words");
-
     if (
       words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
       contentAreaWidth
