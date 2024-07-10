@@ -261,13 +261,13 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   }
 
   const lines = text.split("\n");
-  const wordCharCodeRegex = /[a-zA-Z]+|\{.\d\}+|\d+|\s+|[^\w\s]/g;
+  const wordCharCodeRegex = /[a-zA-Z]+|\{.\d\}+|\{\d\}+|\d+|\s+|[^\w\s]/g;
 
   const chunkedLines = lines.map((line) => {
     const words = line.match(wordCharCodeRegex);
     return words;
   });
-
+  
   const vestaboardCharsLines = chunkedLines
     .map((line) => {
       return line?.flatMap((word) => {
