@@ -239,10 +239,7 @@ const VestaboardCharactersCodeMap = {
 };
 
 // KMM format
-export function classic(
-  text: string,
-  extraHPadding = 0,
-): Array<Array<number>> {
+export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   const rowCount = 6;
   const columnCount = 22;
   const lines = text.split("\n");
@@ -289,7 +286,7 @@ export function classic(
       }, [])
     );
 
-    console.log(words, ':::words')
+    console.log(words, ":::words");
 
     if (
       words.reduce((sum, word) => sum + word.length, 0) + words.length - 1 <=
@@ -297,34 +294,19 @@ export function classic(
     )
       return [words];
 
-              // TODO: split big word
-
-      // kotlin
-    //   for (index in 0..words.size) {
-    //     val sublist = words.subList(0, index)
-
-    //     if (sublist.requiredCharacters() > contentAreaWidth) {
-    //         return listOf(
-    //             WrappedLine(
-    //                 words.subList(
-    //                     0,
-    //                     index - 1
-    //                 )
-    //             )
-    //         ) + makeLines(words.subList(index - 1, words.size))
-    //     }
-    // }
-
     for (let index = 0; index <= words.length; index++) {
       const sublist = words.slice(0, index);
-      if (
-        sublist.reduce((sum, word) => sum + word.length, 0) + words.length - 1 >
-        contentAreaWidth
-      ) {
-        console.log(index, words, ':::index')
+      const requiredCharacters =
+        sublist
+          .map((word) => word.length)
+          .reduce((sum, count) => sum + count, 0) +
+        sublist.length -
+        1;
+
+      if (requiredCharacters > contentAreaWidth) {
         return [
           words.slice(0, index - 1),
-          ...makeLines(words.slice(index - 1)),
+          ...makeLines(words.slice(index - 1, words.length)),
         ];
       }
     }
@@ -337,10 +319,11 @@ export function classic(
   });
   const numContentRows = formatted.length;
   // not sure why this recursion would be here, legacy formatter includes it
-  //   if (numContentRows === 3 && extraHPadding === 0) {
-  //     // redo all the work, add padding
-  //     return classic(text, extraHPadding + 4, recursions + 1);
-  //   }
+  if (numContentRows === 3 && extraHPadding === 0) {
+    // redo all the work, add padding
+    return classic(text, extraHPadding + 4);
+  }
+
   const maxNumContentColumns = Math.max(
     ...formatted.map((line) => line.reduce((sum, word) => sum + word.length, 0))
   );

@@ -39,16 +39,19 @@ describe("Classic", () => {
     const string =
       "Hello, World{37} 37 {65}66{65} 89{65} {65}20 hello world whatsup";
     const classicBoard = classic(string, 0);
+    console.log(classicBoard, mockBoard)
     expect(classicBoard).toEqual(mockBoard);
   });
 
-  // it("Should convert string to classic board", () => {
-  //   // should be 3 lines
-  //   // 57 characters
-  //   const string = "reallylongwordthatismorethantwentytwocharcters";
-  //   const classicBoard = classic(string);
-  //   expect(classicBoard).toEqual([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,18,5,1,12,12,25,12,15,14,7,23,15,18,4,20,8,1,20,0,0,0],[0,9,19,13,15,18,5,20,8,1,14,20,23,5,14,20,25,20,23,0,0,0],[0,15,3,8,1,18,3,20,5,18,19,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]);
-  // });
+
+
+  it("Should convert string to classic board", () => {
+    // should be 3 lines
+    // 57 characters
+    const string = "reallylongwordthatismorethantwentytwocharcters";
+    const classicBoard = classic(string);
+    expect(classicBoard).toEqual([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,18,5,1,12,12,25,12,15,14,7,23,15,18,4,20,8,1,20,0,0,0],[0,9,19,13,15,18,5,20,8,1,14,20,23,5,14,20,25,20,23,0,0,0],[0,15,3,8,1,18,3,20,5,18,19,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]);
+  });
 
   // it("Should convert string to classic board", () => {
   //   // should be 3 lines
