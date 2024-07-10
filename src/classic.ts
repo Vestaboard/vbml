@@ -241,11 +241,25 @@ const VestaboardCharactersCodeMap = {
   "{70}": VestaboardCharacter.Black,
   "{71}": VestaboardCharacter.Filled,
 };
-
+const rowCount = 6;
+const columnCount = 22;
 // KMM format
 export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
-  const rowCount = 6;
-  const columnCount = 22;
+  const emptyRow = new Array(columnCount).fill(0);
+
+  const emptyBoard = [
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    emptyRow,
+  ];
+
+  if (!text) {
+    return emptyBoard;
+  }
+
   const lines = text.split("\n");
   const wordCharCodeRegex = /[a-zA-Z]+|\{.\d\}+|\d+|\s+|[^\w\s]/g;
 
@@ -256,7 +270,7 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
 
   const vestaboardCharsLines = chunkedLines
     .map((line) => {
-      return line.flatMap((word) => {
+      return line?.flatMap((word) => {
         if (word.includes("{") && word.includes("}")) {
           return VestaboardCharactersCodeMap[word];
         }
@@ -268,12 +282,12 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     .map((chars) => {
       let words = [];
       let word = [];
-      for (let i = 0; i < chars.length; i++) {
-        if (chars[i] === 0) {
+      for (let i = 0; i < chars?.length; i++) {
+        if (chars?.[i] === 0) {
           words.push(word);
           word = [];
         } else {
-          word.push(chars[i]);
+          word.push(chars?.[i]);
         }
       }
       words.push(word);
@@ -334,7 +348,6 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     0
   );
   const vPad = Math.max(Math.floor((rowCount - numContentRows) / 2), 0);
-  const emptyRow = new Array(columnCount).fill(0);
   const emptyRowPaddings = new Array(vPad).fill(0).map(() => emptyRow);
   const hPaddings = new Array(hPad).fill([0]);
 
@@ -342,15 +355,6 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     ...emptyRowPaddings,
     ...formatted.map((line) => [...hPaddings, ...line, ...hPaddings]),
     ...emptyRowPaddings,
-  ];
-
-  const emptyBoard = [
-    emptyRow,
-    emptyRow,
-    emptyRow,
-    emptyRow,
-    emptyRow,
-    emptyRow,
   ];
 
   const codes = padded.slice(0, rowCount).map((line, rowIndex) => {
