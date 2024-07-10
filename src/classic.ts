@@ -83,7 +83,6 @@ const VestaboardCharactersCodeMap = {
   A: VestaboardCharacter.A,
   B: VestaboardCharacter.B,
   C: VestaboardCharacter.C,
-  //do the rest
   D: VestaboardCharacter.D,
   E: VestaboardCharacter.E,
   F: VestaboardCharacter.F,
@@ -321,7 +320,6 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
     return line.flatMap((word) => [word, [0]]).slice(0, -1);
   });
   const numContentRows = formatted.length;
-  // not sure why this recursion would be here, legacy formatter includes it
   if (numContentRows === 3 && extraHPadding === 0) {
     // redo all the work, add padding
     return classic(text, extraHPadding + 4);
