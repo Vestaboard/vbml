@@ -3,79 +3,80 @@
 // ░░▀░░▀▀▀░▀▀▀░░▀░░▀░▀░▀▀░░▀▀▀░▀░▀░▀░▀░▀▀░░░░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 // A direct translation of formatter.kt to TypeScript from the KMM project
 
+// https://docs.vestaboard.com/docs/characterCodes
 enum VestaboardCharacter {
-  Blank,
-  A,
-  B,
-  C,
-  D,
-  E,
-  F,
-  G,
-  H,
-  I,
-  J,
-  K,
-  L,
-  M,
-  N,
-  O,
-  P,
-  Q,
-  R,
-  S,
-  T,
-  U,
-  V,
-  W,
-  X,
-  Y,
-  Z,
-  One,
-  Two,
-  Three,
-  Four,
-  Five,
-  Six,
-  Seven,
-  Eight,
-  Nine,
-  Zero,
-  ExclamationMark,
-  AtSign,
-  PoundSign,
-  DollarSign,
-  LeftParen,
-  RightParen,
-  Hyphen,
-  Missing,
-  Missing2,
-  PlusSign,
-  Ampersand,
-  EqualsSign,
-  Semicolon,
-  Colon,
-  Missing3,
-  SingleQuote,
-  DoubleQuote,
-  PercentSign,
-  Comma,
-  Period,
-  Missing4,
-  Missing5,
-  Slash,
-  QuestionMark,
-  Missing6,
-  DegreeSign,
-  PoppyRed,
-  Orange,
-  Yellow,
-  Green,
-  ParisBlue,
-  Violet,
-  White,
-  Black,
-  Filled,
+  Blank, // 0
+  A, // 1
+  B, // 2
+  C, // 3
+  D, // 4
+  E, // 5
+  F, // 6
+  G, // 7
+  H, // 8
+  I, // 9
+  J, // 10
+  K, // 11
+  L, // 12
+  M, // 13
+  N, // 14
+  O, // 15
+  P, // 16
+  Q, // 17
+  R, // 18
+  S, // 19
+  T, // 20
+  U, // 21
+  V, // 22
+  W, // 23
+  X, // 24
+  Y, // 25
+  Z, // 26
+  One, // 27
+  Two, // 28
+  Three, // 29
+  Four, // 30
+  Five, // 31
+  Six, // 32
+  Seven, // 33
+  Eight, // 34
+  Nine, // 35
+  Zero, // 36
+  ExclamationMark, // 37
+  AtSign, // 38
+  PoundSign, // 39
+  DollarSign, // 40
+  LeftParen, // 41
+  RightParen, // 42
+  Missing,  // 43 missing
+  Hyphen, // 44
+  Missing1, // 45 missing
+  PlusSign, // 46
+  Ampersand, // 47
+  EqualsSign, // 48 
+  Semicolon, // 49
+  Colon, // 50
+  Missing3, // 51 missing
+  SingleQuote, // 52
+  DoubleQuote, // 53
+  PercentSign, // 54
+  Comma, // 55
+  Period, // 56
+  Missing4, // 57
+  Missing5, // 58
+  Slash, // 59
+  QuestionMark, // 60
+  Missing6, // 61
+  DegreeSign, // 62
+  PoppyRed, // 63
+  Orange, // 64
+  Yellow, // 65
+  Green, // 66
+  ParisBlue, // 67
+  Violet, // 68
+  White, // 69
+  Black, // 70
+  Filled, // 71
 }
 
 const VestaboardCharactersCodeMap = {
@@ -211,9 +212,9 @@ const VestaboardCharactersCodeMap = {
   "{40}": VestaboardCharacter.DollarSign,
   "{41}": VestaboardCharacter.LeftParen,
   "{42}": VestaboardCharacter.RightParen,
-  "{43}": VestaboardCharacter.Hyphen,
-  "{44}": VestaboardCharacter.Missing,
-  "{45}": VestaboardCharacter.Missing2,
+  "{43}": VestaboardCharacter.Missing,
+  "{44}": VestaboardCharacter.Hyphen,
+  "{45}": VestaboardCharacter.Missing1,
   "{46}": VestaboardCharacter.PlusSign,
   "{47}": VestaboardCharacter.Ampersand,
   "{48}": VestaboardCharacter.EqualsSign,
