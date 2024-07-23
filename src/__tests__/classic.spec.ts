@@ -18,7 +18,7 @@ describe("Classic", () => {
     expect(classicBoard).toEqual(mockBoard);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert embedded char code string to classic board", () => {
     const mockBoard = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [
@@ -42,7 +42,7 @@ describe("Classic", () => {
     expect(classicBoard).toEqual(mockBoard);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert longer string to classic board", () => {
     const string = "reallylongwordthatismorethantwentytwocharcters";
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -61,7 +61,7 @@ describe("Classic", () => {
     ]);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert long string with digits to classic board", () => {
     const string = "reallylongwordthatismorethan22charcters";
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -80,7 +80,7 @@ describe("Classic", () => {
     ]);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert single new line string to classic board", () => {
     const string = `hello
     world`;
     const classicBoard = classic(string);
@@ -94,7 +94,7 @@ describe("Classic", () => {
     ]);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert double newline string to classic board", () => {
     const string = `hello\n\nworld`;
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -121,7 +121,7 @@ describe("Classic", () => {
     ]);
   });
 
-  it("Should convert string to classic board", () => {
+  it("Should convert char code 1 string to classic board with `a`", () => {
     const string = `{1}`;
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -133,7 +133,7 @@ describe("Classic", () => {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]);
   });
-  it("Should convert string to classic board", () => {
+  it("Should convert hyphen string to classic board", () => {
     const string = `- -hyphen`;
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
@@ -145,4 +145,49 @@ describe("Classic", () => {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]);
   });
+
+  it.only("Should convert special charachter string to classic board", () => {
+    const string = `!@#$%^&*()_+åß∂ƒ©˙∆˚¬µ√ç∫˜µ≤≥÷{}`;
+    const classicBoard = classic(string);
+    expect(classicBoard).toEqual([
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        37, 38, 39, 40, 54, 0, 47,
+         0, 41, 42, 46,  1, 0,  0,
+         6,  0,  0,  0,  0, 0,  0,
+         0
+      ],
+      [
+        3, 0, 0, 0, 0, 0, 0,
+        41, 42, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ],
+      [
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0,
+        0
+      ]
+    ]);
+  });
+
+    
 });
