@@ -146,7 +146,7 @@ describe("Classic", () => {
     ]);
   });
 
-  it.only("Should convert special charachter string to classic board", () => {
+  it("Should convert special charachter string to classic board", () => {
     const string = `!@#$%^&*()_+åß∂ƒ©˙∆˚¬µ√ç∫˜µ≤≥÷{}`;
     const classicBoard = classic(string);
     expect(classicBoard).toEqual([
