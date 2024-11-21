@@ -23,7 +23,7 @@ const getCharCodeForDay = (day: string): number => {
 export interface VBMLDays {
   [key: string]: 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71;
 }
-export const showCalendar = (
+export const makeCalendar = (
   calendarMonth: string,
   calendarYear: string,
   vbmlDays: VBMLDays,
