@@ -20,13 +20,13 @@ const getCharCodeForDay = (day: string): number => {
       return 0;
   }
 };
-interface VBMLDay {
+export interface VBMLDays {
   [key: string]: 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71;
 }
 export const showCalendar = (
   calendarMonth: string,
   calendarYear: string,
-  vbmlDays: Array<VBMLDay>,
+  vbmlDays: VBMLDays,
   defaultDayColor?: 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71,
   hideSMTWTFS?: boolean,
   hideDates?: boolean,
@@ -174,9 +174,10 @@ export const showCalendar = (
     fifthRow,
   ];
   // fill in the days
-  vbmlDays.forEach((vbmlDay, index) => {
-    const day = parseInt(`${Object.keys(vbmlDay)[index]}`);
-    const color = Object.values(vbmlDay)[index];
+
+  Object.keys(vbmlDays).forEach((vbmlDayKey) => {
+    const color = vbmlDays[vbmlDayKey];
+    const day = parseInt(vbmlDayKey);
     const todaysRow = Math.floor((day + offset - 1) / 7) + 1;
     const modulous = (day + offset - 1) % 7;
     // account for spillover off of the board
