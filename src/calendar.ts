@@ -71,7 +71,7 @@ export const makeCalendar = (
           0,
           hideDates ? 0 : getCharacterCodeFoDigit(firstRowDays[0]),
           hideDates ? 0 : 44,
-          getCharacterCodeFoDigit(firstRowDays[1]),
+          hideDates ? 0 : getCharacterCodeFoDigit(firstRowDays[1]),
           0,
           ...Array.from({ length: offset }, () => 0),
           ...Array.from({ length: 7 - offset }, () => calendarDayColor),
@@ -134,11 +134,19 @@ export const makeCalendar = (
     fifthRowDays.length === 0
       ? Array.from({ length: 22 }).map(() => 0)
       : [
-          getCharacterCodeFoDigit(fifthRowDays[0]?.split("")[0]),
-          getCharacterCodeFoDigit(fifthRowDays[0]?.split("")[1]),
-          44,
-          getCharacterCodeFoDigit(fifthRowDays[1]?.split("")[0]),
-          getCharacterCodeFoDigit(fifthRowDays[1]?.split("")[1]),
+          hideDates
+            ? 0
+            : getCharacterCodeFoDigit(fifthRowDays[0]?.split("")[0]),
+          hideDates
+            ? 0
+            : getCharacterCodeFoDigit(fifthRowDays[0]?.split("")[1]),
+          hideDates ? 0 : 44,
+          hideDates
+            ? 0
+            : getCharacterCodeFoDigit(fifthRowDays[1]?.split("")[0]),
+          hideDates
+            ? 0
+            : getCharacterCodeFoDigit(fifthRowDays[1]?.split("")[1]),
           ...Array.from(
             { length: numberOfDaysInLastRow },
             () => calendarDayColor

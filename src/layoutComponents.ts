@@ -56,11 +56,8 @@ export const layoutComponents = (
             return;
           }
           // calendars are always 12 wide
-          if (
-            component.x + bitIndex >= board[0].length ||
-            component.x + bitIndex > 12
-          ) {
-            return;
+          if (component.x + bitIndex >= board[0].length || bitIndex > 12) {
+            return board[rowIndex][bitIndex + component.x];
           }
           board[rowIndex][bitIndex + component.x] = bit;
         });
