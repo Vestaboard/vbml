@@ -27,16 +27,19 @@ export const vbml = {
     const absoluteComponents = input.components
       .filter(
         (component) =>
-          !!component?.style?.absolutePosition && !component?.calendar
+          !("calendar" in component) && !!component?.style?.absolutePosition
       )
       .map(parseAbsoluteComponent(height, width, input.props));
 
     const calendarComponents = input.components
       .filter(
         // check typeof to see if calendar component
-        (component) => !!component?.calendar
+        (component) => "calendar" in component
       )
       .map((component) => {
+        if (!("calendar" in component)) {
+          return;
+        }
         const {
           month,
           year,
@@ -45,7 +48,7 @@ export const vbml = {
           hideSMTWTFS,
           hideDates,
           hideMonthYear,
-        } = component.calendar;
+        } = component?.calendar;
         const x = component.style?.absolutePosition?.x || 0;
         const calendar = makeCalendar(
           month,

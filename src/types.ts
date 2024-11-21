@@ -42,7 +42,7 @@ export interface IVBMLRawComponent {
 
 export interface IVBMLCalendarComponent {
   style?: IComponentStyle;
-  calendar: {
+  calendar?: {
     month: string;
     year: string;
     days: VBMLDays;
@@ -58,9 +58,10 @@ export interface IVBMLTemplateComponent {
   style?: IComponentStyle;
 }
 
-export type IVBMLComponent = IVBMLRawComponent &
-  IVBMLTemplateComponent &
-  IVBMLCalendarComponent;
+export type IVBMLComponent =
+  | IVBMLRawComponent
+  | IVBMLTemplateComponent
+  | IVBMLCalendarComponent;
 
 export interface IVBML {
   props?: VBMLProps;
