@@ -1,7 +1,8 @@
 export const layoutComponents = (
   board: number[][],
   components: number[][][],
-  absoluteComponents: { characters: number[][]; x: number; y: number }[]
+  absoluteComponents: { characters: number[][]; x: number; y: number }[],
+  calendarComponents?: { characters: number[][]; x: number }[]
 ) => {
   let position = {
     top: 0,
@@ -42,6 +43,23 @@ export const layoutComponents = (
             return;
           }
           board[rowIndex + component.y][bitIndex + component.x] = bit;
+        });
+      });
+    });
+
+  calendarComponents &&
+    calendarComponents.forEach((component) => {
+      component.characters.forEach((row, rowIndex) => {
+        row.forEach((bit, bitIndex) => {
+          // make sure we are in bounds, truncate the rest for now
+          if (rowIndex >= board.length) {
+            return;
+          }
+          // calendars are always 12 wide
+          if (component.x + bitIndex >= board[0].length || bitIndex > 12) {
+            return board[rowIndex][bitIndex + component.x];
+          }
+          board[rowIndex][bitIndex + component.x] = bit;
         });
       });
     });
