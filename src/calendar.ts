@@ -193,5 +193,6 @@ export const makeCalendar = (
       todaysRow > 5 ? (modulous === 0 ? 12 : 13) : modulous + 5;
     calendar[todaysRow > 5 ? 5 : todaysRow][todaysColumn] = color;
   });
+
   return calendar;
 };

@@ -611,4 +611,68 @@ describe("VBML", () => {
     expect(result[4].length).toEqual(22);
     expect(result[5].length).toEqual(22);
   });
+
+  it("Should layout a calendar component on the left", () => {
+    const result = vbml.parse({
+      style: {
+        height: 6,
+        width: 22,
+      },
+      components: [
+        {
+          // absolute position right
+          template: "Merry Christmas",
+          style: {
+            height: 6,
+            width: 10,
+            absolutePosition: {
+              x: 13,
+              y: 0,
+            },
+          },
+        },
+
+        {
+          calendar: {
+            defaultDayColor: 66,
+            month: "12",
+            year: "2024",
+            hideDates: true,
+            hideMonthYear: true,
+            days: {
+              "25": 63,
+            },
+          },
+          style: {
+            absolutePosition: {
+              x: -3,
+              y: 0,
+            },
+          },
+        },
+      ],
+    });
+    console.log(result);
+    console.log(vbml.characterCodesToAscii(result));
+    expect(result).toEqual([
+      [
+        0, 0, 19, 13, 20, 23, 20, 6, 19, 0, 0, 0, 0, 13, 5, 18, 18, 25, 0, 0, 0,
+        0,
+      ],
+      [
+        0, 0, 66, 66, 66, 66, 66, 66, 66, 0, 0, 0, 0, 3, 8, 18, 9, 19, 20, 13,
+        1, 19,
+      ],
+      [0, 0, 66, 66, 66, 66, 66, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 66, 66, 66, 66, 66, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 66, 66, 66, 63, 66, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 66, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+    expect(result[0].length).toEqual(22);
+    expect(result[1].length).toEqual(22);
+    expect(result[2].length).toEqual(22);
+    expect(result[3].length).toEqual(22);
+    expect(result[4].length).toEqual(22);
+    expect(result[5].length).toEqual(22);
+  });
 });
