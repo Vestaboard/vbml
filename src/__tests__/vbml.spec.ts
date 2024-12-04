@@ -652,8 +652,6 @@ describe("VBML", () => {
         },
       ],
     });
-    console.log(result);
-    console.log(vbml.characterCodesToAscii(result));
     expect(result).toEqual([
       [
         0, 0, 19, 13, 20, 23, 20, 6, 19, 0, 0, 0, 0, 13, 5, 18, 18, 25, 0, 0, 0,
