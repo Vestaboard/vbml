@@ -42,6 +42,7 @@ export const layoutComponents = (
           if (component.x + bitIndex >= board[0].length) {
             return;
           }
+
           board[rowIndex + component.y][bitIndex + component.x] = bit;
         });
       });
@@ -59,10 +60,22 @@ export const layoutComponents = (
           if (component.x + bitIndex >= board[0].length || bitIndex > 12) {
             return board[rowIndex][bitIndex + component.x];
           }
+
           board[rowIndex][bitIndex + component.x] = bit;
         });
       });
     });
 
-  return board;
+  // fixes issues caused by negative numbers when positioning components
+  const cleanBoard = board.map((row) => {
+    return row.map((char) => {
+      if (typeof char === "number") {
+        return char;
+      } else {
+        return 0;
+      }
+    });
+  });
+
+  return cleanBoard;
 };
