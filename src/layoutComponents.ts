@@ -52,7 +52,6 @@ export const layoutComponents = (
     calendarComponents.forEach((component) => {
       component.characters.forEach((row, rowIndex) => {
         row.forEach((bit, bitIndex) => {
-          component.x !== 0 && console.log(bit);
           // make sure we are in bounds, truncate the rest for now
           if (rowIndex >= board.length) {
             return;
