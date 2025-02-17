@@ -347,7 +347,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.SingleQuote,
     name: "SingleQuote",
-    mappings: ["'", "‘", "’", "`", "´"],
+    mappings: ["'", "‘", "’", "`", "´", "‚"],
   },
   {
     code: CharacterCode.DoubleQuote,
