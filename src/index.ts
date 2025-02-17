@@ -7,6 +7,8 @@ import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
 import { copyCharacterCodes } from "./copyCharacterCodes";
 import { classic } from "./classic";
+import { makeCalendar } from "./calendar";
+import { parseCalendarComponent } from "./parseCalendarComponent";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -19,19 +21,58 @@ export const vbml = {
     const emptyBoard = createEmptyBoard(height, width);
 
     const components = input.components
-      .filter((component) => !component.style?.absolutePosition)
+      .filter((component) => !component?.style?.absolutePosition)
       .map(parseComponent(height, width, input.props));
 
     const absoluteComponents = input.components
-      .filter((component) => !!component.style?.absolutePosition)
+      .filter(
+        (component) =>
+          !("calendar" in component) && !!component?.style?.absolutePosition
+      )
       .map(parseAbsoluteComponent(height, width, input.props));
 
-    return layoutComponents(emptyBoard, components, absoluteComponents);
+    const calendarComponents = input.components
+      .filter(
+        // check typeof to see if calendar component
+        (component) => "calendar" in component
+      )
+      .map((component) => {
+        if (!("calendar" in component)) {
+          return;
+        }
+        const {
+          month,
+          year,
+          days,
+          defaultDayColor,
+          hideSMTWTFS,
+          hideDates,
+          hideMonthYear,
+        } = component?.calendar;
+        const x = component.style?.absolutePosition?.x || 0;
+        const calendar = makeCalendar(
+          month,
+          year,
+          days,
+          defaultDayColor,
+          hideSMTWTFS,
+          hideDates,
+          hideMonthYear
+        );
+        return parseCalendarComponent(calendar, x);
+      });
+
+    return layoutComponents(
+      emptyBoard,
+      components,
+      absoluteComponents,
+      calendarComponents
+    );
   },
   characterCodesToString,
   characterCodesToAscii,
   copyCharacterCodes,
-  classic: (input: string)  => classic(input),
+  classic: (input: string) => classic(input),
 };
 
 export * from "./types";

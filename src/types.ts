@@ -1,3 +1,5 @@
+import { VBMLDays } from "./calendar";
+
 export enum Justify {
   center = "center",
   left = "left",
@@ -38,12 +40,28 @@ export interface IVBMLRawComponent {
   rawCharacters?: number[][];
 }
 
+export interface IVBMLCalendarComponent {
+  style?: IComponentStyle;
+  calendar?: {
+    month: string;
+    year: string;
+    days: VBMLDays;
+    defaultDayColor?: 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71;
+    hideSMTWTFS?: boolean;
+    hideDates?: boolean;
+    hideMonthYear?: boolean;
+  };
+}
+
 export interface IVBMLTemplateComponent {
   template: string;
   style?: IComponentStyle;
 }
 
-export type IVBMLComponent = IVBMLRawComponent | IVBMLTemplateComponent;
+export type IVBMLComponent =
+  | IVBMLRawComponent
+  | IVBMLTemplateComponent
+  | IVBMLCalendarComponent;
 
 export interface IVBML {
   props?: VBMLProps;
