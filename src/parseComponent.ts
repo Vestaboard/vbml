@@ -1,15 +1,16 @@
+import { Align, IVBMLComponent, Justify, VBMLProps } from "./types";
+
 import { convertCharactersToCharacterCodes } from "./characterCodes";
 import { createEmptyBoard } from "./createEmptyBoard";
-import { horizontalAlign } from "./horizontalAlign";
-import { Align, IVBMLComponent, Justify, VBMLProps } from "./types";
-import { verticalAlign } from "./verticalAlign";
-import { getLinesFromWords } from "./getLinesFromWords";
-import { renderComponent } from "./renderComponent";
-import { parseProps } from "./parseProps";
-import { splitWords } from "./splitWords";
-import pipe from "lodash/fp/pipe";
-import map from "lodash/fp/map";
 import { emojisToCharacterCodes } from "./emojisToCharacterCodes";
+import { getLinesFromWords } from "./getLinesFromWords";
+import { horizontalAlign } from "./horizontalAlign";
+import map from "lodash/fp/map";
+import { parseProps } from "./parseProps";
+import pipe from "lodash/fp/pipe";
+import { renderComponent } from "./renderComponent";
+import { splitWords } from "./splitWords";
+import { verticalAlign } from "./verticalAlign";
 
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
