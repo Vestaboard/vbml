@@ -611,4 +611,53 @@ describe("VBML", () => {
     expect(result[4].length).toEqual(22);
     expect(result[5].length).toEqual(22);
   });
+
+  it("Should respect double returns", () => {
+    const result = vbml.parse({
+      style: {
+        height: 3,
+        width: 2,
+      },
+      components: [
+        {
+          template: "h\n\ni",
+          style: {
+            align: Align.top,
+            justify: Justify.left,
+          },
+        },
+      ],
+    });
+
+    expect(result).toEqual([
+      [8, 0],
+      [0, 0],
+      [9, 0],
+    ]);
+  });
+
+  it("Should respect triple returns", () => {
+    const result = vbml.parse({
+      style: {
+        height: 4,
+        width: 2,
+      },
+      components: [
+        {
+          template: "h\n\n\ni",
+          style: {
+            align: Align.top,
+            justify: Justify.left,
+          },
+        },
+      ],
+    });
+
+    expect(result).toEqual([
+      [8, 0],
+      [0, 0],
+      [0, 0],
+      [9, 0],
+    ]);
+  });
 });

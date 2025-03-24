@@ -2,10 +2,19 @@ import curry from "lodash/fp/curry";
 
 export const getLinesFromWords = curry((width: number, words: string[]) => {
   const lines = words.reduce(
-    (acc: Array<{ line: string; length: number }>, curr: string) => {
+    (
+      acc: Array<{ line: string; length: number }>,
+      curr: string,
+      index: number
+    ) => {
       const lastIndex = acc.length - 1;
       const lineLength = acc[lastIndex]["length"];
       const emptyLine = !acc[lastIndex]["line"];
+
+      // Allow for empty lines if there is a double return
+      if (curr == "\n" && words[index - 1] === "\n") {
+        return [...acc, { line: "", length: 0 }];
+      }
 
       if (curr === "\n") {
         // finish the line if we hit a new line
