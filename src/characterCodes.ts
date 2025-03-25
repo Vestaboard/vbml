@@ -107,62 +107,79 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.A,
     name: "A",
-    mappings: ["A", "a", "â", "à", "å", "á", "À", "Á", "Â", "Ã", "Å", "ã", "ã"],
+    mappings: [
+      "A",
+      "a",
+      "â",
+      "à",
+      "å",
+      "á",
+      "À",
+      "Á",
+      "Â",
+      "Ã",
+      "Å",
+      "ã",
+      "ä",
+      "Ä",
+      "æ",
+      "Æ",
+    ],
   },
   {
     code: CharacterCode.B,
     name: "B",
-    mappings: ["B", "b"],
+    mappings: ["B", "b", "ß"],
   },
   {
     code: CharacterCode.C,
     name: "C",
-    mappings: ["C", "c", "ç", "Ç", "¢", "ć", "Ć"],
+    mappings: ["C", "c", "ç", "Ç", "¢", "ć", "Ć", "č", "Č"],
   },
   {
     code: CharacterCode.D,
     name: "D",
-    mappings: ["D", "d", "Ð"],
+    mappings: ["D", "d", "Ð", "ð"],
   },
   {
     code: CharacterCode.E,
     name: "E",
-    mappings: ["E", "e", "é", "ê", "ë", "è", "È", "É", "Ê", "Ë"],
+    mappings: ["E", "e", "é", "ê", "ë", "è", "È", "É", "Ê", "Ë", "€", "£"],
   },
   {
     code: CharacterCode.F,
     name: "F",
-    mappings: ["F", "f", "ƒ"],
+    mappings: ["F", "f", "ƒ", "ſ"],
   },
   {
     code: CharacterCode.G,
     name: "G",
-    mappings: ["G", "g", "ğ"],
+    mappings: ["G", "g", "ğ", "Ğ", "ģ", "Ģ", "ġ", "Ġ", "ĝ", "Ĝ"],
   },
   {
     code: CharacterCode.H,
     name: "H",
-    mappings: ["H", "h"],
+    mappings: ["H", "h", "ħ", "Ħ", "ĥ", "Ĥ"],
   },
   {
     code: CharacterCode.I,
     name: "I",
-    mappings: ["I", "i", "í", "ï", "î", "ì", "Ì", "Í", "Î", "Ï", "|"],
+    mappings: ["I", "i", "í", "ï", "î", "ì", "Ì", "Í", "Î", "Ï", "|", "¡"],
   },
   {
     code: CharacterCode.J,
     name: "J",
-    mappings: ["J", "j"],
+    mappings: ["J", "j", "ĵ", "Ĵ", "į", "Į"],
   },
   {
     code: CharacterCode.K,
     name: "K",
-    mappings: ["K", "k"],
+    mappings: ["K", "k", "ķ", "Ķ", "ĸ"],
   },
   {
     code: CharacterCode.L,
     name: "L",
-    mappings: ["L", "l", "£"],
+    mappings: ["L", "l", "£", "ł", "Ł", "ļ", "Ļ", "ĺ", "Ĺ", "ľ", "Ľ", "ŀ", "Ŀ"],
   },
   {
     code: CharacterCode.M,
@@ -172,17 +189,35 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.N,
     name: "N",
-    mappings: ["N", "n", "ñ", "Ñ"],
+    mappings: ["N", "n", "ñ", "Ñ", "ń", "Ń", "ň", "Ň", "ņ", "Ņ"],
   },
   {
     code: CharacterCode.O,
     name: "O",
-    mappings: ["O", "o", "ó", "ô", "ò", "Ò", "Ó", "Ô", "Õ", "Ø", "ð", "õ", "ø"],
+    mappings: [
+      "O",
+      "o",
+      "ó",
+      "ô",
+      "ò",
+      "Ò",
+      "Ó",
+      "Ô",
+      "Õ",
+      "Ø",
+      "ð",
+      "õ",
+      "ø",
+      "ö",
+      "Ö",
+      "œ",
+      "Œ",
+    ],
   },
   {
     code: CharacterCode.P,
     name: "P",
-    mappings: ["P", "p"],
+    mappings: ["P", "p", "Þ", "þ", "¶"],
   },
   {
     code: CharacterCode.Q,
@@ -192,62 +227,80 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.R,
     name: "R",
-    mappings: ["R", "r"],
+    mappings: ["R", "r", "ŕ", "Ŕ", "ř", "Ř", "ŗ", "Ŗ"],
   },
   {
     code: CharacterCode.S,
     name: "S",
-    mappings: ["S", "s", "š", "Š", "§"],
+    mappings: ["S", "s", "š", "Š", "§", "ś", "Ś", "ş", "Ş", "ș", "Ș"],
   },
   {
     code: CharacterCode.T,
     name: "T",
-    mappings: ["T", "t"],
+    mappings: ["T", "t", "ť", "Ť", "ţ", "Ţ", "ŧ", "Ŧ"],
   },
   {
     code: CharacterCode.U,
     name: "U",
-    mappings: ["U", "u", "û", "ù", "ú", "Ù", "Ú", "Û"],
+    mappings: [
+      "U",
+      "u",
+      "û",
+      "ù",
+      "ú",
+      "Ù",
+      "Ú",
+      "Û",
+      "Ü",
+      "ü",
+      "µ",
+      "ū",
+      "Ū",
+      "ů",
+      "Ů",
+      "ų",
+      "Ų",
+    ],
   },
   {
     code: CharacterCode.V,
     name: "V",
-    mappings: ["V", "v"],
+    mappings: ["V", "v", "Ʋ", "ʋ"],
   },
   {
     code: CharacterCode.W,
     name: "W",
-    mappings: ["W", "w"],
+    mappings: ["W", "w", "ŵ", "Ŵ", "ẁ", "Ẁ", "ẃ", "Ẃ", "ẅ", "Ẅ"],
   },
   {
     code: CharacterCode.X,
     name: "X",
-    mappings: ["X", "x"],
+    mappings: ["X", "x", "ẍ", "Ẍ"],
   },
   {
     code: CharacterCode.Y,
     name: "Y",
-    mappings: ["Y", "y"],
+    mappings: ["Y", "y", "ý", "ÿ", "Ý", "ŷ", "Ŷ", "ỳ", "Ỳ", "ỹ", "Ỹ", "Ÿ"],
   },
   {
     code: CharacterCode.Z,
     name: "Z",
-    mappings: ["Z", "z"],
+    mappings: ["Z", "z", "ž", "Ž", "ź", "Ź", "ż", "Ż"],
   },
   {
     code: CharacterCode.One,
     name: "1",
-    mappings: ["1"],
+    mappings: ["1", "¹"],
   },
   {
     code: CharacterCode.Two,
     name: "Two",
-    mappings: ["2"],
+    mappings: ["2", "²"],
   },
   {
     code: CharacterCode.Three,
     name: "Three",
-    mappings: ["3"],
+    mappings: ["3", "³"],
   },
   {
     code: CharacterCode.Four,
@@ -282,12 +335,12 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Zero,
     name: "Zero",
-    mappings: ["0"],
+    mappings: ["0", "º"],
   },
   {
     code: CharacterCode.ExclamationMark,
     name: "ExclamationMark",
-    mappings: ["!"],
+    mappings: ["!", "¡", "ǃ"],
   },
   {
     code: CharacterCode.AtSign,
@@ -297,22 +350,22 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.PoundSign,
     name: "PoundSign",
-    mappings: ["#"],
+    mappings: ["#", "№"],
   },
   {
     code: CharacterCode.DollarSign,
     name: "DollarSign",
-    mappings: ["$"],
+    mappings: ["$", "¢", "£", "¤", "¥", "₩", "₪", "₫", "€", "₹", "₺", "₽"],
   },
   {
     code: CharacterCode.LeftParen,
     name: "LeftParen",
-    mappings: ["(", "[", "{"],
+    mappings: ["(", "[", "{", "⟨", "«"],
   },
   {
     code: CharacterCode.RightParen,
     name: "RightParen",
-    mappings: [")", "]", "}"],
+    mappings: [")", "]", "}", "⟩", "»"],
   },
   {
     code: CharacterCode.Hyphen,
@@ -322,7 +375,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.PlusSign,
     name: "PlusSign",
-    mappings: ["+", "±"],
+    mappings: ["+", "±", "∓", "∔"],
   },
   {
     code: CharacterCode.Ampersand,
@@ -337,7 +390,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Semicolon,
     name: "Semicolon",
-    mappings: [";"],
+    mappings: [";", ";", "；"],
   },
   {
     code: CharacterCode.Colon,
@@ -347,32 +400,48 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.SingleQuote,
     name: "SingleQuote",
-    mappings: ["'", "‘", "’", "`", "´", "‚"],
+    mappings: [
+      "'",
+      "‘",
+      "’",
+      "`",
+      "´",
+      "‚",
+      "‛",
+      "ʹ",
+      "ʻ",
+      "ʽ",
+      "ʾ",
+      "ʿ",
+      "ˈ",
+      "ˊ",
+      "ˋ",
+    ],
   },
   {
     code: CharacterCode.DoubleQuote,
     name: "DoubleQuote",
-    mappings: [`"`, "„", "“", "”", "¨"],
+    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶"],
   },
   {
     code: CharacterCode.PercentSign,
     name: "PercentSign",
-    mappings: ["%", "‰"],
+    mappings: ["%", "‰", "‱"],
   },
   {
     code: CharacterCode.Comma,
     name: "Comma",
-    mappings: [",", "¸"],
+    mappings: [",", "¸", "‚", "，", "、", "､"],
   },
   {
     code: CharacterCode.Period,
     name: "Period",
-    mappings: ["."],
+    mappings: [".", "․", "‥", "…"],
   },
   {
     code: CharacterCode.Slash,
     name: "Slash",
-    mappings: ["/", "\\"],
+    mappings: ["/", "\\", "⁄", "∕", "⧸", "⫻", "⫽", "⧵"],
   },
   {
     code: CharacterCode.QuestionMark,
@@ -382,9 +451,22 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.DegreeSign,
     name: "DegreeSign",
-    mappings: ["°", "¤", "•", "·"],
+    mappings: ["°", "¤", "•", "·", "∙", "∘", "⚬", "⦿", "⨀", "⨁", "⨂"],
   },
 ];
+
+const _supportedCharacters = [
+  ...CHARACTER_CODES.map((characterCode) =>
+    characterCode.mappings[0]?.toLocaleLowerCase()
+  ),
+  ...CHARACTER_CODES.map((characterCode) =>
+    characterCode.mappings[0]?.toUpperCase()
+  ),
+];
+
+export const supportedCharacters = _supportedCharacters.filter(
+  (item, index) => _supportedCharacters.indexOf(item) === index
+);
 
 const MAPPED_CHARACTERS = CHARACTER_CODES.reduce((prev, current) => {
   return {
@@ -438,3 +520,15 @@ export const convertCharactersToCharacterCodes = (characters: string) =>
       skipNext: false,
     }
   ).accumulator;
+
+export const mappingToCharacter = (character: string) => {
+  if (supportedCharacters.includes(character)) {
+    return character;
+  }
+
+  const characterCodeObject = CHARACTER_CODES.find((code) =>
+    code.mappings.includes(character)
+  );
+
+  return characterCodeObject?.mappings[0]?.toLocaleLowerCase() || " ";
+};
