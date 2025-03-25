@@ -5,5 +5,5 @@ export const hasSpecialCharacters = (text: string): boolean => {
     return false;
   }
 
-  return !text.split("").some((char) => supportedCharacters.includes(char));
+  return text.split("").some((char) => !supportedCharacters.includes(char));
 };

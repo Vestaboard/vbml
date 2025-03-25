@@ -6,6 +6,11 @@ describe("hasSpecialCharacters", () => {
     expect(hasSpecialCharacters(text)).toBeTruthy();
   });
 
+  it("should return true if text contains special characters mixed with standard characters", () => {
+    const text = "äa";
+    expect(hasSpecialCharacters(text)).toBeTruthy();
+  });
+
   it("should return false if text does not contain special characters", () => {
     const text = "abcdefghijklmnopqrstuvwxyz";
     expect(hasSpecialCharacters(text)).toBeFalsy();
