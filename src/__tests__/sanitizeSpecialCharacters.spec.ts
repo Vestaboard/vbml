@@ -15,4 +15,14 @@ describe("Sanitize special characters", () => {
     const text = "hello world";
     expect(sanitizeSpecialCharacters(text)).toEqual("hello world");
   });
+
+  it("Should handle mixed special characters in text", () => {
+    const text = "héllö wôrld";
+    expect(sanitizeSpecialCharacters(text)).toEqual("hello world");
+  });
+
+  it("Should handle multiple special characters together", () => {
+    const text = "äëïöü";
+    expect(sanitizeSpecialCharacters(text)).toEqual("aeiou");
+  });
 });
