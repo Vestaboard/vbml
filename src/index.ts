@@ -1,14 +1,18 @@
 import "./characterCodes";
-import { createEmptyBoard } from "./createEmptyBoard";
-import { layoutComponents } from "./layoutComponents";
+
 import { parseAbsoluteComponent, parseComponent } from "./parseComponent";
+
 import { IVBML } from "./types";
-import { characterCodesToString } from "./characterCodesToString";
 import { characterCodesToAscii } from "./characterCodesToAscii";
-import { copyCharacterCodes } from "./copyCharacterCodes";
+import { characterCodesToString } from "./characterCodesToString";
 import { classic } from "./classic";
+import { copyCharacterCodes } from "./copyCharacterCodes";
+import { createEmptyBoard } from "./createEmptyBoard";
+import { hasSpecialCharacters } from "./hasSpecialCharacters";
+import { layoutComponents } from "./layoutComponents";
 import { makeCalendar } from "./calendar";
 import { parseCalendarComponent } from "./parseCalendarComponent";
+import { sanitizeSpecialCharacters } from "./sanitizeSpecialCharacters";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -72,7 +76,9 @@ export const vbml = {
   characterCodesToString,
   characterCodesToAscii,
   copyCharacterCodes,
-  classic: (input: string) => classic(input),
+  classic,
+  hasSpecialCharacters,
+  sanitizeSpecialCharacters,
 };
 
 export * from "./types";
