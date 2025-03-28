@@ -462,7 +462,33 @@ const _supportedCharacters = [
   ...CHARACTER_CODES.map((characterCode) =>
     characterCode.mappings[0]?.toUpperCase()
   ),
-  ...["\n", "“", "‘", "{", "}", "⬜", "🟥", "🟧", "🟨", "🟩", "🟦", "🟪", "⬛"],
+  ...[
+    "\n",
+    "“",
+    "‘",
+    "{",
+    "}",
+    "⬜",
+    "🟥",
+    "\uD83D",
+    "\uDFE5",
+    "🟧",
+    "\uD83D",
+    "\uDFE7",
+    "🟨",
+    "\uD83D",
+    "\uDFE8",
+    "🟩",
+    "\uD83D",
+    "\uDFE9",
+    "🟦",
+    "\uD83D",
+    "\uDFE6",
+    "🟪",
+    "\uD83D",
+    "\uDFEA",
+    "⬛",
+  ],
 ];
 
 export const supportedCharacters = _supportedCharacters.filter(

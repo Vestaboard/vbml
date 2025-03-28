@@ -50,4 +50,19 @@ describe("hasSpecialCharacters", () => {
     const text = "“";
     expect(hasSpecialCharacters(text)).toBeFalsy();
   });
+
+  it("Should exclude white color swatch", () => {
+    const text = "⬜";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
+
+  it("Should exclude black color swatch", () => {
+    const text = "⬛";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
+
+  it("Should exclude orange color swatch", () => {
+    const text = "🟧";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
 });
