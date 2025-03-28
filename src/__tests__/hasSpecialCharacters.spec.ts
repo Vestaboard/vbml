@@ -35,4 +35,19 @@ describe("hasSpecialCharacters", () => {
     const text = "";
     expect(hasSpecialCharacters(text)).toBeFalsy();
   });
+
+  it("Should exclude newlines", () => {
+    const text = "Hello\nWorld";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
+
+  it("Should exclude the single quote from the iOS keyboard", () => {
+    const text = "‘";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
+
+  it("Should exclude the double quote from the iOS keyboard", () => {
+    const text = "“";
+    expect(hasSpecialCharacters(text)).toBeFalsy();
+  });
 });
