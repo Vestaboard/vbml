@@ -65,4 +65,9 @@ describe("hasSpecialCharacters", () => {
     const text = "🟧";
     expect(hasSpecialCharacters(text)).toBeFalsy();
   });
+
+  it("Should include fractions", () => {
+    const text = "½";
+    expect(hasSpecialCharacters(text)).toBeTruthy();
+  });
 });

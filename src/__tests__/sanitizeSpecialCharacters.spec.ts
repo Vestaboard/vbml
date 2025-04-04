@@ -7,7 +7,7 @@ describe("Sanitize special characters", () => {
   });
 
   it("Should replace special characters with their equivalent", () => {
-    const text = "ä";
+    const text = "Ã";
     expect(sanitizeSpecialCharacters(text)).toEqual("a");
   });
 
@@ -17,12 +17,17 @@ describe("Sanitize special characters", () => {
   });
 
   it("Should handle mixed special characters in text", () => {
-    const text = "héllö wôrld";
+    const text = "héllo wôrld";
     expect(sanitizeSpecialCharacters(text)).toEqual("hello world");
   });
 
   it("Should handle multiple special characters together", () => {
-    const text = "äëïöü";
-    expect(sanitizeSpecialCharacters(text)).toEqual("aeiou");
+    const text = "ëï";
+    expect(sanitizeSpecialCharacters(text)).toEqual("ei");
+  });
+
+  it("Should replace fractions with multiple characters", () => {
+    const text = "½";
+    expect(sanitizeSpecialCharacters(text)).toEqual("1/2");
   });
 });

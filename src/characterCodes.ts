@@ -1,3 +1,5 @@
+import { multipleCharacterMappings } from "./multipleCharacterMappings";
+
 export enum CharacterCode {
   Blank = 0,
   A = 1,
@@ -107,29 +109,12 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.A,
     name: "A",
-    mappings: [
-      "A",
-      "a",
-      "â",
-      "à",
-      "å",
-      "á",
-      "À",
-      "Á",
-      "Â",
-      "Ã",
-      "Å",
-      "ã",
-      "ä",
-      "Ä",
-      "æ",
-      "Æ",
-    ],
+    mappings: ["A", "a", "â", "à", "å", "á", "À", "Á", "Â", "Ã", "Å", "ã"],
   },
   {
     code: CharacterCode.B,
     name: "B",
-    mappings: ["B", "b", "ß"],
+    mappings: ["B", "b"],
   },
   {
     code: CharacterCode.C,
@@ -194,25 +179,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.O,
     name: "O",
-    mappings: [
-      "O",
-      "o",
-      "ó",
-      "ô",
-      "ò",
-      "Ò",
-      "Ó",
-      "Ô",
-      "Õ",
-      "Ø",
-      "ð",
-      "õ",
-      "ø",
-      "ö",
-      "Ö",
-      "œ",
-      "Œ",
-    ],
+    mappings: ["O", "o", "ó", "ô", "ò", "Ò", "Ó", "Ô", "Õ", "Ø", "ð", "õ", "ø"],
   },
   {
     code: CharacterCode.P,
@@ -251,8 +218,6 @@ const CHARACTER_CODES = [
       "Ù",
       "Ú",
       "Û",
-      "Ü",
-      "ü",
       "µ",
       "ū",
       "Ū",
@@ -436,7 +401,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Period,
     name: "Period",
-    mappings: [".", "․", "‥", "…"],
+    mappings: [".", "․", "‥"],
   },
   {
     code: CharacterCode.Slash,
@@ -549,6 +514,11 @@ export const convertCharactersToCharacterCodes = (characters: string) =>
   ).accumulator;
 
 export const mappingToCharacter = (character: string) => {
+  const multipleCharacterMapping = multipleCharacterMappings[character];
+  if (multipleCharacterMapping) {
+    return multipleCharacterMapping;
+  }
+
   if (supportedCharacters.includes(character)) {
     return character;
   }
