@@ -386,7 +386,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.DoubleQuote,
     name: "DoubleQuote",
-    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶"],
+    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶", "‟"],
   },
   {
     code: CharacterCode.PercentSign,
