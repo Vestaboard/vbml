@@ -172,6 +172,7 @@ const VestaboardCharactersCodeMap = {
   "´": VestaboardCharacter.SingleQuote,
   "ˋ": VestaboardCharacter.SingleQuote,
   "ˊ": VestaboardCharacter.SingleQuote,
+  "‚":VestaboardCharacter.SingleQuote,
   "`": VestaboardCharacter.SingleQuote,
   "%": VestaboardCharacter.PercentSign,
   ",": VestaboardCharacter.Comma,
