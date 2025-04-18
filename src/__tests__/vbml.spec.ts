@@ -43,6 +43,25 @@ describe("VBML", () => {
 
     expect(result).toEqual([[8, 9, 8, 9]]);
   });
+  it("Should format äÄ to aeae", () => {
+    const result = vbml.parse({
+      style: {
+        height: 1,
+        width: 4,
+      },
+      components: [
+        {
+          template: "äÄ",
+          style: {
+            width: 4,
+            height: 1,
+          },
+        },
+      ],
+    });
+
+    expect(result).toEqual([[1, 5, 1, 5]]);
+  });
 
   it("Should layout components vertically", () => {
     const result = vbml.parse({
