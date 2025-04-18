@@ -515,7 +515,14 @@ export const convertCharactersToCharacterCodes = (characters: string) =>
 
 export const mappingToCharacter = (character: string) => {
   const multipleCharacterMapping = multipleCharacterMappings[character];
+
   if (multipleCharacterMapping) {
+    console.log(
+      "multipleCharacterMapping",
+      multipleCharacterMapping,
+      "character",
+      character,
+    )
     return multipleCharacterMapping;
   }
 

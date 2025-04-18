@@ -367,6 +367,9 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
           return VestaboardCharactersCodeMap[word];
         }
         return word.split("").flatMap((char) => {
+          if (char === "ä" || char === "Ä") {
+            return [VestaboardCharactersCodeMap["a"], VestaboardCharactersCodeMap["e"]];
+          }
           return VestaboardCharactersCodeMap[char];
         });
       });
