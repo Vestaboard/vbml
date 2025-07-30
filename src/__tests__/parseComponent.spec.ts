@@ -22,6 +22,7 @@ describe("Parse Component", () => {
     ]);
   });
 
+
   it("Should format a longer message center with plain text", () => {
     const input: IVBMLComponent = {
       template: "Thank you for having us!",

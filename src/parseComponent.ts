@@ -11,6 +11,7 @@ import pipe from "lodash/fp/pipe";
 import { renderComponent } from "./renderComponent";
 import { splitWords } from "./splitWords";
 import { verticalAlign } from "./verticalAlign";
+import { sanitizeSpecialCharacters } from "./sanitizeSpecialCharacters";
 
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
@@ -26,12 +27,14 @@ export const parseComponent =
     return pipe(
       emojisToCharacterCodes,
       parseProps(props || {}),
+      sanitizeSpecialCharacters,
       splitWords(width),
       getLinesFromWords(width),
       map(convertCharactersToCharacterCodes),
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
       renderComponent(emptyComponent)
+      
     )(template) as number[][];
   };
 

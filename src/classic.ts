@@ -162,6 +162,18 @@ const VestaboardCharactersCodeMap = {
   // " ": VestaboardCharacter.Missing3,
   "'": VestaboardCharacter.SingleQuote,
   '"': VestaboardCharacter.DoubleQuote,
+  "‟": VestaboardCharacter.DoubleQuote,
+  "“": VestaboardCharacter.DoubleQuote,
+  "”": VestaboardCharacter.DoubleQuote,
+  "„": VestaboardCharacter.DoubleQuote,
+  "¨": VestaboardCharacter.DoubleQuote,
+  "‘": VestaboardCharacter.SingleQuote,
+  "’": VestaboardCharacter.SingleQuote,
+  "´": VestaboardCharacter.SingleQuote,
+  "ˋ": VestaboardCharacter.SingleQuote,
+  "ˊ": VestaboardCharacter.SingleQuote,
+  "‚":VestaboardCharacter.SingleQuote,
+  "`": VestaboardCharacter.SingleQuote,
   "%": VestaboardCharacter.PercentSign,
   ",": VestaboardCharacter.Comma,
   ".": VestaboardCharacter.Period,
@@ -173,20 +185,12 @@ const VestaboardCharactersCodeMap = {
   // " ": VestaboardCharacter.Missing6,
   "°": VestaboardCharacter.DegreeSign,
   "—": VestaboardCharacter.Hyphen,
-  "‘": VestaboardCharacter.SingleQuote,
-  "’": VestaboardCharacter.SingleQuote,
-  "`": VestaboardCharacter.SingleQuote,
-  "´": VestaboardCharacter.SingleQuote,
   "–": VestaboardCharacter.Hyphen,
   "¯": VestaboardCharacter.Hyphen,
   "~": VestaboardCharacter.Hyphen,
   "¸": VestaboardCharacter.Comma,
   "¦": VestaboardCharacter.Colon,
   "¿": VestaboardCharacter.QuestionMark,
-  "„": VestaboardCharacter.DoubleQuote,
-  "“": VestaboardCharacter.DoubleQuote,
-  "”": VestaboardCharacter.DoubleQuote,
-  "¨": VestaboardCharacter.DoubleQuote,
   "[": VestaboardCharacter.LeftParen,
   "{": VestaboardCharacter.LeftParen,
   "]": VestaboardCharacter.RightParen,
@@ -363,6 +367,9 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
           return VestaboardCharactersCodeMap[word];
         }
         return word.split("").flatMap((char) => {
+          if (char === "ä" || char === "Ä") {
+            return [VestaboardCharactersCodeMap["a"], VestaboardCharactersCodeMap["e"]];
+          }
           return VestaboardCharactersCodeMap[char];
         });
       });

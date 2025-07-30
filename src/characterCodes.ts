@@ -386,7 +386,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.DoubleQuote,
     name: "DoubleQuote",
-    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶"],
+    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶", "‟"],
   },
   {
     code: CharacterCode.PercentSign,
@@ -536,7 +536,14 @@ export const convertCharactersToCharacterCodes = (characters: string) =>
 
 export const mappingToCharacter = (character: string) => {
   const multipleCharacterMapping = multipleCharacterMappings[character];
+
   if (multipleCharacterMapping) {
+    console.log(
+      "multipleCharacterMapping",
+      multipleCharacterMapping,
+      "character",
+      character,
+    )
     return multipleCharacterMapping;
   }
 
