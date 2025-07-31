@@ -1,6 +1,6 @@
 {
   "name": "@vestaboard/vbml",
-  "version": "1.2.19",
+  "version": "1.2.20",
   "description": "The Vestaboard markup language",
   "main": "lib/index.js",
   "scripts": {

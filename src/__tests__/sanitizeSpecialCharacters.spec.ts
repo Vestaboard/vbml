@@ -30,4 +30,14 @@ describe("Sanitize special characters", () => {
     const text = "½";
     expect(sanitizeSpecialCharacters(text)).toEqual("1/2");
   });
+
+  it("Should not replace Vestaboard Note hearts", () => {
+    const text = "❤️";
+    expect(sanitizeSpecialCharacters(text)).toEqual("❤️");
+  });
+
+  it("Should not replace Vestaboard Note unicode hearts", () => {
+    const text = "❤";
+    expect(sanitizeSpecialCharacters(text)).toEqual("❤");
+  });
 });

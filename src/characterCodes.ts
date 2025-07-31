@@ -437,6 +437,7 @@ const CHARACTER_CODES = [
       "🖤",
       "🤍",
       "🤎",
+      "❤",
     ],
   },
 ];
@@ -474,11 +475,14 @@ const _supportedCharacters = [
     "\uD83D",
     "\uDFEA",
     "⬛",
+    "❤",
   ],
 ];
 
 export const supportedCharacters = _supportedCharacters.filter(
-  (item, index) => _supportedCharacters.indexOf(item) === index
+  (item, index) => {
+    return _supportedCharacters.indexOf(item) === index;
+  }
 );
 
 const MAPPED_CHARACTERS = CHARACTER_CODES.reduce((prev, current) => {
@@ -538,12 +542,6 @@ export const mappingToCharacter = (character: string) => {
   const multipleCharacterMapping = multipleCharacterMappings[character];
 
   if (multipleCharacterMapping) {
-    console.log(
-      "multipleCharacterMapping",
-      multipleCharacterMapping,
-      "character",
-      character,
-    )
     return multipleCharacterMapping;
   }
 
