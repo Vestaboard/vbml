@@ -58,10 +58,18 @@ export interface IVBMLTemplateComponent {
   style?: IComponentStyle;
 }
 
+export interface IVBMLComponentWithRandomColors {
+  randomColors: {
+    colors?: number[];
+  };
+  style?: IComponentStyle;
+}
+
 export type IVBMLComponent =
   | IVBMLRawComponent
   | IVBMLTemplateComponent
-  | IVBMLCalendarComponent;
+  | IVBMLCalendarComponent
+  | IVBMLComponentWithRandomColors;
 
 export interface IVBML {
   props?: VBMLProps;

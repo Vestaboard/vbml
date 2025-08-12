@@ -679,4 +679,22 @@ describe("VBML", () => {
       [9, 0],
     ]);
   });
+
+  it("Should let us use random colors", () => {
+    const result = vbml.parse({
+      style: {
+        height: 1,
+        width: 1,
+      },
+      components: [
+        {
+          randomColors: {
+            colors: [61],
+          },
+        },
+      ],
+    });
+
+    expect(result[0][0]).toBe(61);
+  });
 });

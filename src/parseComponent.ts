@@ -1,4 +1,5 @@
 import { Align, IVBMLComponent, Justify, VBMLProps } from "./types";
+import { colorCodes, randomColors } from "./randomColors";
 
 import { convertCharactersToCharacterCodes } from "./characterCodes";
 import { createEmptyBoard } from "./createEmptyBoard";
@@ -9,9 +10,9 @@ import map from "lodash/fp/map";
 import { parseProps } from "./parseProps";
 import pipe from "lodash/fp/pipe";
 import { renderComponent } from "./renderComponent";
+import { sanitizeSpecialCharacters } from "./sanitizeSpecialCharacters";
 import { splitWords } from "./splitWords";
 import { verticalAlign } from "./verticalAlign";
-import { sanitizeSpecialCharacters } from "./sanitizeSpecialCharacters";
 
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
@@ -20,6 +21,16 @@ export const parseComponent =
 
     const width = component?.style?.width || defaultWidth;
     const height = component?.style?.height || defaultHeight;
+
+    if ("randomColors" in component) {
+      const colors = component.randomColors.colors || colorCodes;
+      return randomColors(
+        component?.style?.height || height,
+        component?.style?.width || width,
+        colors
+      );
+    }
+
     const emptyComponent = createEmptyBoard(height, width);
 
     const template = "template" in component ? component.template : "";
@@ -34,7 +45,6 @@ export const parseComponent =
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
       renderComponent(emptyComponent)
-      
     )(template) as number[][];
   };
 
