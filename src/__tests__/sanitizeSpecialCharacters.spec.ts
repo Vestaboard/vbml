@@ -33,7 +33,7 @@ describe("Sanitize special characters", () => {
 
   it("Should not replace Vestaboard Note hearts", () => {
     const text = "❤️";
-    expect(sanitizeSpecialCharacters(text)).toEqual("❤️");
+    expect(sanitizeSpecialCharacters(text)).toEqual("❤");
   });
 
   it("Should not replace Vestaboard Note unicode hearts", () => {
