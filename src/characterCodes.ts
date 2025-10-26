@@ -5,8 +5,8 @@ import { multipleCharacterMappings } from "./multipleCharacterMappings";
  *
  * @link https://www.unicode.org/charts/PDF/UFE00.pdf
  *
- * @description emoji variation selector; preceded by character code U+2674
- * or "Heavy Black Heart" (❤) to produce "Read Heart" (❤️), which is a sequence of U+2674,U+FE0F.
+ * @description emoji variation selector; preceded by character code U+2764
+ * or "Heavy Black Heart" (❤) to produce "Read Heart" (❤️), which is a sequence of U+2764,U+FE0F.
  *
  * Note that we should not cast this to a whitespace, but remove it completely when sanitizing text.
  */
