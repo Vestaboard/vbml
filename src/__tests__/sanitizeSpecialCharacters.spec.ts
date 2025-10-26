@@ -31,13 +31,55 @@ describe("Sanitize special characters", () => {
     expect(sanitizeSpecialCharacters(text)).toEqual("1/2");
   });
 
-  it("Should not replace Vestaboard Note hearts", () => {
+  it("Should sanitize variation selector-16 (U+FE0F) from ❤️", () => {
     const text = "❤️";
     expect(sanitizeSpecialCharacters(text)).toEqual("❤");
   });
 
-  it("Should not replace Vestaboard Note unicode hearts", () => {
-    const text = "❤";
+  it("Should sanitize variation selector-16 (U+FE0F) from the string literal \\u2764\\uFE0F", () => {
+    const text = "\u2764\uFE0F";
+    expect(sanitizeSpecialCharacters(text)).toEqual("\u2764");
+  });
+
+  it("Should not replace Vestaboard Note unicode hearts (U+2764)", () => {
+    const text = "\u2764";
     expect(sanitizeSpecialCharacters(text)).toEqual("❤");
+  });
+
+  it("Should accept whitespace after \u2764 (U+2764)", () => {
+    const text = "\u2764 ";
+    expect(sanitizeSpecialCharacters(text)).toEqual(text);
+  });
+
+  it("Should not clear whitespace between black heart unicode characters", () => {
+    const testString = "❤ ❤ ❤ ❤ ❤";
+    const result = sanitizeSpecialCharacters(testString);
+    expect(result).toEqual(testString);
+  });
+
+  it("Should not trim whitespace when \u2764 if followed by a latin glyph", () => {
+    const testString = "\u2764 A";
+    const result = sanitizeSpecialCharacters(testString);
+    expect(result).toEqual(testString);
+  });
+
+  it("Should not trim whitespace when \u2764 is followed by an emoji", () => {
+    const testString = "\u2764 🟧";
+    const result = sanitizeSpecialCharacters(testString);
+    expect(result).toEqual(testString);
+  });
+
+  it("Should convert unsupported, sequenced emojis to whitespace", () => {
+    const testString = "☠️⚠️✅▶️✨⌛️";
+    const equivalentWhitespace = "\u0020\u0020\u0020\u0020\u0020\u0020";
+    const result = sanitizeSpecialCharacters(testString);
+    expect(result).toEqual(equivalentWhitespace);
+  });
+
+  it("Should handle the heart emoji and unsupported emojis", () => {
+    const testString = "❤️☠️⚠️✅▶️✨⌛️";
+    const expectation = "\u2764\u0020\u0020\u0020\u0020\u0020\u0020";
+    const result = sanitizeSpecialCharacters(testString);
+    expect(result).toEqual(expectation);
   });
 });
