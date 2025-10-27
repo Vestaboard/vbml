@@ -1,5 +1,17 @@
 import { multipleCharacterMappings } from "./multipleCharacterMappings";
 
+/**
+ * __VARIATION SELECTOR-16__
+ *
+ * @link https://www.unicode.org/charts/PDF/UFE00.pdf
+ *
+ * @description emoji variation selector; preceded by character code U+2764
+ * or "Heavy Black Heart" (❤) to produce "Read Heart" (❤️), which is a sequence of U+2764,U+FE0F.
+ *
+ * Note that we should not cast this to a whitespace, but remove it completely when sanitizing text.
+ */
+const VARIATION_SELECTOR_SIXTEEN = "\uFE0F";
+
 export enum CharacterCode {
   Blank = 0,
   A = 1,
@@ -539,8 +551,10 @@ export const convertCharactersToCharacterCodes = (characters: string) =>
   ).accumulator;
 
 export const mappingToCharacter = (character: string) => {
-  const multipleCharacterMapping = multipleCharacterMappings[character];
+  const isVariationSelector = character === VARIATION_SELECTOR_SIXTEEN;
+  if (isVariationSelector) return "";
 
+  const multipleCharacterMapping = multipleCharacterMappings[character];
   if (multipleCharacterMapping) {
     return multipleCharacterMapping;
   }
