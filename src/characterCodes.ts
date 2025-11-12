@@ -354,7 +354,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Zero,
     name: "Zero",
-    mappings: ["0", "º"],
+    mappings: ["0"],
   },
   {
     code: CharacterCode.ExclamationMark,
