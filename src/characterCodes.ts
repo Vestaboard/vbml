@@ -116,17 +116,41 @@ const CHARACTER_CODES = [
       "‹",
       "˜",
       "÷",
+      "π",
+      "∆",
+      "√",
+      "∫",
+      "∞",
     ],
   },
   {
     code: CharacterCode.A,
     name: "A",
-    mappings: ["A", "a", "â", "à", "å", "á", "À", "Á", "Â", "Ã", "Å", "ã"],
+    mappings: [
+      "A",
+      "a",
+      "â",
+      "à",
+      "å",
+      "á",
+      "À",
+      "Á",
+      "Â",
+      "Ã",
+      "Å",
+      "ã",
+      "ä",
+      "Ä",
+      "∂",
+      "œ",
+      "æ",
+      "Æ",
+    ],
   },
   {
     code: CharacterCode.B,
     name: "B",
-    mappings: ["B", "b"],
+    mappings: ["B", "b", "ß"],
   },
   {
     code: CharacterCode.C,
@@ -141,7 +165,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.E,
     name: "E",
-    mappings: ["E", "e", "é", "ê", "ë", "è", "È", "É", "Ê", "Ë", "€", "£"],
+    mappings: ["E", "e", "é", "ê", "ë", "è", "È", "É", "Ê", "Ë", "€", "£", "∑"],
   },
   {
     code: CharacterCode.F,
@@ -191,7 +215,23 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.O,
     name: "O",
-    mappings: ["O", "o", "ó", "ô", "ò", "Ò", "Ó", "Ô", "Õ", "Ø", "ð", "õ", "ø"],
+    mappings: [
+      "O",
+      "o",
+      "ó",
+      "ô",
+      "ò",
+      "Ò",
+      "Ó",
+      "Ô",
+      "Õ",
+      "Ø",
+      "ð",
+      "õ",
+      "ø",
+      "ö",
+      "Ö",
+    ],
   },
   {
     code: CharacterCode.P,
@@ -237,6 +277,8 @@ const CHARACTER_CODES = [
       "Ů",
       "ų",
       "Ų",
+      "ü",
+      "Ü",
     ],
   },
   {
@@ -317,7 +359,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.ExclamationMark,
     name: "ExclamationMark",
-    mappings: ["!", "¡", "ǃ"],
+    mappings: ["!", "ǃ"],
   },
   {
     code: CharacterCode.AtSign,
@@ -362,7 +404,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.EqualsSign,
     name: "EqualsSign",
-    mappings: ["="],
+    mappings: ["=", "≠", "≈", "≡"],
   },
   {
     code: CharacterCode.Semicolon,
@@ -413,7 +455,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Period,
     name: "Period",
-    mappings: [".", "․", "‥"],
+    mappings: [".", "․", "‥", "…"],
   },
   {
     code: CharacterCode.Slash,
@@ -430,6 +472,7 @@ const CHARACTER_CODES = [
     name: "DegreeSign",
     mappings: [
       "°",
+      "º",
       "¤",
       "•",
       "·",
