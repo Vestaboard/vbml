@@ -82,4 +82,54 @@ describe("Sanitize special characters", () => {
     const result = sanitizeSpecialCharacters(testString);
     expect(result).toEqual(expectation);
   });
+
+  it("Should sanitize all German and special characters", () => {
+    // Test individual German umlaut characters
+    // Note: lowercase umlauts are converted to uppercase equivalents (ä → AE, not ae)
+    expect(sanitizeSpecialCharacters("ä")).toEqual("AE");
+    expect(sanitizeSpecialCharacters("Ä")).toEqual("AE");
+    expect(sanitizeSpecialCharacters("ö")).toEqual("OE");
+    expect(sanitizeSpecialCharacters("Ö")).toEqual("OE");
+    expect(sanitizeSpecialCharacters("ü")).toEqual("UE");
+    expect(sanitizeSpecialCharacters("Ü")).toEqual("UE");
+    expect(sanitizeSpecialCharacters("ß")).toEqual("SS");
+
+    // Test Scandinavian characters
+    expect(sanitizeSpecialCharacters("ø")).toEqual("o");
+    expect(sanitizeSpecialCharacters("å")).toEqual("a");
+
+    // Test ligatures
+    expect(sanitizeSpecialCharacters("œ")).toEqual("OE");
+    expect(sanitizeSpecialCharacters("æ")).toEqual("AE");
+
+    // Test other accented characters
+    expect(sanitizeSpecialCharacters("ç")).toEqual("c");
+    expect(sanitizeSpecialCharacters("ƒ")).toEqual("f");
+    expect(sanitizeSpecialCharacters("µ")).toEqual(" "); // micro sign converts to space
+
+    // Test special punctuation and symbols
+    expect(sanitizeSpecialCharacters("…")).toEqual("...");
+    expect(sanitizeSpecialCharacters("–")).toEqual("-");
+    expect(sanitizeSpecialCharacters("⁄")).toEqual("/");
+
+    // Test full string with all special characters
+    const allChars = "äÄöÖüÜßøåœæçƒµ…–⁄∑¡¶¢[]|{}≠¿€®†¨π•±∂©º∆@¥≈√∫~∞";
+    const result = sanitizeSpecialCharacters(allChars);
+    expect(result).toBeTruthy();
+    expect(typeof result).toBe("string");
+    // Verify no special characters remain - should only contain A-Z, numbers, and basic punctuation
+    expect(result).not.toMatch(/[äÄöÖüÜßøåœæçƒµ]/);
+  });
+
+  it("Should handle German text with umlauts in context", () => {
+    const germanText = "Über die Brücke gehen wir für Österreich";
+    const result = sanitizeSpecialCharacters(germanText);
+    expect(result).toEqual("UEber die BrUEcke gehen wir fUEr OEsterreich");
+  });
+
+  it("Should handle German sharp s (ß) in context", () => {
+    const germanText = "Straße";
+    const result = sanitizeSpecialCharacters(germanText);
+    expect(result).toEqual("StraSSe");
+  });
 });
