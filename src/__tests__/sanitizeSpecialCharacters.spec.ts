@@ -132,4 +132,14 @@ describe("Sanitize special characters", () => {
     const result = sanitizeSpecialCharacters(germanText);
     expect(result).toEqual("StraSSe");
   });
+
+  it("Should convert ß to SS in all contexts", () => {
+    const texts = ["ß", "Straße", "fußball", "groß", "weiß"];
+    const expected = ["SS", "StraSSe", "fuSSball", "groSS", "weiSS"];
+
+    texts.forEach((text, index) => {
+      const result = sanitizeSpecialCharacters(text);
+      expect(result).toEqual(expected[index]);
+    });
+  });
 });

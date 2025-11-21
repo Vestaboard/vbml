@@ -7,4 +7,7 @@ export const emojisToCharacterCodes = (template: string) =>
     .replace(/🟦/g, "{67}")
     .replace(/🟪/g, "{68}")
     .replace(/⬜/g, "{69}")
-    .replace(/⬛/g, "{70}");
+    .replace(/⬛/g, "{70}")
+
+    // Handle special case for ß to SS
+    .replace("ß", "SS");
