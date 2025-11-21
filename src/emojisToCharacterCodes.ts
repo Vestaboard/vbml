@@ -10,4 +10,4 @@ export const emojisToCharacterCodes = (template: string) =>
     .replace(/⬛/g, "{70}")
 
     // Handle special case for ß to SS
-    .replace("ß", "SS");
+    .replace(/ß/g, "SS");
