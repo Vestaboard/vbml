@@ -105,7 +105,6 @@ const CHARACTER_CODES = [
       "¶",
       "*",
       "^",
-      "_",
       "¬",
       "«",
       "»",
@@ -150,7 +149,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.B,
     name: "B",
-    mappings: ["B", "b", "ß"],
+    mappings: ["B", "b"],
   },
   {
     code: CharacterCode.C,
@@ -277,7 +276,6 @@ const CHARACTER_CODES = [
       "Ů",
       "ų",
       "Ų",
-      "ü",
       "Ü",
     ],
   },
@@ -389,7 +387,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Hyphen,
     name: "Hyphen",
-    mappings: ["-", "—", "–", "¯", "~"],
+    mappings: ["-", "—", "–", "¯", "~", "_"],
   },
   {
     code: CharacterCode.PlusSign,
@@ -440,7 +438,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.DoubleQuote,
     name: "DoubleQuote",
-    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶", "‟"],
+    mappings: [`"`, "„", "“", "”", "¨", "˝", "ˮ", "˵", "˶", "‟", `"`],
   },
   {
     code: CharacterCode.PercentSign,
@@ -472,6 +470,7 @@ const CHARACTER_CODES = [
     name: "DegreeSign",
     mappings: [
       "°",
+      "˚",
       "º",
       "¤",
       "•",
