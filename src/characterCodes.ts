@@ -387,7 +387,7 @@ const CHARACTER_CODES = [
   {
     code: CharacterCode.Hyphen,
     name: "Hyphen",
-    mappings: ["-", "—", "–", "¯", "{", "_"],
+    mappings: ["-", "—", "–", "¯", "~", "_"],
   },
   {
     code: CharacterCode.PlusSign,
