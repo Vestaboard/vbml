@@ -336,8 +336,16 @@ const VestaboardCharactersCodeMap = {
 const rowCount = 6;
 const columnCount = 22;
 // KMM format
-export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
+export function classic(
+  text: string,
+  options?: {
+    extraHPadding?: number;
+    preserveDoubleSpaces?: boolean;
+  }
+): Array<Array<number>> {
   const emptyRow = new Array(columnCount).fill(0);
+  const extraHPadding = options?.extraHPadding || 0;
+  const preserveDoubleSpaces = options?.preserveDoubleSpaces || false;
 
   const emptyBoard = [
     emptyRow,
@@ -353,7 +361,9 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   }
 
   const lines = emojisToCharacterCodes(text).split("\n");
-  const wordCharCodeRegex = /[a-zA-Z]+|\{.\d\}+|\{\d\}+|\d+|\s+|[^\w\s]/g;
+  const wordCharCodeRegex = preserveDoubleSpaces
+    ? /[a-zA-Z]+|\{.\d\}+|\{\d\}+|\d+| {2}| |[^\w\s]/g
+    : /[a-zA-Z]+|\{.\d\}+|\{\d\}+|\d+|\s+|[^\w\s]/g;
 
   const chunkedLines = lines.map((line) => {
     const words = line.match(wordCharCodeRegex);
@@ -366,9 +376,16 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
         if (word.includes("{") && word.includes("}")) {
           return VestaboardCharactersCodeMap[word];
         }
+        // Handle double spaces when preserveDoubleSpaces is true
+        if (preserveDoubleSpaces && word === "  ") {
+          return [0, 0];
+        }
         return word.split("").flatMap((char) => {
           if (char === "ä" || char === "Ä") {
-            return [VestaboardCharactersCodeMap["a"], VestaboardCharactersCodeMap["e"]];
+            return [
+              VestaboardCharactersCodeMap["a"],
+              VestaboardCharactersCodeMap["e"],
+            ];
           }
           return VestaboardCharactersCodeMap[char];
         });
@@ -378,9 +395,20 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
       let words = [];
       let word = [];
       for (let i = 0; i < chars?.length; i++) {
-        if (chars?.[i] === 0) {
+        if (chars?.[i] === 0 && !preserveDoubleSpaces) {
           words.push(word);
           word = [];
+        } else if (chars?.[i] === 0 && preserveDoubleSpaces) {
+          // When preserving double spaces, only treat single 0 as word boundary
+          // Check if this is part of a double space
+          if (i + 1 < chars?.length && chars?.[i + 1] === 0) {
+            word.push(chars?.[i]);
+          } else if (i > 0 && chars?.[i - 1] === 0) {
+            word.push(chars?.[i]);
+          } else {
+            words.push(word);
+            word = [];
+          }
         } else {
           word.push(chars?.[i]);
         }
@@ -431,7 +459,10 @@ export function classic(text: string, extraHPadding = 0): Array<Array<number>> {
   const numContentRows = formatted.length;
   if (numContentRows === 3 && extraHPadding === 0) {
     // redo all the work, add padding
-    return classic(text, extraHPadding + 4);
+    return classic(text, {
+      extraHPadding: extraHPadding + 4,
+      preserveDoubleSpaces,
+    });
   }
 
   const maxNumContentColumns = Math.max(
