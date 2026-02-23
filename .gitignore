@@ -1,2 +1,4 @@
 node_modules
 lib
+php/vendor/
+php/.phpunit.result.cache
