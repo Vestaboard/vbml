@@ -1,0 +1,51 @@
+name: Publish PHP Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g. 1.0.0)"
+        required: true
+        type: string
+
+jobs:
+  test-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          tools: composer
+
+      - name: Install Dependencies
+        working-directory: php
+        run: composer install
+
+      - name: Run Tests
+        working-directory: php
+        run: ./vendor/bin/phpunit
+
+      - name: Tag Release
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag -a "php-v${{ github.event.inputs.version }}" -m "PHP Package v${{ github.event.inputs.version }}"
+          git push origin "php-v${{ github.event.inputs.version }}"
+
+      - name: Notify Packagist
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -XPOST \
+            -H "content-type: application/json" \
+            "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
+            -d "{\"repository\":{\"url\":\"https://github.com/${{ github.repository }}\"}}")
+          echo "Packagist API response: $STATUS"
+          if [[ "$STATUS" -lt 200 || "$STATUS" -ge 300 ]]; then
+            echo "Packagist notification failed with status $STATUS"
+            exit 1
+          fi
