@@ -1,0 +1,49 @@
+[project]
+name = "pyvbml"
+description = "A python package to parse Vestaboard markup language (VBML) to Vestaboard character arrays"
+authors = [{ name = "Nathan Spencer", email = "natekspencer@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "backports-strenum>=1.3.1; python_version < '3.11'",
+]
+dynamic = ["version"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.4",
+]
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.hooks.version]
+path = "pyvbml/__init__.py"
+pattern = true
+
+[tool.hatch.build.targets.sdist]
+include = ["pyvbml"]
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.ruff.lint]
+select = ["D"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+forced-separate = ["tests"]
+combine-as-imports = true
+split-on-trailing-comma = false
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true }}]
+
+[tool.uv-dynamic-versioning]
+pattern = "default-unprefixed"
