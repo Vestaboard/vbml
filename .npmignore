@@ -2,3 +2,5 @@ node_modules
 src
 formatter.kt
 php
+python
+*.py
