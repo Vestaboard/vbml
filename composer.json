@@ -2,7 +2,7 @@
   "name": "vestaboard/vbml",
   "description": "The Vestaboard Markup Language for PHP",
   "type": "library",
-  "license": "GNU",
+  "license": "GPL-3.0-only",
   "authors": [{"name": "Vestaboard"}],
   "require": {
     "php": "^8.1",
