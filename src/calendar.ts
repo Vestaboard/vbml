@@ -182,8 +182,9 @@ export const makeCalendar = (
   // fill in the days
 
   Object.keys(vbmlDays).forEach((vbmlDayKey) => {
-    const color = vbmlDays[vbmlDayKey];
     const day = parseInt(vbmlDayKey);
+    if (day > numberOfDaysInMonth) return; // ignore days that don't exist in month
+    const color = vbmlDays[vbmlDayKey];
     const todaysRow = Math.floor((day + offset - 1) / 7) + 1;
     const modulous = (day + offset - 1) % 7;
     // account for spillover off of the board

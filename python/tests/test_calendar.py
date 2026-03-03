@@ -116,8 +116,8 @@ def test_calendar_with_highlighted_days() -> None:
     ]
 
 
-def test_calendar_with_highlighted_days_not_on_calendar() -> None:
-    """Test calendar with highlighted days not on calendar."""
+def test_calendar_does_not_highlight_days_outside_of_month() -> None:
+    """Test calendar doesn't highlight days outside of month."""
     result = make_calendar(
         6,
         2026,

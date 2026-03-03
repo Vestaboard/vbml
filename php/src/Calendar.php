@@ -184,6 +184,7 @@ class Calendar
         // Fill in the days
         foreach ($vbmlDays as $vbmlDayKey => $color) {
             $day = (int)$vbmlDayKey;
+            if ($day > $numberOfDaysInMonth) continue;
             $todaysRow = (int)floor(($day + $offset - 1) / 7) + 1;
             $modulus = ($day + $offset - 1) % 7;
             $todaysColumn = $todaysRow > 5 ? ($modulus === 0 ? 12 : 13) : $modulus + 5;
