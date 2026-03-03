@@ -89,7 +89,7 @@ class VbmlTest extends TestCase
     public function testShouldLayoutAbsoluteByRelative(): void
     {
         $result = Vbml::parse([
-            'style' => ['height' => 22, 'width' => 6],
+            'style' => ['height' => 6, 'width' => 22],
             'components' => [
                 ['template' => 'abc', 'style' => ['height' => 6, 'width' => 22, 'align' => 'top', 'justify' => 'left']],
                 ['template' => 'def', 'style' => ['height' => 1, 'width' => 3, 'align' => 'top', 'justify' => 'left', 'absolutePosition' => ['x' => 3, 'y' => 0]]],
@@ -102,7 +102,7 @@ class VbmlTest extends TestCase
     public function testShouldLayoutAbsoluteOverRelative(): void
     {
         $result = Vbml::parse([
-            'style' => ['height' => 22, 'width' => 6],
+            'style' => ['height' => 6, 'width' => 22],
             'components' => [
                 ['template' => 'abc', 'style' => ['height' => 6, 'width' => 22, 'align' => 'top', 'justify' => 'left']],
                 ['template' => 'def', 'style' => ['height' => 1, 'width' => 3, 'align' => 'top', 'justify' => 'left', 'absolutePosition' => ['x' => 0, 'y' => 0]]],

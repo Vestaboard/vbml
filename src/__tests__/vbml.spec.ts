@@ -175,8 +175,8 @@ describe("VBML", () => {
   it("Should layout absolute components by relative components", () => {
     const result = vbml.parse({
       style: {
-        height: 22,
-        width: 6,
+        height: 6,
+        width: 22,
       },
       components: [
         {
@@ -211,8 +211,8 @@ describe("VBML", () => {
   it("Should layout absolute components over relative components", () => {
     const result = vbml.parse({
       style: {
-        height: 22,
-        width: 6,
+        height: 6,
+        width: 22,
       },
       components: [
         {
