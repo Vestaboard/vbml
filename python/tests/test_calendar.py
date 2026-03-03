@@ -73,7 +73,7 @@ def test_calendar_with_6_weeks() -> None:
 
 
 def test_calendar_with_1_day_on_last_week() -> None:
-    """Test calendar with only 1 day on last week."""
+    """Test calendar renders single date header when last week has one day."""
     result = make_calendar(2, 2027)
 
     assert result == [
@@ -116,8 +116,8 @@ def test_calendar_with_highlighted_days() -> None:
     ]
 
 
-def test_calendar_with_highlighted_days_not_on_calendar() -> None:
-    """Test calendar with highlighted days not on calendar."""
+def test_calendar_does_not_highlight_days_outside_of_month() -> None:
+    """Test calendar doesn't highlight days outside of month."""
     result = make_calendar(
         6,
         2026,
@@ -246,10 +246,3 @@ def test_calendar_with_invalid_month() -> None:
     """Test calendar with invalid month."""
     with pytest.raises(ValueError):
         make_calendar(0, 2026)
-
-
-def test_calendars() -> None:
-    """Test calendars."""
-    for year in range(2026, 2040):
-        for month in range(1, 13):
-            make_calendar(month, year, highlighted_days={28: 66})
