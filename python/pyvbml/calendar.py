@@ -59,7 +59,7 @@ def make_calendar(
     fifth_row_days = (
         [str(fifth_start), str(fifth_end)] if fifth_start <= num_days else None
     )
-    num_days_last_row = fifth_end - (7 - offset + 22) + 1
+    num_days_last_row = fifth_end - fifth_start + 1
 
     def dc(digit: str) -> int:
         """Digit → character code, or 0 when dates are hidden."""
