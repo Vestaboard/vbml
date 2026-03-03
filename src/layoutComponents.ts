@@ -19,6 +19,13 @@ export const layoutComponents = (
     // Fill in the individual component bits over the empty board
     component.forEach((row, rowIndex) => {
       row.forEach((bit, bitIndex) => {
+        // make sure we are in bounds, truncate the rest for now
+        if (rowIndex + top >= board.length) {
+          return;
+        }
+        if (bitIndex + left >= board[0].length) {
+          return;
+        }
         board[rowIndex + top][bitIndex + left] = bit;
       });
     });
