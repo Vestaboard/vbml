@@ -136,9 +136,9 @@ class Calendar
             $fifthRow = array_merge(
                 [$hideDates ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif0, 0, 1)),
                  $hideDates ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif0, 1, 1))],
-                [$hideDates ? 0 : 44],
-                [$hideDates ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif1, 0, 1)),
-                 $hideDates ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif1, 1, 1))],
+                [$hideDates | $fif0 === $fif1 ? 0 : 44],
+                [$hideDates | $fif0 === $fif1 ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif1, 0, 1)),
+                 $hideDates | $fif0 === $fif1 ? 0 : self::getCharacterCodeForDigit(mb_substr((string)$fif1, 1, 1))],
                 array_fill(0, $numberOfDaysInLastRow, $calendarDayColor),
                 array_fill(0, 22 - (5 + $numberOfDaysInLastRow), 0)
             );
