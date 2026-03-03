@@ -46,14 +46,12 @@ export const makeCalendar = (
   const secondRowDays = [`${7 - offset + 1}`, `${7 - offset + 7}`];
   const thirdRowDays = [`${7 - offset + 8}`, `${7 - offset + 14}`];
   const fourthRowDays = [`${7 - offset + 15}`, `${7 - offset + 21}`];
-  const fifthRowDays = [
-    `${7 - offset + 22}`,
-    `${Math.min(7 - offset + numberOfDaysInMonth, numberOfDaysInMonth)}`,
-  ];
-  const numberOfDaysInLastRow =
-    Math.min(7 - offset + numberOfDaysInMonth, numberOfDaysInMonth) -
-    (7 - offset + 22) +
-    1;
+  const fifthStart = 7 - offset + 22;
+  const fifthEnd = Math.min(7 - offset + numberOfDaysInMonth, numberOfDaysInMonth);
+  const fifthRowDays = fifthStart <= numberOfDaysInMonth
+    ? [`${fifthStart}`, `${fifthEnd}`]
+    : [];
+  const numberOfDaysInLastRow = fifthEnd - fifthStart + 1;
   const calendarDayColor = defaultDayColor || 65;
   const firstRow =
     firstRowDays[0] === firstRowDays[1]
