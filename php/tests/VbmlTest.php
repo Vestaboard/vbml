@@ -89,7 +89,7 @@ class VbmlTest extends TestCase
     public function testShouldLayoutAbsoluteByRelative(): void
     {
         $result = Vbml::parse([
-            'style' => ['height' => 22, 'width' => 6],
+            'style' => ['height' => 6, 'width' => 22],
             'components' => [
                 ['template' => 'abc', 'style' => ['height' => 6, 'width' => 22, 'align' => 'top', 'justify' => 'left']],
                 ['template' => 'def', 'style' => ['height' => 1, 'width' => 3, 'align' => 'top', 'justify' => 'left', 'absolutePosition' => ['x' => 3, 'y' => 0]]],
@@ -102,7 +102,7 @@ class VbmlTest extends TestCase
     public function testShouldLayoutAbsoluteOverRelative(): void
     {
         $result = Vbml::parse([
-            'style' => ['height' => 22, 'width' => 6],
+            'style' => ['height' => 6, 'width' => 22],
             'components' => [
                 ['template' => 'abc', 'style' => ['height' => 6, 'width' => 22, 'align' => 'top', 'justify' => 'left']],
                 ['template' => 'def', 'style' => ['height' => 1, 'width' => 3, 'align' => 'top', 'justify' => 'left', 'absolutePosition' => ['x' => 0, 'y' => 0]]],
@@ -314,6 +314,26 @@ class VbmlTest extends TestCase
             ],
         ]);
         $this->assertEquals([[8, 0], [0, 0], [0, 0], [9, 0]], $result);
+    }
+
+    public function testShouldProduceUniformRowLengthsWhenComponentWiderThanBoard(): void
+    {
+        $result = Vbml::parse([
+            'style' => ['height' => 22, 'width' => 6],
+            'components' => [
+                ['template' => 'abc', 'style' => ['height' => 6, 'width' => 22, 'align' => 'top', 'justify' => 'left']],
+                ['template' => 'def', 'style' => ['height' => 1, 'width' => 3, 'align' => 'top', 'justify' => 'left', 'absolutePosition' => ['x' => 3, 'y' => 0]]],
+            ],
+        ]);
+
+        // All rows should have the same width as the board (6)
+        $this->assertCount(22, $result);
+        foreach ($result as $row) {
+            $this->assertCount(6, $row);
+        }
+
+        // First row should be truncated to board width
+        $this->assertEquals([1, 2, 3, 4, 5, 6], $result[0]);
     }
 
     public function testShouldLetUsUseRandomColors(): void

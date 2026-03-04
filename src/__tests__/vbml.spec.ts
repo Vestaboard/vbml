@@ -175,8 +175,8 @@ describe("VBML", () => {
   it("Should layout absolute components by relative components", () => {
     const result = vbml.parse({
       style: {
-        height: 22,
-        width: 6,
+        height: 6,
+        width: 22,
       },
       components: [
         {
@@ -211,8 +211,8 @@ describe("VBML", () => {
   it("Should layout absolute components over relative components", () => {
     const result = vbml.parse({
       style: {
-        height: 22,
-        width: 6,
+        height: 6,
+        width: 22,
       },
       components: [
         {
@@ -678,6 +678,48 @@ describe("VBML", () => {
       [0, 0],
       [9, 0],
     ]);
+  });
+
+  it("Should produce uniform row lengths when component is wider than board", () => {
+    const result = vbml.parse({
+      style: {
+        height: 22,
+        width: 6,
+      },
+      components: [
+        {
+          template: "abc",
+          style: {
+            height: 6,
+            width: 22,
+            align: Align.top,
+            justify: Justify.left,
+          },
+        },
+        {
+          template: "def",
+          style: {
+            height: 1,
+            width: 3,
+            align: Align.top,
+            justify: Justify.left,
+            absolutePosition: {
+              x: 3,
+              y: 0,
+            },
+          },
+        },
+      ],
+    });
+
+    // All rows should have the same width as the board (6)
+    expect(result.length).toEqual(22);
+    result.forEach((row, index) => {
+      expect(row).toHaveLength(6);
+    });
+
+    // First row should be truncated to board width
+    expect(result[0]).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   it("Should let us use random colors", () => {
