@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
+    "test:fixtures": "node scripts/validate-conformance-fixtures.mjs",
     "test": "jest"
   },
   "repository": {
