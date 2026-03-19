@@ -1,0 +1,27 @@
+{
+  "style": {
+    "height": 6,
+    "width": 22
+  },
+  "components": [
+    {
+      "style": {
+        "absolutePosition": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "calendar": {
+        "defaultDayColor": 66,
+        "hideDates": true,
+        "hideMonthYear": true,
+        "hideSMTWTFS": true,
+        "month": "12",
+        "year": "2024",
+        "days": {
+          "25": 63
+        }
+      }
+    }
+  ]
+}
