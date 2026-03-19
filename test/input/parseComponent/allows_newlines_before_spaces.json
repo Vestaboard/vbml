@@ -1,0 +1,10 @@
+{
+  "height": 2,
+  "width": 2,
+  "component": {
+    "template": "{1}\n{70}{1}",
+    "style": {
+      "justify": "center"
+    }
+  }
+}
