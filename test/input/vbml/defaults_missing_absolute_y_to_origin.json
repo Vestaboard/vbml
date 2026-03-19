@@ -1,0 +1,29 @@
+{
+  "style": {
+    "height": 1,
+    "width": 4
+  },
+  "components": [
+    {
+      "rawCharacters": [
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "rawCharacters": [
+        [
+          1,
+          2
+        ]
+      ],
+      "style": {
+        "absolutePosition": {
+          "x": 0
+        }
+      }
+    }
+  ]
+}

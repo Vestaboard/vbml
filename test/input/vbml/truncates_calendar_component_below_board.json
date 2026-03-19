@@ -1,0 +1,17 @@
+{
+  "style": {
+    "height": 2,
+    "width": 22
+  },
+  "components": [
+    {
+      "calendar": {
+        "month": "12",
+        "year": "2024",
+        "days": {
+          "25": 63
+        }
+      }
+    }
+  ]
+}
