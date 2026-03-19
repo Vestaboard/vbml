@@ -1,0 +1,15 @@
+{
+  "style": {
+    "height": 4,
+    "width": 2
+  },
+  "components": [
+    {
+      "template": "h\n\n\ni",
+      "style": {
+        "align": "top",
+        "justify": "left"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "style": {
+    "height": 1,
+    "width": 2
+  },
+  "components": [
+    {
+      "template": "hi"
+    }
+  ]
+}

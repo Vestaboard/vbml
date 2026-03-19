@@ -1,0 +1,15 @@
+{
+  "style": {
+    "height": 1,
+    "width": 4
+  },
+  "components": [
+    {
+      "template": "äÄ",
+      "style": {
+        "width": 4,
+        "height": 1
+      }
+    }
+  ]
+}

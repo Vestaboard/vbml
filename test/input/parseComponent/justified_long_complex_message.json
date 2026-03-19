@@ -1,0 +1,11 @@
+{
+  "height": 6,
+  "width": 22,
+  "component": {
+    "template": "Pack my box with five dozen liquor jugs. The quick brown fox jumps over the lazy dog. How vexingly quick daft zebras jump!",
+    "style": {
+      "align": "center",
+      "justify": "justified"
+    }
+  }
+}

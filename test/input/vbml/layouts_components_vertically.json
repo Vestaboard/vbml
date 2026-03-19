@@ -1,0 +1,22 @@
+{
+  "style": {
+    "height": 2,
+    "width": 2
+  },
+  "components": [
+    {
+      "template": "hi",
+      "style": {
+        "width": 2,
+        "height": 1
+      }
+    },
+    {
+      "template": "hi",
+      "style": {
+        "width": 2,
+        "height": 1
+      }
+    }
+  ]
+}
