@@ -1,0 +1,6 @@
+{
+  "reason": "Python treats an empty absolutePosition object as falsey, so this component still flows with the relative content instead of defaulting to origin as an absolute component.",
+  "result": [
+    [3, 4, 1, 2]
+  ]
+}
