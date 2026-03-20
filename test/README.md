@@ -1,21 +1,21 @@
 # Shared Conformance Fixtures
 
 The `test/` directory is data-only. It defines the shared behavioral contract
-for the Node, Python, and PHP implementations.
+for the TypeScript, Python, and PHP implementations.
 
 Shared expectations in `test/expected` are the source of truth for every
-platform. Platform-specific overrides in `test/platform-exceptions` document
+language. Language-specific exceptions in `test/language-exceptions` document
 temporary or intentional drift from that shared contract.
 
 ## Layout
 
 - `test/input/<suite>/<case>.json`
 - `test/expected/<suite>/<case>.json`
-- `test/platform-exceptions/<platform>/<suite>/<case>.json`
+- `test/language-exceptions/<language>/<suite>/<case>.json`
 
 The executable runners live outside of `test/`:
 
-- Node: `src/__tests__/conformance`
+- TypeScript: `src/__tests__/conformance`
 - Python: `python/tests/conformance`
 - PHP: `php/tests/Conformance`
 
@@ -28,21 +28,21 @@ The executable runners live outside of `test/`:
   - `{ "result": ... }`
   - `{ "error": { "message": "..." } }`
 
-## Platform Exception Rules
+## Language Exception Rules
 
-Use `test/platform-exceptions` only when a platform intentionally or currently
+Use `test/language-exceptions` only when a language intentionally or currently
 behaves differently from the shared expectation.
 
-- Every platform exception must include a non-empty `reason`.
-- Every platform exception must define exactly one of `result`, `error`, or
+- Every language exception must include a non-empty `reason`.
+- Every language exception must define exactly one of `result`, `error`, or
   `skip`.
 - `skip` must be written as `{ "skip": true }`.
-- Treat platform exceptions as temporary documentation of drift, not as an
+- Treat language exceptions as temporary documentation of drift, not as an
   alternate test suite.
 
 ## When To Add Shared Cases
 
-Prefer shared conformance coverage for supported behavior. Keep platform-native
+Prefer shared conformance coverage for supported behavior. Keep language-native
 tests only when the contract is not cleanly expressible as input and expected
 output, such as deep-copy identity.
 
@@ -51,15 +51,15 @@ output, such as deep-copy identity.
 1. Add or update `test/input/<suite>/<case>.json`.
 2. Add the matching `test/expected/<suite>/<case>.json` for the shared
    contract.
-3. If any platform differs, add a matching file under
-   `test/platform-exceptions/<platform>/<suite>/<case>.json` with a `reason`.
-4. Remove the platform exception when that platform matches the shared contract.
-5. Run the fixture validator and the affected platform suites.
+3. If any language differs, add a matching file under
+   `test/language-exceptions/<language>/<suite>/<case>.json` with a `reason`.
+4. Remove the language exception when that language matches the shared contract.
+5. Run the fixture validator and the affected language suites.
 
 ## Commands
 
 - Validate shared fixtures: `yarn test:fixtures`
-- Run Node tests: `yarn test --runInBand`
+- Run TypeScript tests: `yarn test --runInBand`
 - Run Python conformance tests:
   `PYTHONPATH=python pytest python/tests/conformance -q`
 - Run PHP tests: `cd php && ./vendor/bin/phpunit`

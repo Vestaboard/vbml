@@ -27,7 +27,7 @@ jobs:
       - name: Validate Shared Fixtures
         run: yarn test:fixtures
 
-  node:
+  ts:
     needs: fixtures
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +44,7 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run Node Tests
+      - name: Run TypeScript Tests
         run: yarn test --runInBand
 
   python:

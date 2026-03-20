@@ -5,7 +5,7 @@ interface ConformanceErrorExpectation {
   message: string;
 }
 
-interface PlatformException<TExpected> {
+interface LanguageException<TExpected> {
   reason: string;
   result?: TExpected;
   error?: ConformanceErrorExpectation;
@@ -33,7 +33,7 @@ interface RunConformanceSuiteOptions<TInput, TExpected> {
   suiteName: string;
   suiteDir: string;
   run: (input: TInput) => TExpected;
-  platform?: string;
+  language?: string;
 }
 
 const readJsonFile = <T>(filePath: string): T =>
@@ -79,15 +79,15 @@ const loadCases = <TInput, TExpected>(suiteDir: string): Array<ConformanceCase<T
   });
 };
 
-const loadPlatformException = <TExpected>(
-  platform: string,
+const loadLanguageException = <TExpected>(
+  language: string,
   suiteDir: string,
   testId: string
-): PlatformException<TExpected> | null => {
+): LanguageException<TExpected> | null => {
   const exceptionPath = path.resolve(
     __dirname,
-    "../../../test/platform-exceptions",
-    platform,
+    "../../../test/language-exceptions",
+    language,
     suiteDir,
     `${testId}.json`
   );
@@ -96,16 +96,16 @@ const loadPlatformException = <TExpected>(
     return null;
   }
 
-  return readJsonFile<PlatformException<TExpected>>(exceptionPath);
+  return readJsonFile<LanguageException<TExpected>>(exceptionPath);
 };
 
 const resolveExpectation = <TExpected>(
-  platform: string,
+  language: string,
   suiteDir: string,
   testCase: ConformanceCase<unknown, TExpected>
 ): ResolvedExpectation<TExpected> => {
-  const exception = loadPlatformException<TExpected>(
-    platform,
+  const exception = loadLanguageException<TExpected>(
+    language,
     suiteDir,
     testCase.id
   );
@@ -113,14 +113,14 @@ const resolveExpectation = <TExpected>(
   if (exception) {
     if (!exception.reason.trim()) {
       throw new Error(
-        `Platform exception "${suiteDir}/${testCase.id}" is missing a reason for ${platform}.`
+        `Language exception "${suiteDir}/${testCase.id}" is missing a reason for ${language}.`
       );
     }
 
     if (exception.skip) {
       if (exception.result !== undefined || exception.error !== undefined) {
         throw new Error(
-          `Platform exception "${suiteDir}/${testCase.id}" cannot define skip with result or error.`
+          `Language exception "${suiteDir}/${testCase.id}" cannot define skip with result or error.`
         );
       }
 
@@ -131,7 +131,7 @@ const resolveExpectation = <TExpected>(
 
     if ((exception.result === undefined) === (exception.error === undefined)) {
       throw new Error(
-        `Platform exception "${suiteDir}/${testCase.id}" must define exactly one of result or error.`
+        `Language exception "${suiteDir}/${testCase.id}" must define exactly one of result or error.`
       );
     }
 
@@ -157,13 +157,13 @@ export const runConformanceSuite = <TInput, TExpected>({
   suiteName,
   suiteDir,
   run,
-  platform = "node",
+  language = "ts",
 }: RunConformanceSuiteOptions<TInput, TExpected>): void => {
   const cases = loadCases<TInput, TExpected>(suiteDir);
 
   describe(suiteName, () => {
     cases.forEach((testCase) => {
-      const resolved = resolveExpectation(platform, suiteDir, testCase);
+      const resolved = resolveExpectation(language, suiteDir, testCase);
       const testMethod = resolved.skip ? it.skip : it;
       const label = testCase.id;
 

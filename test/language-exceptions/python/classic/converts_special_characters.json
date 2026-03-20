@@ -1,5 +1,5 @@
 {
-  "reason": "Python classic wrapping diverges from Node when unsupported glyphs appear inside a long token sequence.",
+  "reason": "Python classic wrapping diverges from the TypeScript implementation when unsupported glyphs appear inside a long token sequence.",
   "result": [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

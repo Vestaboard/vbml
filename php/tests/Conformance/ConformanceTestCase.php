@@ -8,7 +8,7 @@ use RecursiveIteratorIterator;
 
 abstract class ConformanceTestCase extends TestCase
 {
-    protected static function loadCases(string $suite, string $platform = 'php'): array
+    protected static function loadCases(string $suite, string $language = 'php'): array
     {
         $inputRoot = self::repoRoot() . "/test/input/{$suite}";
         $expectedRoot = self::repoRoot() . "/test/expected/{$suite}";
@@ -29,7 +29,7 @@ abstract class ConformanceTestCase extends TestCase
                 $suite,
                 $caseId,
                 self::readJsonFile($expectedPath),
-                $platform
+                $language
             );
 
             $cases[$caseId] = [[
@@ -106,17 +106,17 @@ abstract class ConformanceTestCase extends TestCase
         string $suite,
         string $caseId,
         array $payload,
-        string $platform
+        string $language
     ): array {
         $exceptionPath = self::repoRoot()
-            . "/test/platform-exceptions/{$platform}/{$suite}/{$caseId}.json";
+            . "/test/language-exceptions/{$language}/{$suite}/{$caseId}.json";
 
         if (is_file($exceptionPath)) {
             $exception = self::readJsonFile($exceptionPath);
             $reason = trim((string)($exception['reason'] ?? ''));
             if ($reason === '') {
                 throw new \RuntimeException(
-                    "Platform exception \"{$suite}/{$caseId}\" is missing a reason."
+                    "Language exception \"{$suite}/{$caseId}\" is missing a reason."
                 );
             }
 
@@ -126,7 +126,7 @@ abstract class ConformanceTestCase extends TestCase
                     || array_key_exists('error', $exception)
                 ) {
                     throw new \RuntimeException(
-                        "Platform exception \"{$suite}/{$caseId}\" cannot define skip with result or error."
+                        "Language exception \"{$suite}/{$caseId}\" cannot define skip with result or error."
                     );
                 }
 
@@ -139,7 +139,7 @@ abstract class ConformanceTestCase extends TestCase
             $hasError = array_key_exists('error', $exception);
             if ($hasResult === $hasError) {
                 throw new \RuntimeException(
-                    "Platform exception \"{$suite}/{$caseId}\" must define exactly one of result or error."
+                    "Language exception \"{$suite}/{$caseId}\" must define exactly one of result or error."
                 );
             }
 

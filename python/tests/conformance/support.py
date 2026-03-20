@@ -32,7 +32,7 @@ class ConformanceCase:
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _INPUT_ROOT = _REPO_ROOT / "test" / "input"
 _EXPECTED_ROOT = _REPO_ROOT / "test" / "expected"
-_PLATFORM_EXCEPTION_ROOT = _REPO_ROOT / "test" / "platform-exceptions"
+_LANGUAGE_EXCEPTION_ROOT = _REPO_ROOT / "test" / "language-exceptions"
 
 
 def _read_json(path: Path) -> Any:
@@ -91,22 +91,22 @@ def _resolve_expected(
     suite: str,
     case_id: str,
     payload: dict[str, Any],
-    platform: str,
+    language: str,
 ) -> ResolvedExpected:
-    exception_path = _PLATFORM_EXCEPTION_ROOT / platform / suite / f"{case_id}.json"
+    exception_path = _LANGUAGE_EXCEPTION_ROOT / language / suite / f"{case_id}.json"
 
     if exception_path.exists():
         exception = _read_json(exception_path)
         reason = str(exception.get("reason", "")).strip()
         if not reason:
             raise ValueError(
-                f'Platform exception "{suite}/{case_id}" is missing a reason.'
+                f'Language exception "{suite}/{case_id}" is missing a reason.'
             )
 
         if exception.get("skip"):
             if "result" in exception or "error" in exception:
                 raise ValueError(
-                    f'Platform exception "{suite}/{case_id}" cannot define '
+                    f'Language exception "{suite}/{case_id}" cannot define '
                     "skip with result or error."
                 )
 
@@ -116,7 +116,7 @@ def _resolve_expected(
         has_error = "error" in exception
         if has_result == has_error:
             raise ValueError(
-                f'Platform exception "{suite}/{case_id}" must define exactly '
+                f'Language exception "{suite}/{case_id}" must define exactly '
                 "one of result or error."
             )
 
@@ -139,7 +139,7 @@ def _resolve_expected(
     )
 
 
-def load_cases(suite: str, platform: str = "python") -> list[ConformanceCase]:
+def load_cases(suite: str, language: str = "python") -> list[ConformanceCase]:
     """Load all cases for a suite."""
 
     input_root = _INPUT_ROOT / suite
@@ -161,7 +161,7 @@ def load_cases(suite: str, platform: str = "python") -> list[ConformanceCase]:
             ConformanceCase(
                 id=case_id,
                 input_data=input_data,
-                expected=_resolve_expected(suite, case_id, expected_payload, platform),
+                expected=_resolve_expected(suite, case_id, expected_payload, language),
             )
         )
 

@@ -4,15 +4,15 @@
  * The script treats `test/input/<suite>/<case>.json` and
  * `test/expected/<suite>/<case>.json` as the canonical shared cases and
  * verifies that every case has both halves. It also validates the shape of
- * expected fixtures and platform-specific exceptions in
- * `test/platform-exceptions/<platform>/<suite>/<case>.json`.
+ * expected fixtures and language-specific exceptions in
+ * `test/language-exceptions/<language>/<suite>/<case>.json`.
  *
  * In practice this catches:
  * - missing input/expected pairs
  * - invalid JSON
  * - malformed expected error payloads
- * - malformed platform exceptions
- * - platform exceptions that do not map to a shared case
+ * - malformed language exceptions
+ * - language exceptions that do not map to a shared case
  */
 import fs from "fs";
 import path from "path";
@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const inputRoot = path.join(repoRoot, "test", "input");
 const expectedRoot = path.join(repoRoot, "test", "expected");
-const platformExceptionRoot = path.join(repoRoot, "test", "platform-exceptions");
+const languageExceptionRoot = path.join(repoRoot, "test", "language-exceptions");
 
 const errors = [];
 
@@ -96,17 +96,17 @@ const validateExpectedFixture = (filePath, payload) => {
   }
 };
 
-const validatePlatformException = (filePath, payload, knownCases) => {
-  const relativePath = path.relative(platformExceptionRoot, filePath);
+const validateLanguageException = (filePath, payload, knownCases) => {
+  const relativePath = path.relative(languageExceptionRoot, filePath);
   const fileLabel = path.relative(repoRoot, filePath);
   const segments = relativePath.split(path.sep);
 
   if (segments.length < 3) {
-    errors.push(`${fileLabel} must be stored as <platform>/<suite>/<case>.json.`);
+    errors.push(`${fileLabel} must be stored as <language>/<suite>/<case>.json.`);
     return;
   }
 
-  const [platform, ...caseSegments] = segments;
+  const [, ...caseSegments] = segments;
   const caseId = caseSegments.join("/").replace(/\.json$/, "");
 
   if (!knownCases.has(caseId)) {
@@ -143,7 +143,7 @@ const validatePlatformException = (filePath, payload, knownCases) => {
 
 const inputFiles = walkJsonFiles(inputRoot);
 const expectedFiles = walkJsonFiles(expectedRoot);
-const platformExceptionFiles = walkJsonFiles(platformExceptionRoot);
+const languageExceptionFiles = walkJsonFiles(languageExceptionRoot);
 
 const inputCases = new Set(inputFiles.map((filePath) => toCaseId(inputRoot, filePath)));
 const expectedCases = new Set(
@@ -173,10 +173,10 @@ const knownCases = new Set(
   [...inputCases].filter((caseId) => expectedCases.has(caseId))
 );
 
-for (const exceptionFile of platformExceptionFiles) {
+for (const exceptionFile of languageExceptionFiles) {
   const payload = readJsonFile(exceptionFile);
   if (payload !== null) {
-    validatePlatformException(exceptionFile, payload, knownCases);
+    validateLanguageException(exceptionFile, payload, knownCases);
   }
 }
 
@@ -189,5 +189,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Validated ${knownCases.size} shared cases and ${platformExceptionFiles.length} platform exceptions.`
+  `Validated ${knownCases.size} shared cases and ${languageExceptionFiles.length} language exceptions.`
 );
