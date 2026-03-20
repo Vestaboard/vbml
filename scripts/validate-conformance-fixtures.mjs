@@ -13,7 +13,6 @@
  * - malformed expected error payloads
  * - malformed platform exceptions
  * - platform exceptions that do not map to a shared case
- * - accidental Node exceptions
  */
 import fs from "fs";
 import path from "path";
@@ -109,10 +108,6 @@ const validatePlatformException = (filePath, payload, knownCases) => {
 
   const [platform, ...caseSegments] = segments;
   const caseId = caseSegments.join("/").replace(/\.json$/, "");
-
-  if (platform === "node") {
-    errors.push(`${fileLabel} is invalid because Node is the shared source of truth.`);
-  }
 
   if (!knownCases.has(caseId)) {
     errors.push(`${fileLabel} does not match a shared case in test/input and test/expected.`);

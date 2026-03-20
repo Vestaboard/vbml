@@ -3,8 +3,9 @@
 The `test/` directory is data-only. It defines the shared behavioral contract
 for the Node, Python, and PHP implementations.
 
-Node is the source of truth. Shared expectations in `test/expected` should
-match Node behavior unless the Node suite itself is being corrected.
+Shared expectations in `test/expected` are the source of truth for every
+platform. Platform-specific overrides in `test/platform-exceptions` document
+temporary or intentional drift from that shared contract.
 
 ## Layout
 
@@ -29,10 +30,9 @@ The executable runners live outside of `test/`:
 
 ## Platform Exception Rules
 
-Use `test/platform-exceptions` only when a non-Node platform intentionally or
-currently behaves differently from the shared expectation.
+Use `test/platform-exceptions` only when a platform intentionally or currently
+behaves differently from the shared expectation.
 
-- Never add platform exceptions for Node.
 - Every platform exception must include a non-empty `reason`.
 - Every platform exception must define exactly one of `result`, `error`, or
   `skip`.
@@ -49,9 +49,9 @@ output, such as deep-copy identity.
 ## Maintainer Workflow
 
 1. Add or update `test/input/<suite>/<case>.json`.
-2. Add the matching `test/expected/<suite>/<case>.json` using Node behavior as
-   the default.
-3. If Python or PHP differs, add a matching file under
+2. Add the matching `test/expected/<suite>/<case>.json` for the shared
+   contract.
+3. If any platform differs, add a matching file under
    `test/platform-exceptions/<platform>/<suite>/<case>.json` with a `reason`.
 4. Remove the platform exception when that platform matches the shared contract.
 5. Run the fixture validator and the affected platform suites.
