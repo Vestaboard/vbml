@@ -11,8 +11,8 @@ from .support import assert_case, case_ids, load_cases
 def test_calendar(case) -> None:
     def _run(input_data):
         return make_calendar(
-            int(input_data["month"]),
-            int(input_data["year"]),
+            input_data["month"],
+            input_data["year"],
             default_day_color=input_data.get("defaultDayColor"),
             highlighted_days=input_data.get("days"),
             hide_day_of_week=input_data.get("hideSMTWTFS", False),

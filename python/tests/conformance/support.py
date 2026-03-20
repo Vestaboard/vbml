@@ -39,6 +39,50 @@ def _read_json(path: Path) -> Any:
     return json.loads(path.read_text())
 
 
+def _coerce_shared_json_int(value: Any) -> Any:
+    """Convert shared JSON numeric strings into Python ints."""
+    if isinstance(value, str) and value.isdigit():
+        return int(value)
+    return value
+
+
+def _normalize_input_data(suite: str, input_data: Any) -> Any:
+    """Normalize shared fixture input at the Python conformance boundary."""
+    if suite == "calendar" and isinstance(input_data, dict):
+        return {
+            **input_data,
+            "month": _coerce_shared_json_int(input_data["month"]),
+            "year": _coerce_shared_json_int(input_data["year"]),
+        }
+
+    if suite == "vbml" and isinstance(input_data, dict):
+        components = []
+        for component in input_data.get("components", []):
+            if not isinstance(component, dict) or "calendar" not in component:
+                components.append(component)
+                continue
+
+            calendar = component.get("calendar")
+            if not isinstance(calendar, dict):
+                components.append(component)
+                continue
+
+            components.append(
+                {
+                    **component,
+                    "calendar": {
+                        **calendar,
+                        "month": _coerce_shared_json_int(calendar["month"]),
+                        "year": _coerce_shared_json_int(calendar["year"]),
+                    },
+                }
+            )
+
+        return {**input_data, "components": components}
+
+    return input_data
+
+
 def _walk_json_files(root: Path) -> list[Path]:
     return sorted(path for path in root.rglob("*.json") if path.is_file())
 
@@ -110,7 +154,7 @@ def load_cases(suite: str, platform: str = "python") -> list[ConformanceCase]:
             raise FileNotFoundError(f"Missing expected file for {suite}/{relative_path}")
 
         case_id = str(relative_path.with_suffix("")).replace("\\", "/")
-        input_data = _read_json(input_path)
+        input_data = _normalize_input_data(suite, _read_json(input_path))
         expected_payload = _read_json(expected_path)
 
         cases.append(
