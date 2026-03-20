@@ -1,0 +1,10 @@
+{
+  "height": 2,
+  "width": 22,
+  "component": {
+    "template": "Thank you for having us!",
+    "style": {
+      "justify": "center"
+    }
+  }
+}

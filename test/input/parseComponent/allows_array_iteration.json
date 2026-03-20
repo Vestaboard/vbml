@@ -1,0 +1,14 @@
+{
+  "height": 1,
+  "width": 3,
+  "props": {
+    "numbers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "component": {
+    "template": "{{#numbers}}{{.}}{{/numbers}}"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "style": {
+    "height": 2,
+    "width": 4
+  },
+  "components": [
+    {
+      "template": "{1}{2}",
+      "style": {
+        "width": 2,
+        "height": 1
+      }
+    },
+    {
+      "template": "{3}{4}",
+      "style": {
+        "width": 2,
+        "height": 1
+      }
+    },
+    {
+      "template": "{5}{6}",
+      "style": {
+        "width": 2,
+        "height": 1
+      }
+    }
+  ]
+}

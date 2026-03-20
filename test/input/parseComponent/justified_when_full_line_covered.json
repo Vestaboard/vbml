@@ -1,0 +1,11 @@
+{
+  "height": 6,
+  "width": 22,
+  "component": {
+    "template": "Testing Testing 123456",
+    "style": {
+      "align": "center",
+      "justify": "justified"
+    }
+  }
+}

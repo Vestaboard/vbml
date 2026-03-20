@@ -1,0 +1,10 @@
+{
+  "height": 1,
+  "width": 10,
+  "props": {
+    "isHappy": false
+  },
+  "component": {
+    "template": "I am {{#isHappy}}Happy{{/isHappy}}{{^isHappy}}Mad{{/isHappy}}"
+  }
+}

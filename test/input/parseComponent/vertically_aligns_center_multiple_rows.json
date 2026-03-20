@@ -1,0 +1,10 @@
+{
+  "height": 5,
+  "width": 1,
+  "component": {
+    "template": "!",
+    "style": {
+      "align": "center"
+    }
+  }
+}

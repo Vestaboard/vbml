@@ -1,0 +1,16 @@
+{
+  "mode": "absolute",
+  "height": 3,
+  "width": 12,
+  "component": {
+    "template": "Hello World!",
+    "style": {
+      "absolutePosition": {
+        "x": 4,
+        "y": 2
+      },
+      "width": 6,
+      "height": 2
+    }
+  }
+}

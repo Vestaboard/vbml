@@ -1,0 +1,35 @@
+{
+  "style": {
+    "height": 6,
+    "width": 22
+  },
+  "components": [
+    {
+      "template": "Merry Christmas",
+      "style": {
+        "height": 6,
+        "width": 10,
+        "absolutePosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "calendar": {
+        "defaultDayColor": 66,
+        "month": "12",
+        "year": "2028",
+        "days": {
+          "25": 63
+        }
+      },
+      "style": {
+        "absolutePosition": {
+          "x": 10,
+          "y": 0
+        }
+      }
+    }
+  ]
+}
