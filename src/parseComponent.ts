@@ -20,7 +20,11 @@ export const parseComponent =
     if ("rawCharacters" in component) {
       const raw = component.rawCharacters;
       if (typeof raw === "string") {
-        return JSON.parse(parseProps(props || {})(raw)) as number[][];
+        try {
+          return JSON.parse(parseProps(props || {})(raw)) as number[][];
+        } catch (e) {
+          return [[]]; // Return an empty board if parsing fails
+        }
       }
       return raw;
     }
@@ -33,7 +37,7 @@ export const parseComponent =
       return randomColors(
         component?.style?.height || height,
         component?.style?.width || width,
-        colors
+        colors,
       );
     }
 
@@ -50,7 +54,7 @@ export const parseComponent =
       map(convertCharactersToCharacterCodes),
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
-      renderComponent(emptyComponent)
+      renderComponent(emptyComponent),
     )(template) as number[][];
   };
 
@@ -61,7 +65,7 @@ export const parseAbsoluteComponent =
       characters: parseComponent(
         defaultHeight,
         defaultWidth,
-        props
+        props,
       )(component) as number[][],
       x: component.style?.absolutePosition?.x || 0,
       y: component.style?.absolutePosition?.y || 0,
