@@ -37,7 +37,7 @@ export interface VBMLProps {
 
 export interface IVBMLRawComponent {
   style?: IComponentStyle;
-  rawCharacters?: number[][];
+  rawCharacters?: number[][] | string;
 }
 
 export interface IVBMLCalendarComponent {

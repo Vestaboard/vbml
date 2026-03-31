@@ -471,6 +471,36 @@ describe("Parse Component", () => {
     ]);
   });
 
+  it("Should parse a raw component string with inline prop interpolation", () => {
+    const input: IVBMLComponent = {
+      rawCharacters: "[[{{a}},{{b}}]]",
+    };
+    const result = parseComponent(3, 12, { a: 1, b: 2 })(input);
+    expect(result).toEqual([[1, 2]]);
+  });
+
+  it("Should parse a raw component string where the grid comes from a prop", () => {
+    const input: IVBMLComponent = {
+      rawCharacters: "{{grid}}",
+    };
+    const result = parseComponent(3, 12, { grid: "[[1,2],[3,4]]" })(input);
+    expect(result).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+  });
+
+  it("Should parse a raw component passed as a JSON string", () => {
+    const input: IVBMLComponent = {
+      rawCharacters: "[[1,2],[3,4]]",
+    };
+    const result = parseComponent(3, 12)(input);
+    expect(result).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+  });
+
   it("Should convert emoji characters to character codes", () => {
     const input: IVBMLComponent = {
       template: "🟥🟧🟨🟩🟦🟪⬜⬛",
