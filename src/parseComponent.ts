@@ -17,7 +17,24 @@ import { verticalAlign } from "./verticalAlign";
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
   (component: IVBMLComponent) => {
-    if ("rawCharacters" in component) return component.rawCharacters;
+    if ("rawCharacters" in component) {
+      const raw = component.rawCharacters;
+      if (typeof raw === "string") {
+        const singlePropMatch = raw.match(/^\{\{(\w+)\}\}$/);
+        if (singlePropMatch) {
+          const propValue = (props || {})[singlePropMatch[1]];
+          if (Array.isArray(propValue) && Array.isArray(propValue[0])) {
+            return propValue as number[][];
+          }
+        }
+        try {
+          return JSON.parse(parseProps(props || {})(raw)) as number[][];
+        } catch (e) {
+          return [[]]; // Return an empty board if parsing fails
+        }
+      }
+      return raw;
+    }
 
     const width = component?.style?.width || defaultWidth;
     const height = component?.style?.height || defaultHeight;
@@ -27,7 +44,7 @@ export const parseComponent =
       return randomColors(
         component?.style?.height || height,
         component?.style?.width || width,
-        colors
+        colors,
       );
     }
 
@@ -44,7 +61,7 @@ export const parseComponent =
       map(convertCharactersToCharacterCodes),
       verticalAlign(height, component?.style?.align || Align.top),
       horizontalAlign(width, component?.style?.justify || Justify.left),
-      renderComponent(emptyComponent)
+      renderComponent(emptyComponent),
     )(template) as number[][];
   };
 
@@ -55,7 +72,7 @@ export const parseAbsoluteComponent =
       characters: parseComponent(
         defaultHeight,
         defaultWidth,
-        props
+        props,
       )(component) as number[][],
       x: component.style?.absolutePosition?.x || 0,
       y: component.style?.absolutePosition?.y || 0,
