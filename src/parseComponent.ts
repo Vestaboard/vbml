@@ -17,7 +17,13 @@ import { verticalAlign } from "./verticalAlign";
 export const parseComponent =
   (defaultHeight: number, defaultWidth: number, props?: VBMLProps) =>
   (component: IVBMLComponent) => {
-    if ("rawCharacters" in component) return component.rawCharacters;
+    if ("rawCharacters" in component) {
+      const raw = component.rawCharacters;
+      if (typeof raw === "string") {
+        return JSON.parse(parseProps(props || {})(raw)) as number[][];
+      }
+      return raw;
+    }
 
     const width = component?.style?.width || defaultWidth;
     const height = component?.style?.height || defaultHeight;
