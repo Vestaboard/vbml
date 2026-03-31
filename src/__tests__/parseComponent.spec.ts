@@ -501,6 +501,21 @@ describe("Parse Component", () => {
     ]);
   });
 
+  it("Should parse a raw component string where the prop value is already a number[][]", () => {
+    const grid: number[][] = [
+      [1, 2],
+      [3, 4],
+    ];
+    const input: IVBMLComponent = {
+      rawCharacters: "{{grid}}",
+    };
+    const result = parseComponent(3, 12, { grid })(input);
+    expect(result).toEqual([
+      [1, 2],
+      [3, 4],
+    ]);
+  });
+
   it("Should convert emoji characters to character codes", () => {
     const input: IVBMLComponent = {
       template: "🟥🟧🟨🟩🟦🟪⬜⬛",

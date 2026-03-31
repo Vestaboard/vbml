@@ -20,6 +20,13 @@ export const parseComponent =
     if ("rawCharacters" in component) {
       const raw = component.rawCharacters;
       if (typeof raw === "string") {
+        const singlePropMatch = raw.match(/^\{\{(\w+)\}\}$/);
+        if (singlePropMatch) {
+          const propValue = (props || {})[singlePropMatch[1]];
+          if (Array.isArray(propValue) && Array.isArray(propValue[0])) {
+            return propValue as number[][];
+          }
+        }
         try {
           return JSON.parse(parseProps(props || {})(raw)) as number[][];
         } catch (e) {
