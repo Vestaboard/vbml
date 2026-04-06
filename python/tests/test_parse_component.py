@@ -475,3 +475,40 @@ def test_converts_emoji_characters_to_character_codes() -> None:
     """Should convert emoji characters to character codes."""
     result = _pc(1, 8)({"template": "🟥🟧🟨🟩🟦🟪⬜⬛"})
     assert result == [[63, 64, 65, 66, 67, 68, 69, 70]]
+
+
+def test_note_board_style_3x15_starts_from_beginning_prod_1159() -> None:
+    """Should render Note BoardStyle (3x15) starting from the beginning of a long string (PROD-1159).
+
+    Bug: string rendered as "FINAL FOUR PLAYERS TO WATCH: SAR" because center-align
+    overflow produced a negative padding_top, skipping the first rows.
+    Expected: board starts with "Women's..." not mid-string "Final Four..."
+    """
+    result = _pc(3, 15)(
+        {
+            "template": "Women's 2026 Final Four players to watch: Sarah Strong, Joyce Edwards, more - The New York Times",
+            "style": {"align": Align.CENTER},
+        }
+    )
+    # Row 0 must start with W (23) for "Women's", not F (6) for "Final"
+    assert result[0][0] == 23  # W
+
+
+def test_justified_align_overflow_starts_from_beginning() -> None:
+    """Should start from the beginning of a string when justified-aligned content overflows the component height."""
+    result = _pc(2, 4)({"template": "ab cd ef gh", "style": {"align": Align.JUSTIFIED}})
+    assert result[0][0] == 1  # A (not C)
+    assert result[0][1] == 2  # B (not D)
+
+
+def test_center_align_overflow_starts_from_beginning() -> None:
+    """Should start from the beginning of a string when center-aligned content overflows the component height."""
+    # With width=4, "ab cd ef gh" wraps to 4 rows: [ab, cd, ef, gh]
+    # With height=2, content overflows.
+    # Bug: padding_top = floor((2-4)/2) = -1 → starts from codes[1] (cd)
+    # Fix: padding_top = max(-1, 0) = 0 → starts from codes[0] (ab)
+    result = _pc(2, 4)({"template": "ab cd ef gh", "style": {"align": Align.CENTER}})
+    assert result == [
+        [1, 2, 0, 0],  # A, B, blank, blank
+        [3, 4, 0, 0],  # C, D, blank, blank
+    ]

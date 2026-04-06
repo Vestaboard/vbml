@@ -27,14 +27,14 @@ def vertical_align(
         ]
 
     if align == Align.JUSTIFIED:
-        padding_top = math.ceil((height - len(codes)) / 2)
+        padding_top = max(math.ceil((height - len(codes)) / 2), 0)
         return [
             codes[i - padding_top] if 0 <= i - padding_top < len(codes) else []
             for i in range(height)
         ]
 
     # default / center
-    padding_top = math.floor((height - len(codes)) / 2)
+    padding_top = max(math.floor((height - len(codes)) / 2), 0)
     return [
         codes[i - padding_top] if 0 <= i - padding_top < len(codes) else []
         for i in range(height)
