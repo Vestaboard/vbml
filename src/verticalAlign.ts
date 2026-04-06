@@ -12,12 +12,12 @@ export const verticalAlign = curry(
           .fill([])
           .map((_, index) => reversedCodes[height - 1 - index] || []);
       case Align.justified:
-        const justifiedPaddingTop = Math.ceil((height - codes.length) / 2);
+        const justifiedPaddingTop = Math.max(Math.ceil((height - codes.length) / 2), 0);
         return Array(height)
           .fill([])
           .map((_, index) => codes[index - justifiedPaddingTop] || []);
       default:
-        const paddingTop = Math.floor((height - codes.length) / 2);
+        const paddingTop = Math.max(Math.floor((height - codes.length) / 2), 0);
         return Array(height)
           .fill([])
           .map((_, index) => codes[index - paddingTop] || []);

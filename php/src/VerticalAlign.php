@@ -29,7 +29,7 @@ class VerticalAlign
                 return $result;
 
             case 'justified':
-                $justifiedPaddingTop = (int)ceil(($height - count($codes)) / 2);
+                $justifiedPaddingTop = max((int)ceil(($height - count($codes)) / 2), 0);
                 $result = [];
                 for ($i = 0; $i < $height; $i++) {
                     $srcIndex = $i - $justifiedPaddingTop;
@@ -38,7 +38,7 @@ class VerticalAlign
                 return $result;
 
             default: // center
-                $paddingTop = (int)floor(($height - count($codes)) / 2);
+                $paddingTop = max((int)floor(($height - count($codes)) / 2), 0);
                 $result = [];
                 for ($i = 0; $i < $height; $i++) {
                     $srcIndex = $i - $paddingTop;
