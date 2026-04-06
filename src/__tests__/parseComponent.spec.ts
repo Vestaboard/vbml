@@ -22,7 +22,6 @@ describe("Parse Component", () => {
     ]);
   });
 
-
   it("Should format a longer message center with plain text", () => {
     const input: IVBMLComponent = {
       template: "Thank you for having us!",
@@ -522,5 +521,54 @@ describe("Parse Component", () => {
     };
     const result = parseComponent(1, 8)(input);
     expect(result).toEqual([[63, 64, 65, 66, 67, 68, 69, 70]]);
+  });
+
+  it("Should start from the beginning of a string when center-aligned content overflows the component height", () => {
+    const input: IVBMLComponent = {
+      template:
+        "Women's 2026 Final Four players to watch: Sarah Strong, Joyce Edwards, more - The New York Times",
+      style: {
+        align: Align.center,
+      },
+    };
+
+    const result = parseComponent(3, 15)(input);
+
+    // Row 0 must start with W (23) for "Women\u2019s", not F (6) for "Final"
+    expect(result[0][0]).toBe(23); // W
+  });
+
+  it("Should start from the beginning of a string when justified-aligned content overflows the component height", () => {
+    const input: IVBMLComponent = {
+      template: "ab cd ef gh",
+      style: {
+        align: Align.justified,
+      },
+    };
+
+    const result = parseComponent(2, 4)(input);
+
+    expect(result[0][0]).toBe(1); // A (not C)
+    expect(result[0][1]).toBe(2); // B (not D)
+  });
+
+  it("Should start from the beginning of a string when center-aligned content overflows the component height", () => {
+    const input: IVBMLComponent = {
+      template: "ab cd ef gh",
+      style: {
+        align: Align.center,
+      },
+    };
+
+    // With width=4, wraps to 4 rows: [ab, cd, ef, gh]
+    // With height=2, content overflows.
+    // Bug: paddingTop = floor((2-4)/2) = -1 → starts from codes[1] (cd)
+    // Fix: paddingTop = max(-1, 0) = 0 → starts from codes[0] (ab)
+    const result = parseComponent(2, 4)(input);
+
+    expect(result).toEqual([
+      [1, 2, 0, 0], // A, B, blank, blank
+      [3, 4, 0, 0], // C, D, blank, blank
+    ]);
   });
 });
