@@ -6,7 +6,8 @@
   "authors": [{"name": "Vestaboard"}],
   "require": {
     "php": "^8.1",
-    "mustache/mustache": "^2.14"
+    "ext-mbstring": "*",
+    "mustache/mustache": "^v3.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.0"
