@@ -109,7 +109,7 @@ def test_layouts_absolute_components_by_relative() -> None:
     """Should layout absolute components by relative components."""
     result = vbml.parse(
         {
-            "style": {"height": 22, "width": 6},
+            "style": {"height": 6, "width": 22},
             "components": [
                 {
                     "template": "abc",
@@ -133,16 +133,14 @@ def test_layouts_absolute_components_by_relative() -> None:
             ],
         }
     )
-    # Board is 22 rows × 6 cols; TS test expected 22-element rows which implies
-    # height/width were swapped in the original test. Our board is correctly 6 wide.
-    assert result[0] == [1, 2, 3, 4, 5, 6]
+    assert result[0] == [1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
 def test_layouts_absolute_over_relative_components() -> None:
     """Should layout absolute components over relative components."""
     result = vbml.parse(
         {
-            "style": {"height": 22, "width": 6},
+            "style": {"height": 6, "width": 22},
             "components": [
                 {
                     "template": "abc",
@@ -166,8 +164,7 @@ def test_layouts_absolute_over_relative_components() -> None:
             ],
         }
     )
-    # Board is 22 rows × 6 cols; absolute component (def=4,5,6) overwrites from x=0.
-    assert result[0] == [4, 5, 6, 0, 0, 0]
+    assert result[0] == [4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
 def test_layouts_absolute_over_relative_components_standard_size() -> None:
@@ -773,6 +770,44 @@ def test_respects_triple_returns() -> None:
         }
     )
     assert result == [[8, 0], [0, 0], [0, 0], [9, 0]]
+
+
+def test_uniform_row_lengths_when_component_wider_than_board() -> None:
+    """Should produce uniform row lengths when component is wider than board."""
+    result = vbml.parse(
+        {
+            "style": {"height": 22, "width": 6},
+            "components": [
+                {
+                    "template": "abc",
+                    "style": {
+                        "height": 6,
+                        "width": 22,
+                        "align": Align.TOP,
+                        "justify": Justify.LEFT,
+                    },
+                },
+                {
+                    "template": "def",
+                    "style": {
+                        "height": 1,
+                        "width": 3,
+                        "align": Align.TOP,
+                        "justify": Justify.LEFT,
+                        "absolutePosition": {"x": 3, "y": 0},
+                    },
+                },
+            ],
+        }
+    )
+
+    # All rows should have the same width as the board (6)
+    assert len(result) == 22
+    for row in result:
+        assert len(row) == 6
+
+    # First row should be truncated to board width
+    assert result[0] == [1, 2, 3, 4, 5, 6]
 
 
 def test_random_colors() -> None:
