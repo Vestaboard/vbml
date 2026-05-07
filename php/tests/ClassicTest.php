@@ -161,6 +161,19 @@ class ClassicTest extends TestCase
         ], Classic::classic($string));
     }
 
+    public function testShouldConvertHeartEmojiVariantsToDegreeSign(): void
+    {
+        $string = '❤️❤🧡💛💚💙💜🖤🤍🤎';
+        $this->assertEquals([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ], Classic::classic($string));
+    }
+
     public function testShouldRespectDoubleSpaces(): void
     {
         $string = 'hello  world';

@@ -177,6 +177,18 @@ def test_converts_emoji_colors() -> None:
     ]
 
 
+def test_converts_heart_emoji_variants() -> None:
+    """Should convert heart emoji variants to degree sign (char 62)."""
+    assert classic("❤️❤🧡💛💚💙💜🖤🤍🤎") == [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]
+
+
 def test_respects_double_spaces() -> None:
     """Should respect double spaces in string."""
     assert classic("hello  world", preserve_double_spaces=True) == [
