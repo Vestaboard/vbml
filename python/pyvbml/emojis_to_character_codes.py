@@ -17,6 +17,17 @@ def emojis_to_character_codes(template: str) -> str:
         .replace("🟪", "{68}")
         .replace("⬜", "{69}")
         .replace("⬛", "{70}")
+        # Heart variants → char 62 (rendered as a heart on Flagship boards).
+        # ❤️ (with U+FE0F variation selector) must be replaced before bare ❤.
+        .replace("❤️", "{62}")
+        .replace("❤", "{62}")
+        .replace("🧡", "{62}")
+        .replace("💛", "{62}")
+        .replace("💚", "{62}")
+        .replace("💙", "{62}")
+        .replace("💜", "{62}")
+        .replace("🖤", "{62}")
+        .replace("🤍", "{62}")
+        .replace("🤎", "{62}")
         .replace("ß", "SS")  # special case for ß → SS
-        .replace("❤️", "{62}")  # Vestaboard Note
     )

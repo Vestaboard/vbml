@@ -18,6 +18,18 @@ class EmojisToCharacterCodes
             '🟪' => '{68}',
             '⬜' => '{69}',
             '⬛' => '{70}',
+            // Heart variants → char 62 (rendered as a heart on Flagship boards).
+            // ❤️ (with U+FE0F variation selector) must come before bare ❤.
+            '❤️' => '{62}',
+            '❤' => '{62}',
+            '🧡' => '{62}',
+            '💛' => '{62}',
+            '💚' => '{62}',
+            '💙' => '{62}',
+            '💜' => '{62}',
+            '🖤' => '{62}',
+            '🤍' => '{62}',
+            '🤎' => '{62}',
             'ß' => 'SS',
         ];
         foreach ($replacements as $emoji => $code) {

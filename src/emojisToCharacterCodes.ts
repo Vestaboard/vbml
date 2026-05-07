@@ -9,5 +9,18 @@ export const emojisToCharacterCodes = (template: string) =>
     .replace(/⬜/g, "{69}")
     .replace(/⬛/g, "{70}")
 
+    // Map heart variants to char 62, which Flagship boards render as a heart.
+    // ❤️ (with U+FE0F variation selector) must be replaced before bare ❤.
+    .replace(/❤️/g, "{62}")
+    .replace(/❤/g, "{62}")
+    .replace(/🧡/g, "{62}")
+    .replace(/💛/g, "{62}")
+    .replace(/💚/g, "{62}")
+    .replace(/💙/g, "{62}")
+    .replace(/💜/g, "{62}")
+    .replace(/🖤/g, "{62}")
+    .replace(/🤍/g, "{62}")
+    .replace(/🤎/g, "{62}")
+
     // Handle special case for ß to SS
     .replace(/ß/g, "SS");

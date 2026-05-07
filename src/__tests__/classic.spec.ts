@@ -192,6 +192,22 @@ describe("Classic", () => {
     ]);
   });
 
+  it("Should convert heart emoji variants to degree sign (char 62)", () => {
+    const string = "❤️❤🧡💛💚💙💜🖤🤍🤎";
+    const classicBoard = classic(string);
+    expect(classicBoard).toEqual([
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [
+        0, 0, 0, 0, 0, 62, 62, 62, 62, 62, 62, 62, 62, 62, 62, 0, 0, 0, 0, 0,
+        0, 0,
+      ],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]);
+  });
+
   it("Should respect double spaces in string", () => {
     const string = "hello  world";
     const classicBoard = classic(string, {
