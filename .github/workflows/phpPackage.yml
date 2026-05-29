@@ -35,8 +35,8 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag -a "php-v${{ github.event.inputs.version }}" -m "PHP Package v${{ github.event.inputs.version }}"
-          git push origin "php-v${{ github.event.inputs.version }}"
+          git tag -a "v${{ github.event.inputs.version }}" -m "PHP Package v${{ github.event.inputs.version }}"
+          git push origin "v${{ github.event.inputs.version }}"
 
       - name: Notify Packagist
         run: |
