@@ -17,10 +17,17 @@ from .layout_components import layout_components
 from .parse_calendar_component import parse_calendar_component
 from .parse_component import parse_absolute_component, parse_component
 from .types import IVBML, IVBMLComponent
+from .validate_props import validate_props
+from .validate_schema import validate_schema
 
 
 def parse(input_data: IVBML) -> list[list[int]]:
     """Parse."""
+    schema = input_data.get("schema")
+    if schema:
+        validate_schema(schema)
+        validate_props(schema, input_data.get("props"))
+
     style = input_data.get("style") or {}
     height = style.get("height") or DIMENSIONS_FLAGSHIP[0]
     width = style.get("width") or DIMENSIONS_FLAGSHIP[1]

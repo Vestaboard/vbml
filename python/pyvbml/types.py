@@ -6,7 +6,7 @@ Port of Vestaboard/vbml/src/types.ts
 from __future__ import annotations
 
 import sys
-from typing import Any, TypedDict
+from typing import Any, Literal, TypedDict
 
 if sys.version_info >= (3, 11):
     from enum import StrEnum
@@ -89,10 +89,45 @@ class IVBMLComponent(TypedDict, total=False):
     style: ComponentStyle
 
 
+SchemaFieldType = Literal["Text", "Numeric", "Color", "Enum"]
+
+# TemporalFact: requires a user-supplied value or a source matching the
+#   requested event and time.
+# GeneralFact: model knowledge is sufficient, e.g. a team color.
+# Freeform: any value within the field constraints, e.g. a decorative accent.
+# Evidence is guidance for agents and tooling; it is never enforced by parse.
+Evidence = Literal["TemporalFact", "GeneralFact", "Freeform"]
+
+
+class SchemaOption(TypedDict):
+    """A single allowed value of an Enum schema field."""
+
+    value: str
+    description: str
+
+
+class SchemaField(TypedDict, total=False):
+    """Schema field definition. `description` is required."""
+
+    description: str
+    rows: int
+    columns: int
+    type: SchemaFieldType
+    options: list[SchemaOption]
+    evidence: Evidence
+    evidenceRule: str
+    required: bool
+
+
+# VBMLSchema maps a prop name to its field definition
+VBMLSchema = dict[str, SchemaField]
+
+
 class IVBML(TypedDict, total=False):
     """VBML interface."""
 
     props: VBMLProps
+    schema: VBMLSchema
     style: VBMLStyle
     components: list[IVBMLComponent]
 

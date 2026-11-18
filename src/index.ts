@@ -13,6 +13,8 @@ import { layoutComponents } from "./layoutComponents";
 import { makeCalendar } from "./calendar";
 import { parseCalendarComponent } from "./parseCalendarComponent";
 import { sanitizeSpecialCharacters } from "./sanitizeSpecialCharacters";
+import { validateProps } from "./validateProps";
+import { validateSchema } from "./validateSchema";
 
 // Flagship size
 const BOARD_ROWS = 6;
@@ -20,6 +22,11 @@ const BOARD_COLUMNS = 22;
 
 export const vbml = {
   parse: (input: IVBML): Array<number[]> => {
+    if (input?.schema) {
+      validateSchema(input.schema);
+      validateProps(input.schema, input.props);
+    }
+
     const height = input?.style?.height || BOARD_ROWS;
     const width = input?.style?.width || BOARD_COLUMNS;
     const emptyBoard = createEmptyBoard(height, width);
@@ -82,3 +89,10 @@ export const vbml = {
 };
 
 export * from "./types";
+export { Color } from "./color";
+export {
+  VBMLSchemaError,
+  VBMLSchemaDefinitionError,
+  ISchemaIssue,
+  SchemaIssueCode,
+} from "./schemaErrors";
