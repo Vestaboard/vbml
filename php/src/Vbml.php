@@ -13,6 +13,11 @@ class Vbml
 
     public static function parse(array $input): array
     {
+        if (!empty($input['schema'])) {
+            ValidateSchema::validate($input['schema']);
+            ValidateProps::validate($input['schema'], $input['props'] ?? null);
+        }
+
         $height = $input['style']['height'] ?? self::BOARD_ROWS;
         $width  = $input['style']['width']  ?? self::BOARD_COLUMNS;
         $props  = $input['props'] ?? null;
